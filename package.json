@@ -1,0 +1,23 @@
+{
+  "name": "ngrok",
+  "version": "1.0.0",
+  "main": "lib/index",
+  "types": "lib/types",
+  "scripts": {
+    "build": "tsc --skipLibCheck -p .",
+    "test": "node --use-openssl-ca node_modules/.bin/jest"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "wretch": "^1.7.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "@typescript-eslint/parser": "^4.3.0",
+    "jest": "^26.5.3",
+    "nock": "^13.0.4",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
+  }
+}
