@@ -195,6 +195,16 @@ export declare class Ngrok {
         get: (arg: t.Item) => Promise<t.EndpointWebhookValidation>;
         delete: (arg: t.Item) => Promise<t.Empty>;
     };
+    EndpointSAMLModule: {
+        replace: (arg: t.EndpointSAMLReplace) => Promise<t.EndpointSAML>;
+        get: (arg: t.Item) => Promise<t.EndpointSAML>;
+        delete: (arg: t.Item) => Promise<t.Empty>;
+    };
+    EndpointOIDCModule: {
+        replace: (arg: t.EndpointOIDCReplace) => Promise<t.EndpointOIDC>;
+        get: (arg: t.Item) => Promise<t.EndpointOIDC>;
+        delete: (arg: t.Item) => Promise<t.Empty>;
+    };
     ReservedAddrs: {
         /** Create a new reserved address. */
         create: (arg: t.ReservedAddrCreate) => Promise<t.ReservedAddr>;
