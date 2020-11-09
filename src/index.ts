@@ -326,24 +326,6 @@ export class Ngrok {
       this.rest.url(`/endpoint_configurations/${arg.id}/webhook_validation`).delete().json(),
   }
 
-  EndpointSAMLModule = {
-    replace: (arg: t.EndpointSAMLReplace): Promise<t.EndpointSAML> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/saml`).put(arg).json(),
-    get: (arg: t.Item): Promise<t.EndpointSAML> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/saml`).get().json(),
-    delete: (arg: t.Item): Promise<t.Empty> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/saml`).delete().json(),
-  }
-
-  EndpointOIDCModule = {
-    replace: (arg: t.EndpointOIDCReplace): Promise<t.EndpointOIDC> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/oidc`).put(arg).json(),
-    get: (arg: t.Item): Promise<t.EndpointOIDC> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/oidc`).get().json(),
-    delete: (arg: t.Item): Promise<t.Empty> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/oidc`).delete().json(),
-  }
-
   ReservedAddrs = {
     /** Create a new reserved address. */
     create: (arg: t.ReservedAddrCreate): Promise<t.ReservedAddr> =>

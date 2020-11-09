@@ -491,8 +491,6 @@ export interface LogDestinationTarget {
   kinesis?: Kinesis;
   /** Configuration used to send logs to Amazon CloudWatch Logs. */
   cloudwatch?: Cloudwatch;
-  /** Configuration used for internal debugging. */
-  debug?: EventTargetDebug;
 }
 
 export interface Firehose {
@@ -529,13 +527,6 @@ export interface S3 {
   max_file_size: number;
   /** The maximum age in seconds we should accumulate logs before sending them to S3. */
   max_file_age: number;
-}
-
-export interface EventTargetDebug {
-  /** Whether or not to output to publisher service logs. */
-  log: boolean;
-  /** Url to send events to. */
-  callback_url: string;
 }
 
 export interface AWSAuth {
@@ -592,10 +583,6 @@ export interface EndpointConfiguration {
   oauth?: EndpointOAuth;
   /** logging module configuration or <code>null</code> */
   logging?: EndpointLogging;
-  /** saml module configuration or <code>null</code> */
-  saml?: EndpointSAML;
-  /** oidc module configuration or <code>null</code> */
-  oidc?: EndpointOIDC;
 }
 
 export interface EndpointConfigurationList {
@@ -636,10 +623,6 @@ export interface EndpointConfigurationUpdate {
   oauth?: EndpointOAuth;
   /** logging module configuration or <code>null</code> */
   logging?: EndpointLoggingMutate;
-  /** saml module configuration or <code>null</code> */
-  saml?: EndpointSAMLMutate;
-  /** oidc module configuration or <code>null</code> */
-  oidc?: EndpointOIDC;
 }
 
 export interface EndpointConfigurationCreate {
@@ -671,10 +654,6 @@ export interface EndpointConfigurationCreate {
   oauth?: EndpointOAuth;
   /** logging module configuration or <code>null</code> */
   logging?: EndpointLoggingMutate;
-  /** saml module configuration or <code>null</code> */
-  saml?: EndpointSAMLMutate;
-  /** oidc module configuration or <code>null</code> */
-  oidc?: EndpointOIDC;
 }
 
 export interface EndpointWebhookValidation {
@@ -792,11 +771,11 @@ export interface EndpointOAuth {
   provider: EndpointOAuthProvider;
   /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
   options_passthrough: boolean;
-  /** the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok.' */
+  /** the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok' */
   cookie_prefix: string;
   /** Integer number of seconds of inactivity after which if the user has not accessed the endpoint, their session will time out and they will be forced to reauthenticate. */
   inactivity_timeout: number;
-  /** Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate. */
+  /** Integer number of seconds of the maximum duration an authenticated session. After this period is exceeded, a user must reauthenticate. */
   maximum_duration: number;
   /** Integer number of seconds after which ngrok guarantees it will refresh user state from the identity provider and recheck whether the user is still authorized to access the endpoint. This is the preferred tunable to use to enforce a minimum amount of time after which a revoked user will no longer be able to access the resource. */
   auth_check_interval: number;
@@ -869,83 +848,6 @@ export interface EndpointOAuthGoogle {
   email_domains: Array<string>;
 }
 
-export interface EndpointSAML {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
-  enabled?: boolean;
-  /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
-  options_passthrough: boolean;
-  /** the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok.' */
-  cookie_prefix: string;
-  /** Integer number of seconds of inactivity after which if the user has not accessed the endpoint, their session will time out and they will be forced to reauthenticate. */
-  inactivity_timeout: number;
-  /** Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate. */
-  maximum_duration: number;
-  /** The IdP's metadata URL which returns the XML IdP EntityDescriptor. The IdP's metadata URL specifies how to connect to the IdP as well as its public key which is then used to validate the signature on incoming SAML assertions to the ACS endpoint. */
-  idp_metadata_url: string;
-  /** The full XML IdP EntityDescriptor in bytes. This parameter is mutually exclusive with <code>idp_metadata_url</code>. It is recommended to use that parameter instead if the IdP exposes a metadata URL. */
-  idp_metadata: string;
-  /** If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP. */
-  force_authn: boolean;
-  /** If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the <code>RelayState</code> parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed. */
-  allow_idp_initiated?: boolean;
-  /** If present, only users who are a member of one of the listed groups may access the target endpoint. */
-  authorized_groups: Array<string>;
-  /** The SP Entity's unique ID. This always takes the form of a URL. In ngrok's implementation, this URL is the same as the metadata URL. This will need to be specified to the IdP as configuration. */
-  entity_id: string;
-  /** The public URL of the SP's Assertion Consumer Service. This is where the IdP will redirect to during an authentication flow. This will need to be specified to the IdP as configuration. */
-  assertion_consumer_service_url: string;
-  /** The public URL of the SP's Single Logout Service. This is where the IdP will redirect to during a single logout flow. This will optionally need to be specified to the IdP as configuration. */
-  single_logout_url: string;
-  /** PEM-encoded x.509 certificate of the key pair that is used to sign all SAML requests that the ngrok SP makes to the IdP. Many IdPs do not support request signing verification, but we highly recommend specifying this in the IdP's configuration if it is supported. */
-  request_signing_certificate_pem: string;
-  /** A public URL where the SP's metadata is hosted. If an IdP supports dynamic configuration, this is the URL it can use to retrieve the SP metadata. */
-  metadata_url: string;
-}
-
-export interface EndpointSAMLMutate {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
-  enabled?: boolean;
-  /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
-  options_passthrough: boolean;
-  /** the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok.' */
-  cookie_prefix: string;
-  /** Integer number of seconds of inactivity after which if the user has not accessed the endpoint, their session will time out and they will be forced to reauthenticate. */
-  inactivity_timeout: number;
-  /** Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate. */
-  maximum_duration: number;
-  /** The IdP's metadata URL which returns the XML IdP EntityDescriptor. The IdP's metadata URL specifies how to connect to the IdP as well as its public key which is then used to validate the signature on incoming SAML assertions to the ACS endpoint. */
-  idp_metadata_url: string;
-  /** The full XML IdP EntityDescriptor in bytes. This parameter is mutually exclusive with <code>idp_metadata_url</code>. It is recommended to use that parameter instead if the IdP exposes a metadata URL. */
-  idp_metadata: string;
-  /** If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP. */
-  force_authn: boolean;
-  /** If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the <code>RelayState</code> parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed. */
-  allow_idp_initiated?: boolean;
-  /** If present, only users who are a member of one of the listed groups may access the target endpoint. */
-  authorized_groups: Array<string>;
-}
-
-export interface EndpointOIDC {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
-  enabled?: boolean;
-  /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
-  options_passthrough: boolean;
-  /** the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok.' */
-  cookie_prefix: string;
-  /** Integer number of seconds of inactivity after which if the user has not accessed the endpoint, their session will time out and they will be forced to reauthenticate. */
-  inactivity_timeout: number;
-  /** Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate. */
-  maximum_duration: number;
-  /** URL of the OIDC "OpenID provider". This is the base URL used for discovery. */
-  issuer: string;
-  /** The OIDC app's client ID and OIDC audience. */
-  client_id: string;
-  /** The OIDC app's client secret. */
-  client_secret: string;
-  /** The set of scopes to request from the OIDC identity provider. */
-  scopes: Array<string>;
-}
-
 export interface EndpointLoggingReplace {
   id: string;
   module: EndpointLoggingMutate;
@@ -999,16 +901,6 @@ export interface EndpointOAuthReplace {
 export interface EndpointWebhookValidationReplace {
   id: string;
   module: EndpointWebhookValidation;
-}
-
-export interface EndpointSAMLReplace {
-  id: string;
-  module: EndpointSAMLMutate;
-}
-
-export interface EndpointOIDCReplace {
-  id: string;
-  module: EndpointOIDC;
 }
 
 export interface ReservedAddrCreate {
