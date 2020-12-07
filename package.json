@@ -1,6 +1,6 @@
 {
   "name": "@ngrok/rest",
-  "version": "0.0.1-alpha",
+  "version": "0.0.2",
   "main": "lib/index",
   "types": "lib/types",
   "scripts": {
