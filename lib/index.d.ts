@@ -56,6 +56,30 @@ export declare class Ngrok {
         /** Update attributes of an tunnel authtoken credential by ID */
         update: (arg: t.CredentialUpdate) => Promise<t.Credential>;
     };
+    EventStreams: {
+        /** Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs. */
+        create: (arg: t.EventStreamCreate) => Promise<t.EventStream>;
+        /** Delete an Event Stream. Associated Event Destinations will be preserved. */
+        delete: (arg: t.Item) => Promise<t.Empty>;
+        /** Get detailed information about an Event Stream by ID. */
+        get: (arg: t.Item) => Promise<t.EventStream>;
+        /** List all Event Streams available on this account. */
+        list: (arg: t.Page) => Promise<t.EventStreamList>;
+        /** Update attributes of an Event Stream by ID. */
+        update: (arg: t.EventStreamUpdate) => Promise<t.EventStream>;
+    };
+    EventDestinations: {
+        /** Create a new Event Destination. It will not apply to anything until it is associated with an Event Stream, and that Event Stream is associated with an Endpoint Config. */
+        create: (arg: t.EventDestinationCreate) => Promise<t.EventDestination>;
+        /** Delete an Event Destination. If the Event Destination is still referenced by an Event Stream, this will throw an error until that Event Stream has removed that reference. */
+        delete: (arg: t.Item) => Promise<t.Empty>;
+        /** Get detailed information about an Event Destination by ID. */
+        get: (arg: t.Item) => Promise<t.EventDestination>;
+        /** List all Event Destinations on this account. */
+        list: (arg: t.Page) => Promise<t.EventDestinationList>;
+        /** Update attributes of an Event Destination. */
+        update: (arg: t.EventDestinationUpdate) => Promise<t.EventDestination>;
+    };
     IPPolicies: {
         /** Create a new IP policy. It will not apply to any traffic until you associate to a traffic source via an endpoint configuration or IP restriction. */
         create: (arg: t.IPPolicyCreate) => Promise<t.IPPolicy>;
@@ -103,30 +127,6 @@ export declare class Ngrok {
         list: (arg: t.Page) => Promise<t.IPWhitelistEntryList>;
         /** Update attributes of an IP whitelist entry by ID */
         update: (arg: t.IPWhitelistEntryUpdate) => Promise<t.IPWhitelistEntry>;
-    };
-    LogConfigs: {
-        /** Create a new Log Config. It will not apply to anything until you associate it with one or more Endpoint Configs. */
-        create: (arg: t.LogConfigCreate) => Promise<t.LogConfig>;
-        /** Delete a Log Config. Associated Log Destinations will be preserved. */
-        delete: (arg: t.Item) => Promise<t.Empty>;
-        /** Get detailed information about a Log Config by ID. */
-        get: (arg: t.Item) => Promise<t.LogConfig>;
-        /** List all Log Configs available on this account. */
-        list: (arg: t.Page) => Promise<t.LogConfigList>;
-        /** Update attributes of an Log Config by ID. */
-        update: (arg: t.LogConfigUpdate) => Promise<t.LogConfig>;
-    };
-    LogDestinations: {
-        /** Create a new Log Destination. It will not apply to anything until it is associated with a Log Config, and that Log Config is associated with an Endpoint Config. */
-        create: (arg: t.LogDestinationCreate) => Promise<t.LogDestination>;
-        /** Delete a Log Destination. If the Log Destination is still referenced by a Log Config, this will throw an error until that Log Config has removed that reference. */
-        delete: (arg: t.Item) => Promise<t.Empty>;
-        /** Get detailed information about a Log Destination by ID. */
-        get: (arg: t.Item) => Promise<t.LogDestination>;
-        /** List all Log Destinations on this account. */
-        list: (arg: t.Page) => Promise<t.LogDestinationList>;
-        /** Update attributes of a Log Destination. */
-        update: (arg: t.LogDestinationUpdate) => Promise<t.LogDestination>;
     };
     EndpointConfigurations: {
         /** Create a new endpoint configuration */

@@ -192,6 +192,189 @@ export interface CredentialList {
   next_page_uri?: string;
 }
 
+export interface EventStreamCreate {
+  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+  description: string;
+  /** A list of protocol-specific fields you want to collect on each event. */
+  fields: Array<string>;
+  /** The protocol that determines which events will be collected. Supported values are <code>tcp_connection_closed</code> and <code>http_request_complete</code>. */
+  event_type: string;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids: Array<string>;
+  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
+  sampling_rate: number;
+}
+
+export interface EventStreamUpdate {
+  /** Unique identifier for this Event Stream. */
+  id: string;
+  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
+  metadata?: string;
+  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+  description?: string;
+  /** A list of protocol-specific fields you want to collect on each event. */
+  fields?: Array<string>;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids?: Array<string>;
+  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
+  sampling_rate?: number;
+}
+
+export interface EventStreamList {
+  /** The list of all Event Streams on this account. */
+  event_streams: Array<EventStream>;
+  /** URI of the Event Stream list API resource. */
+  uri: string;
+  /** URI of the next page, or null if there is no next page. */
+  next_page_uri?: string;
+}
+
+export interface EventStream {
+  /** Unique identifier for this Event Stream. */
+  id: string;
+  /** URI of the Event Stream API resource. */
+  uri: string;
+  /** Timestamp when the Event Stream was created, RFC 3339 format. */
+  created_at: string;
+  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+  description: string;
+  /** A list of protocol-specific fields you want to collect on each event. */
+  fields: Array<string>;
+  /** The protocol that determines which events will be collected. Supported values are <code>tcp_connection_closed</code> and <code>http_request_complete</code>. */
+  event_type: string;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids: Array<string>;
+  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
+  sampling_rate: number;
+}
+
+export interface EventDestinationCreate {
+  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
+  description: string;
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is <code>JSON</code>. */
+  format: string;
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch_logs</code>, or <code>s3</code>. */
+  target: EventTarget;
+}
+
+export interface EventDestinationUpdate {
+  /** Unique identifier for this Event Destination. */
+  id: string;
+  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
+  metadata?: string;
+  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
+  description?: string;
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is <code>JSON</code>. */
+  format?: string;
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch_logs</code>, or <code>s3</code>. */
+  target?: EventTarget;
+}
+
+export interface EventDestination {
+  /** Unique identifier for this Event Destination. */
+  id: string;
+  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Timestamp when the Event Destination was created, RFC 3339 format. */
+  created_at: string;
+  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
+  description: string;
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is <code>JSON</code>. */
+  format: string;
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch_logs</code>, or <code>s3</code>. */
+  target: EventTarget;
+  /** URI of the Event Destination API resource. */
+  uri: string;
+}
+
+export interface EventDestinationList {
+  /** The list of all Event Destinations on this account. */
+  event_destinations: Array<EventDestination>;
+  /** URI of the Event Destinations list API resource. */
+  uri: string;
+  /** URI of the next page, or null if there is no next page. */
+  next_page_uri?: string;
+}
+
+export interface EventTarget {
+  /** Configuration used to send events to Amazon Kinesis Data Firehose. */
+  firehose?: EventTargetFirehose;
+  /** Configuration used to send events to Amazon Kinesis. */
+  kinesis?: EventTargetKinesis;
+  /** Configuration used to send events to Amazon CloudWatch Logs. */
+  cloudwatch_logs?: EventTargetCloudwatchLogs;
+  /** Configuration used for internal debugging. */
+  debug?: EventTargetDebug;
+}
+
+export interface EventTargetFirehose {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the Firehose delivery stream to deposit events into. */
+  delivery_stream_arn: string;
+}
+
+export interface EventTargetKinesis {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the Kinesis stream to deposit events into. */
+  stream_arn: string;
+}
+
+export interface EventTargetCloudwatchLogs {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the CloudWatch Logs group to deposit events into. */
+  log_group_arn: string;
+}
+
+export interface EventTargetS3 {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the S3 bucket to deposit events into. */
+  bucket_arn: string;
+  /** An optional prefix to prepend to S3 object keys. */
+  object_prefix: string;
+  /** Whether or not to compress files with gzip. */
+  compression: boolean;
+  /** How many bytes we should accumulate into a single file before sending to S3. */
+  max_file_size: number;
+  /** How many seconds we should batch up events before sending them to S3. */
+  max_file_age: number;
+}
+
+export interface EventTargetDebug {
+  /** Whether or not to output to publisher service logs. */
+  log: boolean;
+  /** URL to send events to. */
+  callback_url: string;
+}
+
+export interface AWSAuth {
+  /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
+  role?: AWSRole;
+  /** Credentials to your AWS account if you prefer ngrok to sign in with long-term access keys. */
+  creds?: AWSCredentials;
+}
+
+export interface AWSRole {
+  /** An ARN that specifies the role that ngrok should use to deliver to the configured target. */
+  role_arn: string;
+}
+
+export interface AWSCredentials {
+  /** The ID portion of an AWS access key. */
+  aws_access_key_id: string;
+  /** The secret portion of an AWS access key. */
+  aws_secret_access_key?: string;
+}
+
 export interface IPPolicyCreate {
   /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
   description: string;
@@ -374,189 +557,6 @@ export interface IPWhitelistEntryList {
   next_page_uri?: string;
 }
 
-export interface LogConfigCreate {
-  /** Arbitrary user-defined machine-readable data of this Log Config. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Human-readable description of the Log Config. Optional, max 255 bytes. */
-  description: string;
-  /** A list of protocol-specific fields you want to collect on each logging event. */
-  fields: Array<string>;
-  /** The protocol that determines which events can be logged. Supported values are <code>tcp_connection_closed</code> and <code>http_request_complete</code>. */
-  event_type: string;
-  /** A list of Log Destination ids which should be applied to this Log Config. Log Configs are required to have at least one Log Destination. */
-  destination_ids: Array<string>;
-  /** The percentage of all events you would like to log. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-  sampling_rate: number;
-}
-
-export interface LogConfigUpdate {
-  /** Unique identifier for this Log Config. */
-  id: string;
-  /** Arbitrary user-defined machine-readable data of this Log Config. Optional, max 4096 bytes. */
-  metadata?: string;
-  /** Human-readable description of the Log Config. Optional, max 255 bytes. */
-  description?: string;
-  /** A list of protocol-specific fields you want to collect on each logging event. */
-  fields?: Array<string>;
-  /** A list of Log Destination ids which should be applied to this Log Config. Log Configs are required to have at least one Log Destination. */
-  destination_ids?: Array<string>;
-  /** The percentage of all events you would like to log. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-  sampling_rate?: number;
-}
-
-export interface LogConfigList {
-  /** The list of all Log Configs on this account. */
-  log_configs: Array<LogConfig>;
-  /** URI of the Log Config list API resource. */
-  uri: string;
-  /** URI of the next page, or null if there is no next page. */
-  next_page_uri?: string;
-}
-
-export interface LogConfig {
-  /** Unique identifier for this Log Config. */
-  id: string;
-  /** URI of the Log Config API resource. */
-  uri: string;
-  /** Timestamp when the Log Config was created, RFC 3339 format. */
-  created_at: string;
-  /** Arbitrary user-defined machine-readable data of this Log Config. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Human-readable description of the Log Config. Optional, max 255 bytes. */
-  description: string;
-  /** A list of protocol-specific fields you want to collect on each logging event. */
-  fields: Array<string>;
-  /** The protocol that determines which events can be logged. Supported values are <code>tcp_connection_closed</code> and <code>http_request_complete</code>. */
-  event_type: string;
-  /** A list of Log Destination ids which should be applied to this Log Config. Log Configs are required to have at least one Log Destination. */
-  destination_ids: Array<string>;
-  /** The percentage of all events you would like to log. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-  sampling_rate: number;
-}
-
-export interface LogDestinationCreate {
-  /** Arbitrary user-defined machine-readable data of this Log Destination. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Human-readable description of the Log Destination. Optional, max 255 bytes. */
-  description: string;
-  /** The output format you would like to serialize your logs into before they post to their target. Currently the only accepted value is <code>JSON</code>. */
-  format: string;
-  /** An object that encapsulates where and how to send your logs to their ultimate destination. A log destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch</code>, or <code>S3</code>. */
-  target: LogDestinationTarget;
-}
-
-export interface LogDestinationUpdate {
-  /** Unique identifier for this Log Destination. */
-  id: string;
-  /** Arbitrary user-defined machine-readable data of this Log Destination. Optional, max 4096 bytes. */
-  metadata?: string;
-  /** Human-readable description of the Log Destination. Optional, max 255 bytes. */
-  description?: string;
-  /** The output format you would like to serialize your logs into before they post to their target. Currently the only accepted value is <code>JSON</code>. */
-  format?: string;
-  /** An object that encapsulates where and how to send your logs to their ultimate destination. A log destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch</code>, or <code>S3</code>. */
-  target?: LogDestinationTarget;
-}
-
-export interface LogDestination {
-  /** Unique identifier for this Log Destination. */
-  id: string;
-  /** Arbitrary user-defined machine-readable data of this Log Destination. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Timestamp when the Log Destination was created, RFC 3339 format. */
-  created_at: string;
-  /** Human-readable description of the Log Destination. Optional, max 255 bytes. */
-  description: string;
-  /** The output format you would like to serialize your logs into before they post to their target. Currently the only accepted value is <code>JSON</code>. */
-  format: string;
-  /** An object that encapsulates where and how to send your logs to their ultimate destination. A log destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch</code>, or <code>S3</code>. */
-  target: LogDestinationTarget;
-  /** URI of the Log Destination API resource. */
-  uri: string;
-}
-
-export interface LogDestinationList {
-  /** The list of all Log Destinations on this account. */
-  log_destinations: Array<LogDestination>;
-  /** URI of the Log Destinations list API resource. */
-  uri: string;
-  /** URI of the next page, or null if there is no next page. */
-  next_page_uri?: string;
-}
-
-export interface LogDestinationTarget {
-  /** Configuration used to stream logs to Amazon Kinesis Data Firehose. */
-  firehose?: Firehose;
-  /** Configuration used to stream logs to Amazon Kinesis. */
-  kinesis?: Kinesis;
-  /** Configuration used to send logs to Amazon CloudWatch Logs. */
-  cloudwatch?: Cloudwatch;
-  /** Configuration used for internal debugging. */
-  debug?: EventTargetDebug;
-}
-
-export interface Firehose {
-  /** Configuration authentication into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the Firehose delivery stream to deposit logs into. */
-  delivery_stream_arn: string;
-}
-
-export interface Kinesis {
-  /** Configuration authentication into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the Kinesis stream to deposit logs into. */
-  stream_arn: string;
-}
-
-export interface Cloudwatch {
-  /** Configuration authentication into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the CloudWatch Logs group to deposit logs with. */
-  log_group_arn: string;
-}
-
-export interface S3 {
-  /** Configuration authentication into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the S3 bucket to post logs into. */
-  bucket_arn: string;
-  /** An optional prefix to prepend to S3 object keys. */
-  object_prefix: string;
-  /** Whether or not to compress log files with gzip. */
-  compression: boolean;
-  /** How large in bytes we should accumulate logs before sending them to S3. */
-  max_file_size: number;
-  /** The maximum age in seconds we should accumulate logs before sending them to S3. */
-  max_file_age: number;
-}
-
-export interface EventTargetDebug {
-  /** Whether or not to output to publisher service logs. */
-  log: boolean;
-  /** Url to send events to. */
-  callback_url: string;
-}
-
-export interface AWSAuth {
-  /** A role for ngrok to assume on your behalf to deposit logs into your AWS account. */
-  role?: AWSRole;
-  /** Credentials to your AWS account if you prefer ngrok to sign in with long-term access keys. */
-  creds?: AWSCredentials;
-}
-
-export interface AWSRole {
-  /** An arn that describes a role that ngrok can assume and use to post to the configured target. */
-  arn: string;
-}
-
-export interface AWSCredentials {
-  /** The ID portion of an AWS access key. */
-  aws_access_key_id: string;
-  /** The secret portion of an AWS access key. */
-  aws_secret_access_key?: string;
-}
-
 export interface EndpointConfiguration {
   /** unique identifier of this endpoint configuration */
   id: string;
@@ -728,15 +728,15 @@ export interface EndpointBasicAuth {
 export interface EndpointLogging {
   /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
   enabled?: boolean;
-  /** list of all LogConfigs that will be used to configure and export this endpoint's logs */
-  log_configs: Array<Ref>;
+  /** list of all EventStreams that will be used to configure and export this endpoint's logs */
+  event_streams: Array<Ref>;
 }
 
 export interface EndpointLoggingMutate {
   /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
   enabled?: boolean;
-  /** list of all LogConfigs that will be used to configure and export this endpoint's logs */
-  log_config_ids: Array<string>;
+  /** list of all EventStreams that will be used to configure and export this endpoint's logs */
+  event_stream_ids: Array<string>;
 }
 
 export interface EndpointRequestHeaders {

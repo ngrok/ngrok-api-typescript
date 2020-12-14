@@ -101,6 +101,42 @@ export class Ngrok {
       this.rest.url(`/credentials/${arg.id}`).patch(arg).json(),
   }
 
+  EventStreams = {
+    /** Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs. */
+    create: (arg: t.EventStreamCreate): Promise<t.EventStream> =>
+      this.rest.url(`/event_streams`).post(arg).json(),
+    /** Delete an Event Stream. Associated Event Destinations will be preserved. */
+    delete: (arg: t.Item): Promise<t.Empty> =>
+      this.rest.url(`/event_streams/${arg.id}`).delete().json(),
+    /** Get detailed information about an Event Stream by ID. */
+    get: (arg: t.Item): Promise<t.EventStream> =>
+      this.rest.url(`/event_streams/${arg.id}`).get().json(),
+    /** List all Event Streams available on this account. */
+    list: (arg: t.Page): Promise<t.EventStreamList> =>
+      this.rest.url(`/event_streams`).get().json(),
+    /** Update attributes of an Event Stream by ID. */
+    update: (arg: t.EventStreamUpdate): Promise<t.EventStream> =>
+      this.rest.url(`/event_streams/${arg.id}`).patch(arg).json(),
+  }
+
+  EventDestinations = {
+    /** Create a new Event Destination. It will not apply to anything until it is associated with an Event Stream, and that Event Stream is associated with an Endpoint Config. */
+    create: (arg: t.EventDestinationCreate): Promise<t.EventDestination> =>
+      this.rest.url(`/event_destinations`).post(arg).json(),
+    /** Delete an Event Destination. If the Event Destination is still referenced by an Event Stream, this will throw an error until that Event Stream has removed that reference. */
+    delete: (arg: t.Item): Promise<t.Empty> =>
+      this.rest.url(`/event_destinations/${arg.id}`).delete().json(),
+    /** Get detailed information about an Event Destination by ID. */
+    get: (arg: t.Item): Promise<t.EventDestination> =>
+      this.rest.url(`/event_destinations/${arg.id}`).get().json(),
+    /** List all Event Destinations on this account. */
+    list: (arg: t.Page): Promise<t.EventDestinationList> =>
+      this.rest.url(`/event_destinations`).get().json(),
+    /** Update attributes of an Event Destination. */
+    update: (arg: t.EventDestinationUpdate): Promise<t.EventDestination> =>
+      this.rest.url(`/event_destinations/${arg.id}`).patch(arg).json(),
+  }
+
   IPPolicies = {
     /** Create a new IP policy. It will not apply to any traffic until you associate to a traffic source via an endpoint configuration or IP restriction. */
     create: (arg: t.IPPolicyCreate): Promise<t.IPPolicy> =>
@@ -171,42 +207,6 @@ export class Ngrok {
     /** Update attributes of an IP whitelist entry by ID */
     update: (arg: t.IPWhitelistEntryUpdate): Promise<t.IPWhitelistEntry> =>
       this.rest.url(`/ip_whitelist/${arg.id}`).patch(arg).json(),
-  }
-
-  LogConfigs = {
-    /** Create a new Log Config. It will not apply to anything until you associate it with one or more Endpoint Configs. */
-    create: (arg: t.LogConfigCreate): Promise<t.LogConfig> =>
-      this.rest.url(`/log_configs`).post(arg).json(),
-    /** Delete a Log Config. Associated Log Destinations will be preserved. */
-    delete: (arg: t.Item): Promise<t.Empty> =>
-      this.rest.url(`/log_configs/${arg.id}`).delete().json(),
-    /** Get detailed information about a Log Config by ID. */
-    get: (arg: t.Item): Promise<t.LogConfig> =>
-      this.rest.url(`/log_configs/${arg.id}`).get().json(),
-    /** List all Log Configs available on this account. */
-    list: (arg: t.Page): Promise<t.LogConfigList> =>
-      this.rest.url(`/log_configs`).get().json(),
-    /** Update attributes of an Log Config by ID. */
-    update: (arg: t.LogConfigUpdate): Promise<t.LogConfig> =>
-      this.rest.url(`/log_configs/${arg.id}`).patch(arg).json(),
-  }
-
-  LogDestinations = {
-    /** Create a new Log Destination. It will not apply to anything until it is associated with a Log Config, and that Log Config is associated with an Endpoint Config. */
-    create: (arg: t.LogDestinationCreate): Promise<t.LogDestination> =>
-      this.rest.url(`/log_destinations`).post(arg).json(),
-    /** Delete a Log Destination. If the Log Destination is still referenced by a Log Config, this will throw an error until that Log Config has removed that reference. */
-    delete: (arg: t.Item): Promise<t.Empty> =>
-      this.rest.url(`/log_destinations/${arg.id}`).delete().json(),
-    /** Get detailed information about a Log Destination by ID. */
-    get: (arg: t.Item): Promise<t.LogDestination> =>
-      this.rest.url(`/log_destinations/${arg.id}`).get().json(),
-    /** List all Log Destinations on this account. */
-    list: (arg: t.Page): Promise<t.LogDestinationList> =>
-      this.rest.url(`/log_destinations`).get().json(),
-    /** Update attributes of a Log Destination. */
-    update: (arg: t.LogDestinationUpdate): Promise<t.LogDestination> =>
-      this.rest.url(`/log_destinations/${arg.id}`).patch(arg).json(),
   }
 
   EndpointConfigurations = {
