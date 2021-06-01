@@ -48,7 +48,7 @@ export class Ngrok {
   }
 
   APIKeys = {
-    /** Create a new API key. The generated API key can be used to authenticateto the ngrok API. */
+    /** Create a new API key. The generated API key can be used to authenticate to the ngrok API. */
     create: (arg: t.APIKeyCreate): Promise<t.APIKey> =>
       this.rest.url(`/api_keys`).post(arg).json(),
     /** Delete an API key by ID */
@@ -58,7 +58,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.APIKey> =>
       this.rest.url(`/api_keys/${arg.id}`).get().json(),
     /** List all API keys owned by this account */
-    list: (arg: t.Page): Promise<t.APIKeyList> =>
+    list: (arg: t.Paging): Promise<t.APIKeyList> =>
       this.rest.url(`/api_keys`).get().json(),
     /** Update attributes of an API key by ID. */
     update: (arg: t.APIKeyUpdate): Promise<t.APIKey> =>
@@ -76,7 +76,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.CertificateAuthority> =>
       this.rest.url(`/certificate_authorities/${arg.id}`).get().json(),
     /** List all Certificate Authority on this account */
-    list: (arg: t.Page): Promise<t.CertificateAuthorityList> =>
+    list: (arg: t.Paging): Promise<t.CertificateAuthorityList> =>
       this.rest.url(`/certificate_authorities`).get().json(),
     /** Update attributes of a Certificate Authority by ID */
     update: (arg: t.CertificateAuthorityUpdate): Promise<t.CertificateAuthority> =>
@@ -94,7 +94,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.Credential> =>
       this.rest.url(`/credentials/${arg.id}`).get().json(),
     /** List all tunnel authtoken credentials on this account */
-    list: (arg: t.Page): Promise<t.CredentialList> =>
+    list: (arg: t.Paging): Promise<t.CredentialList> =>
       this.rest.url(`/credentials`).get().json(),
     /** Update attributes of an tunnel authtoken credential by ID */
     update: (arg: t.CredentialUpdate): Promise<t.Credential> =>
@@ -112,7 +112,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.EventStream> =>
       this.rest.url(`/event_streams/${arg.id}`).get().json(),
     /** List all Event Streams available on this account. */
-    list: (arg: t.Page): Promise<t.EventStreamList> =>
+    list: (arg: t.Paging): Promise<t.EventStreamList> =>
       this.rest.url(`/event_streams`).get().json(),
     /** Update attributes of an Event Stream by ID. */
     update: (arg: t.EventStreamUpdate): Promise<t.EventStream> =>
@@ -130,7 +130,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.EventDestination> =>
       this.rest.url(`/event_destinations/${arg.id}`).get().json(),
     /** List all Event Destinations on this account. */
-    list: (arg: t.Page): Promise<t.EventDestinationList> =>
+    list: (arg: t.Paging): Promise<t.EventDestinationList> =>
       this.rest.url(`/event_destinations`).get().json(),
     /** Update attributes of an Event Destination. */
     update: (arg: t.EventDestinationUpdate): Promise<t.EventDestination> =>
@@ -148,7 +148,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.IPPolicy> =>
       this.rest.url(`/ip_policies/${arg.id}`).get().json(),
     /** List all IP policies on this account */
-    list: (arg: t.Page): Promise<t.IPPolicyList> =>
+    list: (arg: t.Paging): Promise<t.IPPolicyList> =>
       this.rest.url(`/ip_policies`).get().json(),
     /** Update attributes of an IP policy by ID */
     update: (arg: t.IPPolicyUpdate): Promise<t.IPPolicy> =>
@@ -166,7 +166,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.IPPolicyRule> =>
       this.rest.url(`/ip_policy_rules/${arg.id}`).get().json(),
     /** List all IP policy rules on this account */
-    list: (arg: t.Page): Promise<t.IPPolicyRuleList> =>
+    list: (arg: t.Paging): Promise<t.IPPolicyRuleList> =>
       this.rest.url(`/ip_policy_rules`).get().json(),
     /** Update attributes of an IP policy rule by ID */
     update: (arg: t.IPPolicyRuleUpdate): Promise<t.IPPolicyRule> =>
@@ -184,7 +184,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.IPRestriction> =>
       this.rest.url(`/ip_restrictions/${arg.id}`).get().json(),
     /** List all IP restrictions on this account */
-    list: (arg: t.Page): Promise<t.IPRestrictionList> =>
+    list: (arg: t.Paging): Promise<t.IPRestrictionList> =>
       this.rest.url(`/ip_restrictions`).get().json(),
     /** Update attributes of an IP restriction by ID */
     update: (arg: t.IPRestrictionUpdate): Promise<t.IPRestriction> =>
@@ -202,7 +202,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.IPWhitelistEntry> =>
       this.rest.url(`/ip_whitelist/${arg.id}`).get().json(),
     /** List all IP whitelist entries on this account */
-    list: (arg: t.Page): Promise<t.IPWhitelistEntryList> =>
+    list: (arg: t.Paging): Promise<t.IPWhitelistEntryList> =>
       this.rest.url(`/ip_whitelist`).get().json(),
     /** Update attributes of an IP whitelist entry by ID */
     update: (arg: t.IPWhitelistEntryUpdate): Promise<t.IPWhitelistEntry> =>
@@ -220,7 +220,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.EndpointConfiguration> =>
       this.rest.url(`/endpoint_configurations/${arg.id}`).get().json(),
     /** Returns a list of all endpoint configurations on this account */
-    list: (arg: t.Page): Promise<t.EndpointConfigurationList> =>
+    list: (arg: t.Paging): Promise<t.EndpointConfigurationList> =>
       this.rest.url(`/endpoint_configurations`).get().json(),
     /** Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API. */
     update: (arg: t.EndpointConfigurationUpdate): Promise<t.EndpointConfiguration> =>
@@ -234,15 +234,6 @@ export class Ngrok {
       this.rest.url(`/endpoint_configurations/${arg.id}/logging`).get().json(),
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest.url(`/endpoint_configurations/${arg.id}/logging`).delete().json(),
-  }
-
-  EndpointBasicAuthModule = {
-    replace: (arg: t.EndpointBasicAuthReplace): Promise<t.EndpointBasicAuth> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/basic_auth`).put(arg).json(),
-    get: (arg: t.Item): Promise<t.EndpointBasicAuth> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/basic_auth`).get().json(),
-    delete: (arg: t.Item): Promise<t.Empty> =>
-      this.rest.url(`/endpoint_configurations/${arg.id}/basic_auth`).delete().json(),
   }
 
   EndpointCircuitBreakerModule = {
@@ -355,7 +346,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.ReservedAddr> =>
       this.rest.url(`/reserved_addrs/${arg.id}`).get().json(),
     /** List all reserved addresses on this account. */
-    list: (arg: t.Page): Promise<t.ReservedAddrList> =>
+    list: (arg: t.Paging): Promise<t.ReservedAddrList> =>
       this.rest.url(`/reserved_addrs`).get().json(),
     /** Update the attributes of a reserved address. */
     update: (arg: t.ReservedAddrUpdate): Promise<t.ReservedAddr> =>
@@ -376,7 +367,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.ReservedDomain> =>
       this.rest.url(`/reserved_domains/${arg.id}`).get().json(),
     /** List all reserved domains on this account. */
-    list: (arg: t.Page): Promise<t.ReservedDomainList> =>
+    list: (arg: t.Paging): Promise<t.ReservedDomainList> =>
       this.rest.url(`/reserved_domains`).get().json(),
     /** Update the attributes of a reserved domain. */
     update: (arg: t.ReservedDomainUpdate): Promise<t.ReservedDomain> =>
@@ -395,11 +386,6 @@ export class Ngrok {
       this.rest.url(`/reserved_domains/${arg.id}/https_endpoint_configuration`).delete().json(),
   }
 
-  Root = {
-    get: (arg: t.Empty): Promise<t.RootResponse> =>
-      this.rest.url(`/`).get().json(),
-  }
-
   SSHCertificateAuthorities = {
     /** Create a new SSH Certificate Authority */
     create: (arg: t.SSHCertificateAuthorityCreate): Promise<t.SSHCertificateAuthority> =>
@@ -411,7 +397,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.SSHCertificateAuthority> =>
       this.rest.url(`/ssh_certificate_authorities/${arg.id}`).get().json(),
     /** List all SSH Certificate Authorities on this account */
-    list: (arg: t.Page): Promise<t.SSHCertificateAuthorityList> =>
+    list: (arg: t.Paging): Promise<t.SSHCertificateAuthorityList> =>
       this.rest.url(`/ssh_certificate_authorities`).get().json(),
     /** Update an SSH Certificate Authority */
     update: (arg: t.SSHCertificateAuthorityUpdate): Promise<t.SSHCertificateAuthority> =>
@@ -429,7 +415,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.SSHCredential> =>
       this.rest.url(`/ssh_credentials/${arg.id}`).get().json(),
     /** List all ssh credentials on this account */
-    list: (arg: t.Page): Promise<t.SSHCredentialList> =>
+    list: (arg: t.Paging): Promise<t.SSHCredentialList> =>
       this.rest.url(`/ssh_credentials`).get().json(),
     /** Update attributes of an ssh_credential by ID */
     update: (arg: t.SSHCredentialUpdate): Promise<t.SSHCredential> =>
@@ -447,7 +433,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.SSHHostCertificate> =>
       this.rest.url(`/ssh_host_certificates/${arg.id}`).get().json(),
     /** List all SSH Host Certificates issued on this account */
-    list: (arg: t.Page): Promise<t.SSHHostCertificateList> =>
+    list: (arg: t.Paging): Promise<t.SSHHostCertificateList> =>
       this.rest.url(`/ssh_host_certificates`).get().json(),
     /** Update an SSH Host Certificate */
     update: (arg: t.SSHHostCertificateUpdate): Promise<t.SSHHostCertificate> =>
@@ -465,7 +451,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.SSHUserCertificate> =>
       this.rest.url(`/ssh_user_certificates/${arg.id}`).get().json(),
     /** List all SSH User Certificates issued on this account */
-    list: (arg: t.Page): Promise<t.SSHUserCertificateList> =>
+    list: (arg: t.Paging): Promise<t.SSHUserCertificateList> =>
       this.rest.url(`/ssh_user_certificates`).get().json(),
     /** Update an SSH User Certificate */
     update: (arg: t.SSHUserCertificateUpdate): Promise<t.SSHUserCertificate> =>
@@ -483,7 +469,7 @@ export class Ngrok {
     get: (arg: t.Item): Promise<t.TLSCertificate> =>
       this.rest.url(`/tls_certificates/${arg.id}`).get().json(),
     /** List all TLS certificates on this account */
-    list: (arg: t.Page): Promise<t.TLSCertificateList> =>
+    list: (arg: t.Paging): Promise<t.TLSCertificateList> =>
       this.rest.url(`/tls_certificates`).get().json(),
     /** Update attributes of a TLS Certificate by ID */
     update: (arg: t.TLSCertificateUpdate): Promise<t.TLSCertificate> =>
@@ -492,7 +478,7 @@ export class Ngrok {
 
   TunnelSessions = {
     /** List all online tunnel sessions running on this account. */
-    list: (arg: t.Page): Promise<t.TunnelSessionList> =>
+    list: (arg: t.Paging): Promise<t.TunnelSessionList> =>
       this.rest.url(`/tunnel_sessions`).get().json(),
     /** Get the detailed status of a tunnel session by ID */
     get: (arg: t.Item): Promise<t.TunnelSession> =>
@@ -510,7 +496,8 @@ export class Ngrok {
 
   Tunnels = {
     /** List all online tunnels currently running on the account. */
-    list: (arg: t.Page): Promise<t.TunnelList> =>
+    list: (arg: t.Paging): Promise<t.TunnelList> =>
       this.rest.url(`/tunnels`).get().json(),
   }
+
 }

@@ -7,7 +7,7 @@ export interface Item {
   id: string;
 }
 
-export interface Page {
+export interface Paging {
   before_id?: string;
   limit?: string;
 }
@@ -37,7 +37,7 @@ export interface AbuseReport {
   urls: Array<string>;
   /** arbitrary user-defined data about this abuse report. Optional, max 4096 bytes. */
   metadata: string;
-  /** Indicates whether ngrok has processed the abuse report. one of <code>PENDING</code>, <code>PROCESSED</code>, or <code>PARTIALLY_PROCESSED</code> */
+  /** Indicates whether ngrok has processed the abuse report. one of PENDING, PROCESSED, or PARTIALLY_PROCESSED */
   status: string;
   /** an array of hostname statuses related to the report */
   hostnames: Array<AbuseReportHostname>;
@@ -46,7 +46,7 @@ export interface AbuseReport {
 export interface AbuseReportHostname {
   /** the hostname ngrok has parsed out of one of the reported URLs in this abuse report */
   hostname: string;
-  /** indicates what action ngrok has taken against the hostname. one of <code>PENDING</code>, <code>BANNED</code>, <code>UNBANNED</code>, or <code>IGNORE</code> */
+  /** indicates what action ngrok has taken against the hostname. one of PENDING, BANNED, UNBANNED, or IGNORE */
   status: string;
 }
 
@@ -83,7 +83,7 @@ export interface APIKey {
   metadata: string;
   /** timestamp when the api key was created, RFC 3339 format */
   created_at: string;
-  /** the bearer token that can be placed into the Authorization header to authenticate request to the ngrok API. <strong>This value is only available one time, on the API response from key creation. Otherwise it is null.</strong> */
+  /** the bearer token that can be placed into the Authorization header to authenticate request to the ngrok API. This value is only available one time, on the API response from key creation. Otherwise it is null. */
   token?: string;
 }
 
@@ -91,6 +91,181 @@ export interface APIKeyList {
   /** the list of API keys for this account */
   keys: Array<APIKey>;
   /** URI of the API keys list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface PriorityBackend {
+  /** unique identifier for this Priority backend */
+  id: string;
+  /** timestamp when the backend was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** the ids of the child backends in order */
+  backends: Array<string>;
+}
+
+export interface PriorityBackendCreate {
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** the ids of the child backends in order */
+  backends: Array<string>;
+}
+
+export interface PriorityBackendUpdate {
+  id: string;
+  /** human-readable description of this backend. Optional */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata?: string;
+  /** the ids of the child backends in order */
+  backends: Array<string>;
+}
+
+export interface PriorityBackendList {
+  /** the list of all Priority backends on this account */
+  backends: Array<PriorityBackend>;
+  /** URI of the Priority backends list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface StaticBackend {
+  /** unique identifier for this static backend */
+  id: string;
+  /** timestamp when the backend was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** the address to forward to */
+  address: string;
+  /** tls configuration to use */
+  tls: StaticBackendTLS;
+}
+
+export interface StaticBackendTLS {
+  /** if tls is checked */
+  enabled: boolean;
+}
+
+export interface StaticBackendCreate {
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** the address to forward to */
+  address: string;
+  /** tls configuration to use */
+  tls: StaticBackendTLS;
+}
+
+export interface StaticBackendUpdate {
+  id: string;
+  /** human-readable description of this backend. Optional */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata?: string;
+  /** the address to forward to */
+  address: string;
+  /** tls configuration to use */
+  tls: StaticBackendTLS;
+}
+
+export interface StaticBackendList {
+  /** the list of all static backends on this account */
+  backends: Array<StaticBackend>;
+  /** URI of the static backends list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface TunnelGroupBackend {
+  /** unique identifier for this TunnelGroup backend */
+  id: string;
+  /** timestamp when the backend was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
+  labels: Map<string, string>;
+}
+
+export interface TunnelGroupBackendCreate {
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
+  labels: Map<string, string>;
+}
+
+export interface TunnelGroupBackendUpdate {
+  id: string;
+  /** human-readable description of this backend. Optional */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata?: string;
+  /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
+  labels: Map<string, string>;
+}
+
+export interface TunnelGroupBackendList {
+  /** the list of all TunnelGroup backends on this account */
+  backends: Array<TunnelGroupBackend>;
+  /** URI of the TunnelGroup backends list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface WeightedBackend {
+  /** unique identifier for this Weighted backend */
+  id: string;
+  /** timestamp when the backend was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** the ids of the child backends to their weights (0-10000) */
+  backends: Map<string, number>;
+}
+
+export interface WeightedBackendCreate {
+  /** human-readable description of this backend. Optional */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata: string;
+  /** the ids of the child backends to their weights (0-10000) */
+  backends: Map<string, number>;
+}
+
+export interface WeightedBackendUpdate {
+  id: string;
+  /** human-readable description of this backend. Optional */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this backend. Optional */
+  metadata?: string;
+  /** the ids of the child backends to their weights (0-10000) */
+  backends: Map<string, number>;
+}
+
+export interface WeightedBackendList {
+  /** the list of all Weighted backends on this account */
+  backends: Array<WeightedBackend>;
+  /** URI of the Weighted backends list API resource */
   uri: string;
   /** URI of the next page, or null if there is no next page */
   next_page_uri?: string;
@@ -152,7 +327,7 @@ export interface CredentialCreate {
   description: string;
   /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
   metadata: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the bind rule. The bind rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of bind:*.example.com which will allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
 }
 
@@ -162,7 +337,7 @@ export interface CredentialUpdate {
   description?: string;
   /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
   metadata?: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the bind rule. The bind rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of bind:*.example.com which will allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is equivalent to no acl at all and will explicitly permit all actions. */
   acl?: Array<string>;
 }
 
@@ -177,9 +352,9 @@ export interface Credential {
   description: string;
   /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
   metadata: string;
-  /** the credential's authtoken that can be used to authenticate an ngrok client. <strong><em>This value is only available one time, on the API response from credential creation, otherwise it is null.</em></strong> */
+  /** the credential's authtoken that can be used to authenticate an ngrok client. This value is only available one time, on the API response from credential creation, otherwise it is null. */
   token?: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the bind rule. The bind rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of bind:*.example.com which will allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
 }
 
@@ -199,7 +374,7 @@ export interface EventStreamCreate {
   description: string;
   /** A list of protocol-specific fields you want to collect on each event. */
   fields: Array<string>;
-  /** The protocol that determines which events will be collected. Supported values are <code>tcp_connection_closed</code> and <code>http_request_complete</code>. */
+  /** The protocol that determines which events will be collected. Supported values are tcp_connection_closed and http_request_complete. */
   event_type: string;
   /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
   destination_ids: Array<string>;
@@ -244,7 +419,7 @@ export interface EventStream {
   description: string;
   /** A list of protocol-specific fields you want to collect on each event. */
   fields: Array<string>;
-  /** The protocol that determines which events will be collected. Supported values are <code>tcp_connection_closed</code> and <code>http_request_complete</code>. */
+  /** The protocol that determines which events will be collected. Supported values are tcp_connection_closed and http_request_complete. */
   event_type: string;
   /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
   destination_ids: Array<string>;
@@ -257,9 +432,9 @@ export interface EventDestinationCreate {
   metadata: string;
   /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
   description: string;
-  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is <code>JSON</code>. */
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
   format: string;
-  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch_logs</code>, or <code>s3</code>. */
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
   target: EventTarget;
 }
 
@@ -270,9 +445,9 @@ export interface EventDestinationUpdate {
   metadata?: string;
   /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
   description?: string;
-  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is <code>JSON</code>. */
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
   format?: string;
-  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch_logs</code>, or <code>s3</code>. */
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
   target?: EventTarget;
 }
 
@@ -285,9 +460,9 @@ export interface EventDestination {
   created_at: string;
   /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
   description: string;
-  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is <code>JSON</code>. */
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
   format: string;
-  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: <code>kinesis</code>, <code>firehose</code>, <code>cloudwatch_logs</code>, or <code>s3</code>. */
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
   target: EventTarget;
   /** URI of the Event Destination API resource. */
   uri: string;
@@ -309,33 +484,31 @@ export interface EventTarget {
   kinesis?: EventTargetKinesis;
   /** Configuration used to send events to Amazon CloudWatch Logs. */
   cloudwatch_logs?: EventTargetCloudwatchLogs;
-  /** Configuration used for internal debugging. */
-  debug?: EventTargetDebug;
 }
 
 export interface EventTargetFirehose {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
   auth: AWSAuth;
   /** An Amazon Resource Name specifying the Firehose delivery stream to deposit events into. */
   delivery_stream_arn: string;
 }
 
 export interface EventTargetKinesis {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
   auth: AWSAuth;
   /** An Amazon Resource Name specifying the Kinesis stream to deposit events into. */
   stream_arn: string;
 }
 
 export interface EventTargetCloudwatchLogs {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
   auth: AWSAuth;
   /** An Amazon Resource Name specifying the CloudWatch Logs group to deposit events into. */
   log_group_arn: string;
 }
 
 export interface EventTargetS3 {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of <code>role</code> or <code>creds</code> should be configured. */
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
   auth: AWSAuth;
   /** An Amazon Resource Name specifying the S3 bucket to deposit events into. */
   bucket_arn: string;
@@ -350,10 +523,6 @@ export interface EventTargetS3 {
 }
 
 export interface EventTargetDebug {
-  /** Whether or not to output to publisher service logs. */
-  log: boolean;
-  /** URL to send events to. */
-  callback_url: string;
 }
 
 export interface AWSAuth {
@@ -375,12 +544,113 @@ export interface AWSCredentials {
   aws_secret_access_key?: string;
 }
 
+export interface SentEvent {
+  event_id: string;
+}
+
+export interface EventSubscriptionCreate {
+  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
+  metadata: string;
+  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
+  description: string;
+  /** TODO */
+  sources: Array<EventSourceReplace>;
+  /** TODO */
+  destination_ids: Array<string>;
+}
+
+export interface EventSubscriptionUpdate {
+  /** Unique identifier for this Event Subscription. */
+  id: string;
+  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
+  metadata?: string;
+  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
+  description?: string;
+  /** TODO */
+  sources?: Array<EventSourceReplace>;
+  /** TODO */
+  destination_ids?: Array<string>;
+}
+
+export interface EventSubscriptionList {
+  /** The list of all Event Subscriptions on this account. */
+  event_subscriptions: Array<EventSubscription>;
+  /** URI of the Event Subscriptions list API resource. */
+  uri: string;
+  /** URI of next page, or null if there is no next page. */
+  next_page_uri?: string;
+}
+
+export interface EventSubscription {
+  /** Unique identifier for this Event Subscription. */
+  id: string;
+  /** URI of the Event Subscription API resource. */
+  uri: string;
+  /** When the Event Subscription was created (RFC 3339 format). */
+  created_at: string;
+  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
+  metadata: string;
+  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
+  description: string;
+  /** TODO */
+  sources: Array<EventSource>;
+  /** TODO */
+  destinations: Array<Ref>;
+}
+
+export interface EventSourceReplace {
+  /** TODO */
+  type: string;
+}
+
+export interface EventSource {
+  /** TODO */
+  type: string;
+  /** TODO */
+  uri: string;
+}
+
+export interface EventSourceList {
+  /** TODO */
+  sources: Array<EventSource>;
+  /** TODO */
+  uri: string;
+}
+
+export interface EventSourceCreate {
+  /** TODO */
+  subscription_id: string;
+  /** TODO */
+  type: string;
+}
+
+export interface EventSourceUpdate {
+  /** TODO */
+  subscription_id: string;
+  /** TODO */
+  type: string;
+}
+
+/** This is needed instead of Item because the parameters are different. */
+export interface EventSourceItem {
+  /** TODO */
+  subscription_id: string;
+  /** TODO */
+  type: string;
+}
+
+/** This is needed instead of Paging because the parameters are different. We also don't need the typical pagination params because pagination of this isn't necessary or supported. */
+export interface EventSourcePaging {
+  /** TODO */
+  subscription_id: string;
+}
+
 export interface IPPolicyCreate {
   /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
   description: string;
   /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
   metadata: string;
-  /** the IP policy action. Supported values are <code>allow</code> or <code>deny</code> */
+  /** the IP policy action. Supported values are allow or deny */
   action: string;
 }
 
@@ -403,7 +673,7 @@ export interface IPPolicy {
   description: string;
   /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
   metadata: string;
-  /** the IP policy action. Supported values are <code>allow</code> or <code>deny</code> */
+  /** the IP policy action. Supported values are allow or deny */
   action: string;
 }
 
@@ -470,7 +740,7 @@ export interface IPRestrictionCreate {
   metadata: string;
   /** true if the IP restriction will be enforce. if false, only warnings will be issued */
   enforced: boolean;
-  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: <code>dashboard</code>, <code>api</code>, <code>agent</code>, and <code>endpoints</code> */
+  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: dashboard, api, agent, and endpoints */
   type: string;
   /** the set of IP policy identifiers that are used to enforce the restriction */
   ip_policy_ids: Array<string>;
@@ -501,7 +771,7 @@ export interface IPRestriction {
   metadata: string;
   /** true if the IP restriction will be enforce. if false, only warnings will be issued */
   enforced: boolean;
-  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: <code>dashboard</code>, <code>api</code>, <code>agent</code>, and <code>endpoints</code> */
+  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: dashboard, api, agent, and endpoints */
   type: string;
   /** the set of IP policies that are used to enforce the restriction */
   ip_policies: Array<Ref>;
@@ -560,7 +830,7 @@ export interface IPWhitelistEntryList {
 export interface EndpointConfiguration {
   /** unique identifier of this endpoint configuration */
   id: string;
-  /** they type of traffic this endpoint configuration can be applied to. one of: <code>http</code>, <code>https</code>, <code>tcp</code> */
+  /** they type of traffic this endpoint configuration can be applied to. one of: http, https, tcp */
   type: string;
   /** human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
   description: string;
@@ -570,31 +840,29 @@ export interface EndpointConfiguration {
   created_at: string;
   /** URI of the endpoint configuration API resource */
   uri: string;
-  /** basic auth module configuration or <code>null</code> */
-  basic_auth?: EndpointBasicAuth;
-  /** circuit breaker module configuration or <code>null</code> */
+  /** circuit breaker module configuration or null */
   circuit_breaker?: EndpointCircuitBreaker;
-  /** compression module configuration or <code>null</code> */
+  /** compression module configuration or null */
   compression?: EndpointCompression;
-  /** request headers module configuration or <code>null</code> */
+  /** request headers module configuration or null */
   request_headers?: EndpointRequestHeaders;
-  /** response headers module configuration or <code>null</code> */
+  /** response headers module configuration or null */
   response_headers?: EndpointResponseHeaders;
-  /** ip policy module configuration or <code>null</code> */
+  /** ip policy module configuration or null */
   ip_policy?: EndpointIPPolicy;
-  /** mutual TLS module configuration or <code>null</code> */
+  /** mutual TLS module configuration or null */
   mutual_tls?: EndpointMutualTLS;
-  /** TLS termination module configuration or <code>null</code> */
+  /** TLS termination module configuration or null */
   tls_termination?: EndpointTLSTermination;
-  /** webhook validation module configuration or <code>null</code> */
+  /** webhook validation module configuration or null */
   webhook_validation?: EndpointWebhookValidation;
-  /** oauth module configuration or <code>null</code> */
+  /** oauth module configuration or null */
   oauth?: EndpointOAuth;
-  /** logging module configuration or <code>null</code> */
+  /** logging module configuration or null */
   logging?: EndpointLogging;
-  /** saml module configuration or <code>null</code> */
+  /** saml module configuration or null */
   saml?: EndpointSAML;
-  /** oidc module configuration or <code>null</code> */
+  /** oidc module configuration or null */
   oidc?: EndpointOIDC;
 }
 
@@ -614,133 +882,121 @@ export interface EndpointConfigurationUpdate {
   description?: string;
   /** arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes. */
   metadata?: string;
-  /** basic auth module configuration or <code>null</code> */
-  basic_auth?: EndpointBasicAuth;
-  /** circuit breaker module configuration or <code>null</code> */
+  /** circuit breaker module configuration or null */
   circuit_breaker?: EndpointCircuitBreaker;
-  /** compression module configuration or <code>null</code> */
+  /** compression module configuration or null */
   compression?: EndpointCompression;
-  /** request headers module configuration or <code>null</code> */
+  /** request headers module configuration or null */
   request_headers?: EndpointRequestHeaders;
-  /** response headers module configuration or <code>null</code> */
+  /** response headers module configuration or null */
   response_headers?: EndpointResponseHeaders;
-  /** ip policy module configuration or <code>null</code> */
+  /** ip policy module configuration or null */
   ip_policy?: EndpointIPPolicyMutate;
-  /** mutual TLS module configuration or <code>null</code> */
+  /** mutual TLS module configuration or null */
   mutual_tls?: EndpointMutualTLSMutate;
-  /** TLS termination module configuration or <code>null</code> */
+  /** TLS termination module configuration or null */
   tls_termination?: EndpointTLSTermination;
-  /** webhook validation module configuration or <code>null</code> */
+  /** webhook validation module configuration or null */
   webhook_validation?: EndpointWebhookValidation;
-  /** oauth module configuration or <code>null</code> */
+  /** oauth module configuration or null */
   oauth?: EndpointOAuth;
-  /** logging module configuration or <code>null</code> */
+  /** logging module configuration or null */
   logging?: EndpointLoggingMutate;
-  /** saml module configuration or <code>null</code> */
+  /** saml module configuration or null */
   saml?: EndpointSAMLMutate;
-  /** oidc module configuration or <code>null</code> */
+  /** oidc module configuration or null */
   oidc?: EndpointOIDC;
 }
 
 export interface EndpointConfigurationCreate {
-  /** they type of traffic this endpoint configuration can be applied to. one of: <code>http</code>, <code>https</code>, <code>tcp</code> */
+  /** they type of traffic this endpoint configuration can be applied to. one of: http, https, tcp */
   type: string;
   /** human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
   description: string;
   /** arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes. */
   metadata: string;
-  /** basic auth module configuration or <code>null</code> */
-  basic_auth?: EndpointBasicAuth;
-  /** circuit breaker module configuration or <code>null</code> */
+  /** circuit breaker module configuration or null */
   circuit_breaker?: EndpointCircuitBreaker;
-  /** compression module configuration or <code>null</code> */
+  /** compression module configuration or null */
   compression?: EndpointCompression;
-  /** request headers module configuration or <code>null</code> */
+  /** request headers module configuration or null */
   request_headers?: EndpointRequestHeaders;
-  /** response headers module configuration or <code>null</code> */
+  /** response headers module configuration or null */
   response_headers?: EndpointResponseHeaders;
-  /** ip policy module configuration or <code>null</code> */
+  /** ip policy module configuration or null */
   ip_policy?: EndpointIPPolicyMutate;
-  /** mutual TLS module configuration or <code>null</code> */
+  /** mutual TLS module configuration or null */
   mutual_tls?: EndpointMutualTLSMutate;
-  /** TLS termination module configuration or <code>null</code> */
+  /** TLS termination module configuration or null */
   tls_termination?: EndpointTLSTermination;
-  /** webhook validation module configuration or <code>null</code> */
+  /** webhook validation module configuration or null */
   webhook_validation?: EndpointWebhookValidation;
-  /** oauth module configuration or <code>null</code> */
+  /** oauth module configuration or null */
   oauth?: EndpointOAuth;
-  /** logging module configuration or <code>null</code> */
+  /** logging module configuration or null */
   logging?: EndpointLoggingMutate;
-  /** saml module configuration or <code>null</code> */
+  /** saml module configuration or null */
   saml?: EndpointSAMLMutate;
-  /** oidc module configuration or <code>null</code> */
+  /** oidc module configuration or null */
   oidc?: EndpointOIDC;
 }
 
 export interface EndpointWebhookValidation {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
-  /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: <code>SLACK</code>, <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>, <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>. */
+  /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: SLACK, SNS, STRIPE, GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM. */
   provider: string;
   /** a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret */
   secret: string;
 }
 
 export interface EndpointCompression {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
 }
 
 export interface EndpointMutualTLS {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** PEM-encoded CA certificates that will be used to validate. Multiple CAs may be provided by concatenating them together. */
   certificate_authorities: Array<Ref>;
 }
 
 export interface EndpointMutualTLSMutate {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** list of certificate authorities that will be used to validate the TLS client certificate presnted by the initiatiator of the TLS connection */
   certificate_authority_ids: Array<string>;
 }
 
 export interface EndpointTLSTermination {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
-  /** <code>edge</code> if the ngrok edge should terminate TLS traffic, <code>upstream</code> if TLS traffic should be passed through to the upstream ngrok agent / application server for termination. if <code>upstream</code> is chosen, most other modules will be disallowed because they rely on the ngrok edge being able to access the underlying traffic. */
+  /** edge if the ngrok edge should terminate TLS traffic, upstream if TLS traffic should be passed through to the upstream ngrok agent / application server for termination. if upstream is chosen, most other modules will be disallowed because they rely on the ngrok edge being able to access the underlying traffic. */
   terminate_at: string;
-  /** The minimum TLS version used for termination and advertised to the client during the TLS handshake. if unspecified, ngrok will choose an industry-safe default. This value must be null if <code>terminate_at</code> is set to <code>upstream</code>. */
+  /** The minimum TLS version used for termination and advertised to the client during the TLS handshake. if unspecified, ngrok will choose an industry-safe default. This value must be null if terminate_at is set to upstream. */
   min_version?: string;
 }
 
 export interface EndpointBasicAuth {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
-  enabled?: boolean;
-  /** determines how the basic auth credentials are validated. Currently only the value <code>agent</code> is supported which means that credentials will be validated against the username and password specified by the ngrok agent's <code>-auth</code> flag, if any. */
-  auth_provider_id: string;
-  /** an arbitrary string to be specified in as the 'realm' value in the <code>WWW-Authenticate</code> header. default is <code>ngrok</code> */
-  realm: string;
-  /** true or false indicating whether to allow OPTIONS requests through without authentication which is necessary for CORS. default is <code>false</code> */
-  allow_options: boolean;
 }
 
 export interface EndpointLogging {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** list of all EventStreams that will be used to configure and export this endpoint's logs */
   event_streams: Array<Ref>;
 }
 
 export interface EndpointLoggingMutate {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** list of all EventStreams that will be used to configure and export this endpoint's logs */
   event_stream_ids: Array<string>;
 }
 
 export interface EndpointRequestHeaders {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** a map of header key to header value that will be injected into the HTTP Request before being sent to the upstream application server */
   add: Map<string, string>;
@@ -749,7 +1005,7 @@ export interface EndpointRequestHeaders {
 }
 
 export interface EndpointResponseHeaders {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** a map of header key to header value that will be injected into the HTTP Response returned to the HTTP client */
   add: Map<string, string>;
@@ -758,20 +1014,20 @@ export interface EndpointResponseHeaders {
 }
 
 export interface EndpointIPPolicy {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   ip_policies: Array<Ref>;
 }
 
 export interface EndpointIPPolicyMutate {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** list of all IP policies that will be used to check if a source IP is allowed access to the endpoint */
   ip_policy_ids: Array<string>;
 }
 
 export interface EndpointCircuitBreaker {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** Integer number of seconds after which the circuit is tripped to wait before re-evaluating upstream health */
   tripped_duration: number;
@@ -786,7 +1042,7 @@ export interface EndpointCircuitBreaker {
 }
 
 export interface EndpointOAuth {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** an object which defines the identity provider to use for authentication and configuration for who may access the endpoint */
   provider: EndpointOAuthProvider;
@@ -816,15 +1072,15 @@ export interface EndpointOAuthProvider {
 export interface EndpointOAuthGitHub {
   /** the OAuth app client ID. retrieve it from the identity provider's dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well. */
   client_id?: string;
-  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>. */
+  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for client_id. */
   client_secret?: string;
-  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both <code>client_id</code> and <code>client_secret</code> to set scopes) */
+  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both client_id and client_secret to set scopes) */
   scopes: Array<string>;
   /** a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint */
   email_addresses: Array<string>;
   /** a list of email domains of users authenticated by identity provider who are allowed access to the endpoint */
   email_domains: Array<string>;
-  /** a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the 'slug' format qualified with the org name, e.g. <code>org-name/team-name</code> */
+  /** a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the 'slug' format qualified with the org name, e.g. org-name/team-name */
   teams: Array<string>;
   /** a list of github org identifiers. users who are members of any of the listed organizations will be allowed access. identifiers should be the organization's 'slug' */
   organizations: Array<string>;
@@ -833,9 +1089,9 @@ export interface EndpointOAuthGitHub {
 export interface EndpointOAuthFacebook {
   /** the OAuth app client ID. retrieve it from the identity provider's dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well. */
   client_id?: string;
-  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>. */
+  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for client_id. */
   client_secret?: string;
-  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both <code>client_id</code> and <code>client_secret</code> to set scopes) */
+  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both client_id and client_secret to set scopes) */
   scopes: Array<string>;
   /** a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint */
   email_addresses: Array<string>;
@@ -846,9 +1102,9 @@ export interface EndpointOAuthFacebook {
 export interface EndpointOAuthMicrosoft {
   /** the OAuth app client ID. retrieve it from the identity provider's dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well. */
   client_id?: string;
-  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>. */
+  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for client_id. */
   client_secret?: string;
-  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both <code>client_id</code> and <code>client_secret</code> to set scopes) */
+  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both client_id and client_secret to set scopes) */
   scopes: Array<string>;
   /** a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint */
   email_addresses: Array<string>;
@@ -859,9 +1115,9 @@ export interface EndpointOAuthMicrosoft {
 export interface EndpointOAuthGoogle {
   /** the OAuth app client ID. retrieve it from the identity provider's dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well. */
   client_id?: string;
-  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>. */
+  /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for client_id. */
   client_secret?: string;
-  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both <code>client_id</code> and <code>client_secret</code> to set scopes) */
+  /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both client_id and client_secret to set scopes) */
   scopes: Array<string>;
   /** a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint */
   email_addresses: Array<string>;
@@ -870,7 +1126,7 @@ export interface EndpointOAuthGoogle {
 }
 
 export interface EndpointSAML {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
   options_passthrough: boolean;
@@ -880,13 +1136,11 @@ export interface EndpointSAML {
   inactivity_timeout: number;
   /** Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate. */
   maximum_duration: number;
-  /** The IdP's metadata URL which returns the XML IdP EntityDescriptor. The IdP's metadata URL specifies how to connect to the IdP as well as its public key which is then used to validate the signature on incoming SAML assertions to the ACS endpoint. */
-  idp_metadata_url: string;
-  /** The full XML IdP EntityDescriptor in bytes. This parameter is mutually exclusive with <code>idp_metadata_url</code>. It is recommended to use that parameter instead if the IdP exposes a metadata URL. */
+  /** The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file to download or as a URL. */
   idp_metadata: string;
   /** If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP. */
   force_authn: boolean;
-  /** If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the <code>RelayState</code> parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed. */
+  /** If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the RelayState parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed. */
   allow_idp_initiated?: boolean;
   /** If present, only users who are a member of one of the listed groups may access the target endpoint. */
   authorized_groups: Array<string>;
@@ -903,7 +1157,7 @@ export interface EndpointSAML {
 }
 
 export interface EndpointSAMLMutate {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
   options_passthrough: boolean;
@@ -913,20 +1167,18 @@ export interface EndpointSAMLMutate {
   inactivity_timeout: number;
   /** Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate. */
   maximum_duration: number;
-  /** The IdP's metadata URL which returns the XML IdP EntityDescriptor. The IdP's metadata URL specifies how to connect to the IdP as well as its public key which is then used to validate the signature on incoming SAML assertions to the ACS endpoint. */
-  idp_metadata_url: string;
-  /** The full XML IdP EntityDescriptor in bytes. This parameter is mutually exclusive with <code>idp_metadata_url</code>. It is recommended to use that parameter instead if the IdP exposes a metadata URL. */
+  /** The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file to download or as a URL. */
   idp_metadata: string;
   /** If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP. */
   force_authn: boolean;
-  /** If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the <code>RelayState</code> parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed. */
+  /** If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the RelayState parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed. */
   allow_idp_initiated?: boolean;
   /** If present, only users who are a member of one of the listed groups may access the target endpoint. */
   authorized_groups: Array<string>;
 }
 
 export interface EndpointOIDC {
-  /** <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified */
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
   /** Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS. */
   options_passthrough: boolean;
@@ -944,6 +1196,16 @@ export interface EndpointOIDC {
   client_secret: string;
   /** The set of scopes to request from the OIDC identity provider. */
   scopes: Array<string>;
+}
+
+export interface EndpointBackend {
+  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
+  enabled?: boolean;
+  /** backend to be used to back this endpoint */
+  backend: Ref;
+}
+
+export interface EndpointBackendMutate {
 }
 
 export interface EndpointLoggingReplace {
@@ -1011,6 +1273,11 @@ export interface EndpointOIDCReplace {
   module: EndpointOIDC;
 }
 
+export interface EndpointBackendReplace {
+  id: string;
+  module: EndpointBackendMutate;
+}
+
 export interface ReservedAddrCreate {
   /** human-readable description of what this reserved address will be used for */
   description: string;
@@ -1073,9 +1340,9 @@ export interface ReservedDomainCreate {
   http_endpoint_configuration_id: string;
   /** ID of an endpoint configuration of type https that will be used to handle inbound https traffic to this domain */
   https_endpoint_configuration_id: string;
-  /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with `certificate_management_policy`. */
+  /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with certificate_management_policy. */
   certificate_id?: string;
-  /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
+  /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with certificate_id. */
   certificate_management_policy?: ReservedDomainCertPolicy;
 }
 
@@ -1089,9 +1356,9 @@ export interface ReservedDomainUpdate {
   http_endpoint_configuration_id?: string;
   /** ID of an endpoint configuration of type https that will be used to handle inbound https traffic to this domain */
   https_endpoint_configuration_id?: string;
-  /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with `certificate_management_policy`. */
+  /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with certificate_management_policy. */
   certificate_id?: string;
-  /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
+  /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with certificate_id. */
   certificate_management_policy?: ReservedDomainCertPolicy;
 }
 
@@ -1177,11 +1444,11 @@ export interface SSHCertificateAuthorityCreate {
   description: string;
   /** arbitrary user-defined machine-readable data of this SSH Certificate Authority. optional, max 4096 bytes. */
   metadata: string;
-  /** the type of private key to generate. one of <code>rsa</code>, <code>ecdsa</code>, <code>ed25519</code> */
+  /** the type of private key to generate. one of rsa, ecdsa, ed25519 */
   private_key_type: string;
   /** the type of elliptic curve to use when creating an ECDSA key */
   elliptic_curve: string;
-  /** the key size to use when creating an RSA key. one of <code>2048</code> or <code>4096</code> */
+  /** the key size to use when creating an RSA key. one of 2048 or 4096 */
   key_size: number;
 }
 
@@ -1224,7 +1491,7 @@ export interface SSHCredentialCreate {
   description: string;
   /** arbitrary user-defined machine-readable data of this ssh credential. Optional, max 4096 bytes. */
   metadata: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the bind rule. The bind rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of bind:*.example.com which will allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
   /** the PEM-encoded public key of the SSH keypair that will be used to authenticate */
   public_key: string;
@@ -1236,7 +1503,7 @@ export interface SSHCredentialUpdate {
   description?: string;
   /** arbitrary user-defined machine-readable data of this ssh credential. Optional, max 4096 bytes. */
   metadata?: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the bind rule. The bind rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of bind:*.example.com which will allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is equivalent to no acl at all and will explicitly permit all actions. */
   acl?: Array<string>;
 }
 
@@ -1253,7 +1520,7 @@ export interface SSHCredential {
   metadata: string;
   /** the PEM-encoded public key of the SSH keypair that will be used to authenticate */
   public_key: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the bind rule. The bind rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of bind:*.example.com which will allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
 }
 
@@ -1275,7 +1542,7 @@ export interface SSHHostCertificateCreate {
   principals: Array<string>;
   /** The time when the host certificate becomes valid, in RFC 3339 format. Defaults to the current time if unspecified. */
   valid_after: string;
-  /** The time when this host certificate becomes invalid, in RFC 3339 format. If unspecified, a default value of one year in the future will be used. The OpenSSH certificates RFC calls this <code>valid_before</code>. */
+  /** The time when this host certificate becomes invalid, in RFC 3339 format. If unspecified, a default value of one year in the future will be used. The OpenSSH certificates RFC calls this valid_before. */
   valid_until: string;
   /** human-readable description of this SSH Host Certificate. optional, max 255 bytes. */
   description: string;
@@ -1304,7 +1571,7 @@ export interface SSHHostCertificate {
   metadata: string;
   /** a public key in OpenSSH Authorized Keys format that this certificate signs */
   public_key: string;
-  /** the key type of the <code>public_key</code>, one of <code>rsa</code>, <code>ecdsa</code> or <code>ed25519</code> */
+  /** the key type of the public_key, one of rsa, ecdsa or ed25519 */
   key_type: string;
   /** the ssh certificate authority that is used to sign this ssh host certificate */
   ssh_certificate_authority_id: string;
@@ -1312,9 +1579,9 @@ export interface SSHHostCertificate {
   principals: Array<string>;
   /** the time when the ssh host certificate becomes valid, in RFC 3339 format. */
   valid_after: string;
-  /** the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this <code>valid_before</code>. */
+  /** the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this valid_before. */
   valid_until: string;
-  /** the signed SSH certificate in OpenSSH Authorized Keys format. this value should be placed in a <code>-cert.pub</code> certificate file on disk that should be referenced in your <code>sshd_config</code> configuration file with a <code>HostCertificate</code> directive */
+  /** the signed SSH certificate in OpenSSH Authorized Keys format. this value should be placed in a -cert.pub certificate file on disk that should be referenced in your sshd_config configuration file with a HostCertificate directive */
   certificate: string;
 }
 
@@ -1334,13 +1601,13 @@ export interface SSHUserCertificateCreate {
   public_key: string;
   /** the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizinig the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user. */
   principals: Array<string>;
-  /** A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: <code>force-command</code> and <code>source-address</code>. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details. */
+  /** A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: force-command and source-address. See  (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the OpenSSH certificate protocol spec for additional details. */
   critical_options: Map<string, string>;
-  /** A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: <code>{"permit-pty": "", "permit-user-rc": ""}</code> OpenSSH understands a number of predefined extensions. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details. */
+  /** A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: {"permit-pty": "", "permit-user-rc": ""} OpenSSH understands a number of predefined extensions. See  (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the OpenSSH certificate protocol spec for additional details. */
   extensions: Map<string, string>;
   /** The time when the user certificate becomes valid, in RFC 3339 format. Defaults to the current time if unspecified. */
   valid_after: string;
-  /** The time when this host certificate becomes invalid, in RFC 3339 format. If unspecified, a default value of 24 hours will be used. The OpenSSH certificates RFC calls this <code>valid_before</code>. */
+  /** The time when this host certificate becomes invalid, in RFC 3339 format. If unspecified, a default value of 24 hours will be used. The OpenSSH certificates RFC calls this valid_before. */
   valid_until: string;
   /** human-readable description of this SSH User Certificate. optional, max 255 bytes. */
   description: string;
@@ -1369,21 +1636,21 @@ export interface SSHUserCertificate {
   metadata: string;
   /** a public key in OpenSSH Authorized Keys format that this certificate signs */
   public_key: string;
-  /** the key type of the <code>public_key</code>, one of <code>rsa</code>, <code>ecdsa</code> or <code>ed25519</code> */
+  /** the key type of the public_key, one of rsa, ecdsa or ed25519 */
   key_type: string;
   /** the ssh certificate authority that is used to sign this ssh user certificate */
   ssh_certificate_authority_id: string;
   /** the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizinig the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user. */
   principals: Array<string>;
-  /** A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: <code>force-command</code> and <code>source-address</code>. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details. */
+  /** A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: force-command and source-address. See  (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the OpenSSH certificate protocol spec for additional details. */
   critical_options: Map<string, string>;
-  /** A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: <code>{"permit-pty": "", "permit-user-rc": ""}</code> OpenSSH understands a number of predefined extensions. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details. */
+  /** A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: {"permit-pty": "", "permit-user-rc": ""} OpenSSH understands a number of predefined extensions. See  (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the OpenSSH certificate protocol spec for additional details. */
   extensions: Map<string, string>;
   /** the time when the ssh host certificate becomes valid, in RFC 3339 format. */
   valid_after: string;
-  /** the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this <code>valid_before</code>. */
+  /** the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this valid_before. */
   valid_until: string;
-  /** the signed SSH certificate in OpenSSH Authorized Keys Format. this value should be placed in a <code>-cert.pub</code> certificate file on disk that should be referenced in your <code>sshd_config</code> configuration file with a <code>HostCertificate</code> directive */
+  /** the signed SSH certificate in OpenSSH Authorized Keys Format. this value should be placed in a -cert.pub certificate file on disk that should be referenced in your sshd_config configuration file with a HostCertificate directive */
   certificate: string;
 }
 
@@ -1401,9 +1668,9 @@ export interface TLSCertificateCreate {
   description: string;
   /** arbitrary user-defined machine-readable data of this TLS certificate. optional, max 4096 bytes. */
   metadata: string;
-  /** chain of PEM-encoded certificates, leaf first. See <a href="#tls-certificates-pem">Certificate Bundles</a>. */
+  /** chain of PEM-encoded certificates, leaf first. See  (https://ngrok.com/docs/api#tls-certificates-pem)Certificate Bundles. */
   certificate_pem: string;
-  /** private key for the TLS certificate, PEM-encoded. See <a href="#tls-certificates-key">Private Keys</a>. */
+  /** private key for the TLS certificate, PEM-encoded. See  (https://ngrok.com/docs/ngrok-link#tls-certificates-key)Private Keys. */
   private_key_pem: string;
 }
 
@@ -1426,7 +1693,7 @@ export interface TLSCertificate {
   description: string;
   /** arbitrary user-defined machine-readable data of this TLS certificate. optional, max 4096 bytes. */
   metadata: string;
-  /** chain of PEM-encoded certificates, leaf first. See <a href="#tls-certificates-pem">Certificate Bundles</a>. */
+  /** chain of PEM-encoded certificates, leaf first. See  (https://ngrok.com/docs/api#tls-certificates-pem)Certificate Bundles. */
   certificate_pem: string;
   /** subject common name from the leaf of this TLS certificate */
   subject_common_name: string;
@@ -1493,7 +1760,7 @@ export interface TunnelSession {
   region: string;
   /** time when the tunnel session first connected to the ngrok servers */
   started_at: string;
-  /** the transport protocol used to start the tunnel session. Either <code>ngrok/v2</code> or <code>ssh</code> */
+  /** the transport protocol used to start the tunnel session. Either ngrok/v2 or ssh */
   transport: string;
   /** URI to the API resource of the tunnel session */
   uri: string;
@@ -1510,8 +1777,6 @@ export interface TunnelSessionList {
 
 export interface TunnelSessionsUpdate {
   id: string;
-  /** request that the ngrok agent update to this specific version instead of the latest available version */
-  version: string;
 }
 
 export interface Tunnel {
@@ -1521,9 +1786,9 @@ export interface Tunnel {
   public_url: string;
   /** timestamp when the tunnel was initiated in RFC 3339 format */
   started_at: string;
-  /** user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel <a href="https://ngrok.com/docs#tunnel-definitions-metadata">metadata configuration option</a> In API version 0, this value was instead pulled from the top-level <a href="https://ngrok.com/docs#config_metadata">metadata configuration option</a>. */
+  /** user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel  (https://ngrok.com/docs#tunnel-definitions-metadata)metadata configuration option In API version 0, this value was instead pulled from the top-level  (https://ngrok.com/docs#config_metadata)metadata configuration option. */
   metadata: string;
-  /** tunnel protocol. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code> */
+  /** tunnel protocol. one of http, https, tcp or tls */
   proto: string;
   /** identifier of tune region where the tunnel is running */
   region: string;
