@@ -5,7 +5,8 @@
   "types": "lib/types",
   "scripts": {
     "build": "tsc -p .",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "license": "MIT",
   "dependencies": {
@@ -14,9 +15,15 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.0.3",
     "nock": "^13.1.0",
+    "prettier": "^2.3.0",
     "ts-jest": "^27.0.2",
     "typescript": "^4.3.2"
   }
