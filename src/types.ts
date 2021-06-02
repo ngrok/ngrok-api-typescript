@@ -1,6 +1,4 @@
-
-export interface Empty {
-}
+export interface Empty {}
 
 export interface Item {
   /** a resource identifier */
@@ -522,8 +520,7 @@ export interface EventTargetS3 {
   max_file_age: number;
 }
 
-export interface EventTargetDebug {
-}
+export interface EventTargetDebug {}
 
 export interface AWSAuth {
   /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
@@ -978,8 +975,7 @@ export interface EndpointTLSTermination {
   min_version?: string;
 }
 
-export interface EndpointBasicAuth {
-}
+export interface EndpointBasicAuth {}
 
 export interface EndpointLogging {
   /** true if the module will be applied to traffic, false to disable. default true if unspecified */
@@ -1205,8 +1201,7 @@ export interface EndpointBackend {
   backend: Ref;
 }
 
-export interface EndpointBackendMutate {
-}
+export interface EndpointBackendMutate {}
 
 export interface EndpointLoggingReplace {
   id: string;
