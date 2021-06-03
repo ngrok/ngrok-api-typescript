@@ -1,8 +1,16 @@
 {
   "name": "@ngrok/ngrok-api",
-  "version": "0.0.9",
+  "version": "0.0.10",
+  "homepage": "https://github.com/ngrok/ngrok-api-typescript#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrok/ngrok-api-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ngrok/ngrok-api-typescript/issues"
+  },
   "main": "lib/index",
-  "types": "lib/types",
+  "types": "lib/index",
   "scripts": {
     "build": "tsc -p .",
     "test": "jest",
