@@ -1,5 +1,6 @@
 import { Wretcher } from 'wretch';
 import * as t from './types';
+export * from './types';
 interface Config {
     apiToken: string;
     baseUrl: string;
@@ -311,4 +312,3 @@ export declare class Ngrok {
         list: (arg: t.Paging) => Promise<t.TunnelList>;
     };
 }
-export {};
