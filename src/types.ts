@@ -365,465 +365,6 @@ export interface CredentialList {
   next_page_uri?: string;
 }
 
-export interface EventStreamCreate {
-  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
-  description: string;
-  /** A list of protocol-specific fields you want to collect on each event. */
-  fields: Array<string>;
-  /** The protocol that determines which events will be collected. Supported values are tcp_connection_closed and http_request_complete. */
-  event_type: string;
-  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
-  destination_ids: Array<string>;
-  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-  sampling_rate: number;
-}
-
-export interface EventStreamUpdate {
-  /** Unique identifier for this Event Stream. */
-  id: string;
-  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
-  metadata?: string;
-  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
-  description?: string;
-  /** A list of protocol-specific fields you want to collect on each event. */
-  fields?: Array<string>;
-  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
-  destination_ids?: Array<string>;
-  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-  sampling_rate?: number;
-}
-
-export interface EventStreamList {
-  /** The list of all Event Streams on this account. */
-  event_streams: Array<EventStream>;
-  /** URI of the Event Stream list API resource. */
-  uri: string;
-  /** URI of the next page, or null if there is no next page. */
-  next_page_uri?: string;
-}
-
-export interface EventStream {
-  /** Unique identifier for this Event Stream. */
-  id: string;
-  /** URI of the Event Stream API resource. */
-  uri: string;
-  /** Timestamp when the Event Stream was created, RFC 3339 format. */
-  created_at: string;
-  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
-  description: string;
-  /** A list of protocol-specific fields you want to collect on each event. */
-  fields: Array<string>;
-  /** The protocol that determines which events will be collected. Supported values are tcp_connection_closed and http_request_complete. */
-  event_type: string;
-  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
-  destination_ids: Array<string>;
-  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-  sampling_rate: number;
-}
-
-export interface EventDestinationCreate {
-  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
-  description: string;
-  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
-  format: string;
-  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
-  target: EventTarget;
-}
-
-export interface EventDestinationUpdate {
-  /** Unique identifier for this Event Destination. */
-  id: string;
-  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
-  metadata?: string;
-  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
-  description?: string;
-  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
-  format?: string;
-  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
-  target?: EventTarget;
-}
-
-export interface EventDestination {
-  /** Unique identifier for this Event Destination. */
-  id: string;
-  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
-  metadata: string;
-  /** Timestamp when the Event Destination was created, RFC 3339 format. */
-  created_at: string;
-  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
-  description: string;
-  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
-  format: string;
-  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
-  target: EventTarget;
-  /** URI of the Event Destination API resource. */
-  uri: string;
-}
-
-export interface EventDestinationList {
-  /** The list of all Event Destinations on this account. */
-  event_destinations: Array<EventDestination>;
-  /** URI of the Event Destinations list API resource. */
-  uri: string;
-  /** URI of the next page, or null if there is no next page. */
-  next_page_uri?: string;
-}
-
-export interface EventTarget {
-  /** Configuration used to send events to Amazon Kinesis Data Firehose. */
-  firehose?: EventTargetFirehose;
-  /** Configuration used to send events to Amazon Kinesis. */
-  kinesis?: EventTargetKinesis;
-  /** Configuration used to send events to Amazon CloudWatch Logs. */
-  cloudwatch_logs?: EventTargetCloudwatchLogs;
-}
-
-export interface EventTargetFirehose {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the Firehose delivery stream to deposit events into. */
-  delivery_stream_arn: string;
-}
-
-export interface EventTargetKinesis {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the Kinesis stream to deposit events into. */
-  stream_arn: string;
-}
-
-export interface EventTargetCloudwatchLogs {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the CloudWatch Logs group to deposit events into. */
-  log_group_arn: string;
-}
-
-export interface EventTargetS3 {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the S3 bucket to deposit events into. */
-  bucket_arn: string;
-  /** An optional prefix to prepend to S3 object keys. */
-  object_prefix: string;
-  /** Whether or not to compress files with gzip. */
-  compression: boolean;
-  /** How many bytes we should accumulate into a single file before sending to S3. */
-  max_file_size: number;
-  /** How many seconds we should batch up events before sending them to S3. */
-  max_file_age: number;
-}
-
-export interface EventTargetDebug {}
-
-export interface AWSAuth {
-  /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
-  role?: AWSRole;
-  /** Credentials to your AWS account if you prefer ngrok to sign in with long-term access keys. */
-  creds?: AWSCredentials;
-}
-
-export interface AWSRole {
-  /** An ARN that specifies the role that ngrok should use to deliver to the configured target. */
-  role_arn: string;
-}
-
-export interface AWSCredentials {
-  /** The ID portion of an AWS access key. */
-  aws_access_key_id: string;
-  /** The secret portion of an AWS access key. */
-  aws_secret_access_key?: string;
-}
-
-export interface SentEvent {
-  event_id: string;
-}
-
-export interface EventSubscriptionCreate {
-  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
-  metadata: string;
-  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
-  description: string;
-  /** TODO */
-  sources: Array<EventSourceReplace>;
-  /** TODO */
-  destination_ids: Array<string>;
-}
-
-export interface EventSubscriptionUpdate {
-  /** Unique identifier for this Event Subscription. */
-  id: string;
-  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
-  metadata?: string;
-  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
-  description?: string;
-  /** TODO */
-  sources?: Array<EventSourceReplace>;
-  /** TODO */
-  destination_ids?: Array<string>;
-}
-
-export interface EventSubscriptionList {
-  /** The list of all Event Subscriptions on this account. */
-  event_subscriptions: Array<EventSubscription>;
-  /** URI of the Event Subscriptions list API resource. */
-  uri: string;
-  /** URI of next page, or null if there is no next page. */
-  next_page_uri?: string;
-}
-
-export interface EventSubscription {
-  /** Unique identifier for this Event Subscription. */
-  id: string;
-  /** URI of the Event Subscription API resource. */
-  uri: string;
-  /** When the Event Subscription was created (RFC 3339 format). */
-  created_at: string;
-  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
-  metadata: string;
-  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
-  description: string;
-  /** TODO */
-  sources: Array<EventSource>;
-  /** TODO */
-  destinations: Array<Ref>;
-}
-
-export interface EventSourceReplace {
-  /** TODO */
-  type: string;
-}
-
-export interface EventSource {
-  /** TODO */
-  type: string;
-  /** TODO */
-  uri: string;
-}
-
-export interface EventSourceList {
-  /** TODO */
-  sources: Array<EventSource>;
-  /** TODO */
-  uri: string;
-}
-
-export interface EventSourceCreate {
-  /** TODO */
-  subscription_id: string;
-  /** TODO */
-  type: string;
-}
-
-export interface EventSourceUpdate {
-  /** TODO */
-  subscription_id: string;
-  /** TODO */
-  type: string;
-}
-
-/** This is needed instead of Item because the parameters are different. */
-export interface EventSourceItem {
-  /** TODO */
-  subscription_id: string;
-  /** TODO */
-  type: string;
-}
-
-/** This is needed instead of Paging because the parameters are different. We also don't need the typical pagination params because pagination of this isn't necessary or supported. */
-export interface EventSourcePaging {
-  /** TODO */
-  subscription_id: string;
-}
-
-export interface IPPolicyCreate {
-  /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
-  metadata: string;
-  /** the IP policy action. Supported values are allow or deny */
-  action: string;
-}
-
-export interface IPPolicyUpdate {
-  id: string;
-  /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
-  metadata?: string;
-}
-
-export interface IPPolicy {
-  /** unique identifier for this IP policy */
-  id: string;
-  /** URI of the IP Policy API resource */
-  uri: string;
-  /** timestamp when the IP policy was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
-  metadata: string;
-  /** the IP policy action. Supported values are allow or deny */
-  action: string;
-}
-
-export interface IPPolicyList {
-  /** the list of all IP policies on this account */
-  ip_policies: Array<IPPolicy>;
-  /** URI of the IP policy list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
-export interface IPPolicyRuleCreate {
-  /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
-  metadata: string;
-  /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
-  cidr: string;
-  /** ID of the IP policy this IP policy rule will be attached to */
-  ip_policy_id: string;
-}
-
-export interface IPPolicyRuleUpdate {
-  id: string;
-  /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
-  metadata?: string;
-  /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
-  cidr?: string;
-}
-
-export interface IPPolicyRule {
-  /** unique identifier for this IP policy rule */
-  id: string;
-  /** URI of the IP policy rule API resource */
-  uri: string;
-  /** timestamp when the IP policy rule was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
-  metadata: string;
-  /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
-  cidr: string;
-  /** object describing the IP policy this IP Policy Rule belongs to */
-  ip_policy: Ref;
-}
-
-export interface IPPolicyRuleList {
-  /** the list of all IP policy rules on this account */
-  ip_policy_rules: Array<IPPolicyRule>;
-  /** URI of the IP policy rule list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
-export interface IPRestrictionCreate {
-  /** human-readable description of this IP restriction. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
-  metadata: string;
-  /** true if the IP restriction will be enforce. if false, only warnings will be issued */
-  enforced: boolean;
-  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: dashboard, api, agent, and endpoints */
-  type: string;
-  /** the set of IP policy identifiers that are used to enforce the restriction */
-  ip_policy_ids: Array<string>;
-}
-
-export interface IPRestrictionUpdate {
-  id: string;
-  /** human-readable description of this IP restriction. optional, max 255 bytes. */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
-  metadata?: string;
-  /** true if the IP restriction will be enforce. if false, only warnings will be issued */
-  enforced?: boolean;
-  /** the set of IP policy identifiers that are used to enforce the restriction */
-  ip_policy_ids: Array<string>;
-}
-
-export interface IPRestriction {
-  /** unique identifier for this IP restriction */
-  id: string;
-  /** URI of the IP restriction API resource */
-  uri: string;
-  /** timestamp when the IP restriction was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of this IP restriction. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
-  metadata: string;
-  /** true if the IP restriction will be enforce. if false, only warnings will be issued */
-  enforced: boolean;
-  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: dashboard, api, agent, and endpoints */
-  type: string;
-  /** the set of IP policies that are used to enforce the restriction */
-  ip_policies: Array<Ref>;
-}
-
-export interface IPRestrictionList {
-  /** the list of all IP restrictions on this account */
-  ip_restrictions: Array<IPRestriction>;
-  /** URI of the IP resrtrictions list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
-export interface IPWhitelistEntryCreate {
-  /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
-  metadata: string;
-  /** an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints */
-  ip_net: string;
-}
-
-export interface IPWhitelistEntryUpdate {
-  id: string;
-  /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
-  metadata?: string;
-}
-
-export interface IPWhitelistEntry {
-  /** unique identifier for this IP whitelist entry */
-  id: string;
-  /** URI of the IP whitelist entry API resource */
-  uri: string;
-  /** timestamp when the IP whitelist entry was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
-  metadata: string;
-  /** an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints */
-  ip_net: string;
-}
-
-export interface IPWhitelistEntryList {
-  /** the list of all IP whitelist entries on this account */
-  whitelist: Array<IPWhitelistEntry>;
-  /** URI of the IP whitelist API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
 export interface EndpointConfiguration {
   /** unique identifier of this endpoint configuration */
   id: string;
@@ -1203,6 +744,539 @@ export interface EndpointBackend {
 
 export interface EndpointBackendMutate {}
 
+export interface TCPEdgeCreate {
+  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+  metadata: string;
+  ip_restriction?: EndpointIPPolicyMutate;
+}
+
+export interface TCPEdgeUpdate {
+  /** unique identifier of this edge */
+  id: string;
+  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+  metadata?: string;
+  ip_restriction?: EndpointIPPolicyMutate;
+}
+
+export interface TCPEdge {
+  /** unique identifier of this edge */
+  id: string;
+  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+  metadata: string;
+  /** timestamp when the edge was created, RFC 3339 format */
+  created_at: string;
+  /** URI of the edge API resource */
+  uri: string;
+  /** edge modules */
+  backend?: EndpointBackend;
+  ip_restriction?: EndpointIPPolicy;
+}
+
+export interface TLSEdgeCreate {
+  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+  metadata: string;
+  ip_restriction?: EndpointIPPolicyMutate;
+  mutual_tls?: EndpointMutualTLSMutate;
+  tls_termination?: EndpointTLSTermination;
+}
+
+export interface TLSEdgeUpdate {
+  /** unique identifier of this edge */
+  id: string;
+  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+  metadata?: string;
+  ip_restriction?: EndpointIPPolicyMutate;
+  mutual_tls?: EndpointMutualTLSMutate;
+  tls_termination?: EndpointTLSTermination;
+}
+
+export interface TLSEdge {
+  /** unique identifier of this edge */
+  id: string;
+  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+  metadata: string;
+  /** timestamp when the edge configuration was created, RFC 3339 format */
+  created_at: string;
+  /** URI of the edge API resource */
+  uri: string;
+  /** edge modules */
+  backend?: EndpointBackend;
+  ip_restriction?: EndpointIPPolicy;
+  mutual_tls?: EndpointMutualTLS;
+  tls_termination?: EndpointTLSTermination;
+}
+
+export interface EventStreamCreate {
+  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+  description: string;
+  /** A list of protocol-specific fields you want to collect on each event. */
+  fields: Array<string>;
+  /** The protocol that determines which events will be collected. Supported values are tcp_connection_closed and http_request_complete. */
+  event_type: string;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids: Array<string>;
+  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
+  sampling_rate: number;
+}
+
+export interface EventStreamUpdate {
+  /** Unique identifier for this Event Stream. */
+  id: string;
+  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
+  metadata?: string;
+  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+  description?: string;
+  /** A list of protocol-specific fields you want to collect on each event. */
+  fields?: Array<string>;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids?: Array<string>;
+  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
+  sampling_rate?: number;
+}
+
+export interface EventStreamList {
+  /** The list of all Event Streams on this account. */
+  event_streams: Array<EventStream>;
+  /** URI of the Event Stream list API resource. */
+  uri: string;
+  /** URI of the next page, or null if there is no next page. */
+  next_page_uri?: string;
+}
+
+export interface EventStream {
+  /** Unique identifier for this Event Stream. */
+  id: string;
+  /** URI of the Event Stream API resource. */
+  uri: string;
+  /** Timestamp when the Event Stream was created, RFC 3339 format. */
+  created_at: string;
+  /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+  description: string;
+  /** A list of protocol-specific fields you want to collect on each event. */
+  fields: Array<string>;
+  /** The protocol that determines which events will be collected. Supported values are tcp_connection_closed and http_request_complete. */
+  event_type: string;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids: Array<string>;
+  /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
+  sampling_rate: number;
+}
+
+export interface EventDestinationCreate {
+  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
+  description: string;
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
+  format: string;
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
+  target: EventTarget;
+}
+
+export interface EventDestinationUpdate {
+  /** Unique identifier for this Event Destination. */
+  id: string;
+  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
+  metadata?: string;
+  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
+  description?: string;
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
+  format?: string;
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
+  target?: EventTarget;
+}
+
+export interface EventDestination {
+  /** Unique identifier for this Event Destination. */
+  id: string;
+  /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
+  metadata: string;
+  /** Timestamp when the Event Destination was created, RFC 3339 format. */
+  created_at: string;
+  /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
+  description: string;
+  /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is JSON. */
+  format: string;
+  /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: kinesis, firehose, cloudwatch_logs, or s3. */
+  target: EventTarget;
+  /** URI of the Event Destination API resource. */
+  uri: string;
+}
+
+export interface EventDestinationList {
+  /** The list of all Event Destinations on this account. */
+  event_destinations: Array<EventDestination>;
+  /** URI of the Event Destinations list API resource. */
+  uri: string;
+  /** URI of the next page, or null if there is no next page. */
+  next_page_uri?: string;
+}
+
+export interface EventTarget {
+  /** Configuration used to send events to Amazon Kinesis Data Firehose. */
+  firehose?: EventTargetFirehose;
+  /** Configuration used to send events to Amazon Kinesis. */
+  kinesis?: EventTargetKinesis;
+  /** Configuration used to send events to Amazon CloudWatch Logs. */
+  cloudwatch_logs?: EventTargetCloudwatchLogs;
+}
+
+export interface EventTargetFirehose {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the Firehose delivery stream to deposit events into. */
+  delivery_stream_arn: string;
+}
+
+export interface EventTargetKinesis {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the Kinesis stream to deposit events into. */
+  stream_arn: string;
+}
+
+export interface EventTargetCloudwatchLogs {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the CloudWatch Logs group to deposit events into. */
+  log_group_arn: string;
+}
+
+export interface EventTargetS3 {
+  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
+  auth: AWSAuth;
+  /** An Amazon Resource Name specifying the S3 bucket to deposit events into. */
+  bucket_arn: string;
+  /** An optional prefix to prepend to S3 object keys. */
+  object_prefix: string;
+  /** Whether or not to compress files with gzip. */
+  compression: boolean;
+  /** How many bytes we should accumulate into a single file before sending to S3. */
+  max_file_size: number;
+  /** How many seconds we should batch up events before sending them to S3. */
+  max_file_age: number;
+}
+
+export interface EventTargetDebug {}
+
+export interface AWSAuth {
+  /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
+  role?: AWSRole;
+  /** Credentials to your AWS account if you prefer ngrok to sign in with long-term access keys. */
+  creds?: AWSCredentials;
+}
+
+export interface AWSRole {
+  /** An ARN that specifies the role that ngrok should use to deliver to the configured target. */
+  role_arn: string;
+}
+
+export interface AWSCredentials {
+  /** The ID portion of an AWS access key. */
+  aws_access_key_id: string;
+  /** The secret portion of an AWS access key. */
+  aws_secret_access_key?: string;
+}
+
+export interface SentEvent {
+  event_id: string;
+}
+
+export interface EventSubscriptionCreate {
+  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
+  metadata: string;
+  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
+  description: string;
+  /** Sources containing the types for which this event subscription will trigger */
+  sources: Array<EventSourceReplace>;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids: Array<string>;
+}
+
+export interface EventSubscriptionUpdate {
+  /** Unique identifier for this Event Subscription. */
+  id: string;
+  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
+  metadata?: string;
+  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
+  description?: string;
+  /** Sources containing the types for which this event subscription will trigger */
+  sources?: Array<EventSourceReplace>;
+  /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+  destination_ids?: Array<string>;
+}
+
+export interface EventSubscriptionList {
+  /** The list of all Event Subscriptions on this account. */
+  event_subscriptions: Array<EventSubscription>;
+  /** URI of the Event Subscriptions list API resource. */
+  uri: string;
+  /** URI of next page, or null if there is no next page. */
+  next_page_uri?: string;
+}
+
+export interface EventSubscription {
+  /** Unique identifier for this Event Subscription. */
+  id: string;
+  /** URI of the Event Subscription API resource. */
+  uri: string;
+  /** When the Event Subscription was created (RFC 3339 format). */
+  created_at: string;
+  /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
+  metadata: string;
+  /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
+  description: string;
+  /** Sources containing the types for which this event subscription will trigger */
+  sources: Array<EventSource>;
+  /** Destinations to which these events will be sent */
+  destinations: Array<Ref>;
+}
+
+export interface EventSourceReplace {
+  /** Type of event for which an event subscription will trigger */
+  type: string;
+}
+
+export interface EventSource {
+  /** Type of event for which an event subscription will trigger */
+  type: string;
+  /** URI of the Event Source API resource. */
+  uri: string;
+}
+
+export interface EventSourceList {
+  /** The list of all Event Sources for an Event Subscription */
+  sources: Array<EventSource>;
+  /** URI of the next page, or null if there is no next page. */
+  uri: string;
+}
+
+export interface EventSourceCreate {
+  /** The unique identifier for the Event Subscription that this Event Source is attached to. */
+  subscription_id: string;
+  /** Type of event for which an event subscription will trigger */
+  type: string;
+}
+
+export interface EventSourceUpdate {
+  /** The unique identifier for the Event Subscription that this Event Source is attached to. */
+  subscription_id: string;
+  /** Type of event for which an event subscription will trigger */
+  type: string;
+}
+
+/** This is needed instead of Item because the parameters are different. */
+export interface EventSourceItem {
+  /** The unique identifier for the Event Subscription that this Event Source is attached to. */
+  subscription_id: string;
+  /** Type of event for which an event subscription will trigger */
+  type: string;
+}
+
+/** This is needed instead of Paging because the parameters are different. We also don't need the typical pagination params because pagination of this isn't necessary or supported. */
+export interface EventSourcePaging {
+  /** The unique identifier for the Event Subscription that this Event Source is attached to. */
+  subscription_id: string;
+}
+
+export interface IPPolicyCreate {
+  /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
+  metadata: string;
+  /** the IP policy action. Supported values are allow or deny */
+  action: string;
+}
+
+export interface IPPolicyUpdate {
+  id: string;
+  /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
+  metadata?: string;
+}
+
+export interface IPPolicy {
+  /** unique identifier for this IP policy */
+  id: string;
+  /** URI of the IP Policy API resource */
+  uri: string;
+  /** timestamp when the IP policy was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
+  metadata: string;
+  /** the IP policy action. Supported values are allow or deny */
+  action: string;
+}
+
+export interface IPPolicyList {
+  /** the list of all IP policies on this account */
+  ip_policies: Array<IPPolicy>;
+  /** URI of the IP policy list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface IPPolicyRuleCreate {
+  /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
+  metadata: string;
+  /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
+  cidr: string;
+  /** ID of the IP policy this IP policy rule will be attached to */
+  ip_policy_id: string;
+}
+
+export interface IPPolicyRuleUpdate {
+  id: string;
+  /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
+  metadata?: string;
+  /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
+  cidr?: string;
+}
+
+export interface IPPolicyRule {
+  /** unique identifier for this IP policy rule */
+  id: string;
+  /** URI of the IP policy rule API resource */
+  uri: string;
+  /** timestamp when the IP policy rule was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
+  metadata: string;
+  /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
+  cidr: string;
+  /** object describing the IP policy this IP Policy Rule belongs to */
+  ip_policy: Ref;
+}
+
+export interface IPPolicyRuleList {
+  /** the list of all IP policy rules on this account */
+  ip_policy_rules: Array<IPPolicyRule>;
+  /** URI of the IP policy rule list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface IPRestrictionCreate {
+  /** human-readable description of this IP restriction. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
+  metadata: string;
+  /** true if the IP restriction will be enforced. if false, only warnings will be issued */
+  enforced: boolean;
+  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: dashboard, api, agent, and endpoints */
+  type: string;
+  /** the set of IP policy identifiers that are used to enforce the restriction */
+  ip_policy_ids: Array<string>;
+}
+
+export interface IPRestrictionUpdate {
+  id: string;
+  /** human-readable description of this IP restriction. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
+  metadata?: string;
+  /** true if the IP restriction will be enforced. if false, only warnings will be issued */
+  enforced?: boolean;
+  /** the set of IP policy identifiers that are used to enforce the restriction */
+  ip_policy_ids: Array<string>;
+}
+
+export interface IPRestriction {
+  /** unique identifier for this IP restriction */
+  id: string;
+  /** URI of the IP restriction API resource */
+  uri: string;
+  /** timestamp when the IP restriction was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of this IP restriction. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
+  metadata: string;
+  /** true if the IP restriction will be enforced. if false, only warnings will be issued */
+  enforced: boolean;
+  /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: dashboard, api, agent, and endpoints */
+  type: string;
+  /** the set of IP policies that are used to enforce the restriction */
+  ip_policies: Array<Ref>;
+}
+
+export interface IPRestrictionList {
+  /** the list of all IP restrictions on this account */
+  ip_restrictions: Array<IPRestriction>;
+  /** URI of the IP resrtrictions list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
+export interface IPWhitelistEntryCreate {
+  /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
+  metadata: string;
+  /** an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints */
+  ip_net: string;
+}
+
+export interface IPWhitelistEntryUpdate {
+  id: string;
+  /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
+  metadata?: string;
+}
+
+export interface IPWhitelistEntry {
+  /** unique identifier for this IP whitelist entry */
+  id: string;
+  /** URI of the IP whitelist entry API resource */
+  uri: string;
+  /** timestamp when the IP whitelist entry was created, RFC 3339 format */
+  created_at: string;
+  /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
+  description: string;
+  /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
+  metadata: string;
+  /** an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints */
+  ip_net: string;
+}
+
+export interface IPWhitelistEntryList {
+  /** the list of all IP whitelist entries on this account */
+  whitelist: Array<IPWhitelistEntry>;
+  /** URI of the IP whitelist API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  next_page_uri?: string;
+}
+
 export interface EndpointLoggingReplace {
   id: string;
   module: EndpointLoggingMutate;
@@ -1332,9 +1406,9 @@ export interface ReservedDomainCreate {
   /** arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes. */
   metadata: string;
   /** ID of an endpoint configuration of type http that will be used to handle inbound http traffic to this domain */
-  http_endpoint_configuration_id: string;
+  http_endpoint_configuration_id?: string;
   /** ID of an endpoint configuration of type https that will be used to handle inbound https traffic to this domain */
-  https_endpoint_configuration_id: string;
+  https_endpoint_configuration_id?: string;
   /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with certificate_management_policy. */
   certificate_id?: string;
   /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with certificate_id. */

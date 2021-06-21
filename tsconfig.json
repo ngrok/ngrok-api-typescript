@@ -1,17 +1,27 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "declaration": true,
-    "outDir": "lib",
+    "target": "es6",
     "module": "commonjs",
-    "lib": [ "es2015" ],
-    "target": "es5",
+    "declaration": true,
     "sourceMap": true,
-    "skipLibCheck": true
+    "declarationMap": true,
+    "skipLibCheck": true,
+    "types": [
+    ],
+    "lib": [
+      "es2019"
+    ],
+    "outDir": "lib"
   },
   "include": [
-    "src"
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs"
+  }
 }
