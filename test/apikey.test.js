@@ -16,6 +16,9 @@ describe('valid ngrok api key', () => {
   test('non-empty api keys list', () => {
     nock('https://api.ngrok.com.lan')
       .get('/api_keys')
+      .query({
+        limit: '100',
+      })
       .reply(200, {
         keys: [
           {
@@ -32,8 +35,8 @@ describe('valid ngrok api key', () => {
       });
 
     expect.assertions(1);
-    return ngrok.APIKeys.list({}).then(data => {
-      expect(data.keys.length).toBeGreaterThan(0);
+    return ngrok.APIKeys.list().then(result => {
+      expect(result.length).toBeGreaterThan(0);
     });
   });
 
@@ -51,8 +54,8 @@ describe('valid ngrok api key', () => {
     return (
       ngrok.APIKeys.get({ id: '1000' })
         /* eslint jest/no-conditional-expect: "warn" */
-        .catch(data => {
-          expect(JSON.stringify(data)).toMatch(
+        .catch(result => {
+          expect(JSON.stringify(result)).toMatch(
             'the identifier is not a valid identifier'
           );
         })

@@ -29,7 +29,9 @@ export declare class Ngrok {
         /** Get the details of an API key by ID. */
         get: (arg: t.Item) => Promise<t.APIKey>;
         /** List all API keys owned by this account */
-        list: (arg: t.Paging) => Promise<t.APIKeyList>;
+        list: () => Promise<Array<t.APIKey>>;
+        _pagedList: (arg: t.Paging) => Promise<t.APIKeyList>;
+        _asyncList: () => AsyncGenerator<t.APIKey, void, unknown>;
         /** Update attributes of an API key by ID. */
         update: (arg: t.APIKeyUpdate) => Promise<t.APIKey>;
     };
@@ -41,7 +43,9 @@ export declare class Ngrok {
         /** Get detailed information about a certficate authority */
         get: (arg: t.Item) => Promise<t.CertificateAuthority>;
         /** List all Certificate Authority on this account */
-        list: (arg: t.Paging) => Promise<t.CertificateAuthorityList>;
+        list: () => Promise<Array<t.CertificateAuthority>>;
+        _pagedList: (arg: t.Paging) => Promise<t.CertificateAuthorityList>;
+        _asyncList: () => AsyncGenerator<t.CertificateAuthority, void, unknown>;
         /** Update attributes of a Certificate Authority by ID */
         update: (arg: t.CertificateAuthorityUpdate) => Promise<t.CertificateAuthority>;
     };
@@ -53,9 +57,25 @@ export declare class Ngrok {
         /** Get detailed information about a tunnel authtoken credential */
         get: (arg: t.Item) => Promise<t.Credential>;
         /** List all tunnel authtoken credentials on this account */
-        list: (arg: t.Paging) => Promise<t.CredentialList>;
+        list: () => Promise<Array<t.Credential>>;
+        _pagedList: (arg: t.Paging) => Promise<t.CredentialList>;
+        _asyncList: () => AsyncGenerator<t.Credential, void, unknown>;
         /** Update attributes of an tunnel authtoken credential by ID */
         update: (arg: t.CredentialUpdate) => Promise<t.Credential>;
+    };
+    EndpointConfigurations: {
+        /** Create a new endpoint configuration */
+        create: (arg: t.EndpointConfigurationCreate) => Promise<t.EndpointConfiguration>;
+        /** Delete an endpoint configuration. This operation will fail if the endpoint configuration is still referenced by any reserved domain or reserved address. */
+        delete: (arg: t.Item) => Promise<t.Empty>;
+        /** Returns detailed information about an endpoint configuration */
+        get: (arg: t.Item) => Promise<t.EndpointConfiguration>;
+        /** Returns a list of all endpoint configurations on this account */
+        list: () => Promise<Array<t.EndpointConfiguration>>;
+        _pagedList: (arg: t.Paging) => Promise<t.EndpointConfigurationList>;
+        _asyncList: () => AsyncGenerator<t.EndpointConfiguration, void, unknown>;
+        /** Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API. */
+        update: (arg: t.EndpointConfigurationUpdate) => Promise<t.EndpointConfiguration>;
     };
     EventStreams: {
         /** Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs. */
@@ -65,7 +85,9 @@ export declare class Ngrok {
         /** Get detailed information about an Event Stream by ID. */
         get: (arg: t.Item) => Promise<t.EventStream>;
         /** List all Event Streams available on this account. */
-        list: (arg: t.Paging) => Promise<t.EventStreamList>;
+        list: () => Promise<Array<t.EventStream>>;
+        _pagedList: (arg: t.Paging) => Promise<t.EventStreamList>;
+        _asyncList: () => AsyncGenerator<t.EventStream, void, unknown>;
         /** Update attributes of an Event Stream by ID. */
         update: (arg: t.EventStreamUpdate) => Promise<t.EventStream>;
     };
@@ -77,9 +99,37 @@ export declare class Ngrok {
         /** Get detailed information about an Event Destination by ID. */
         get: (arg: t.Item) => Promise<t.EventDestination>;
         /** List all Event Destinations on this account. */
-        list: (arg: t.Paging) => Promise<t.EventDestinationList>;
+        list: () => Promise<Array<t.EventDestination>>;
+        _pagedList: (arg: t.Paging) => Promise<t.EventDestinationList>;
+        _asyncList: () => AsyncGenerator<t.EventDestination, void, unknown>;
         /** Update attributes of an Event Destination. */
         update: (arg: t.EventDestinationUpdate) => Promise<t.EventDestination>;
+    };
+    EventSubscriptions: {
+        /** Create an Event Subscription. */
+        create: (arg: t.EventSubscriptionCreate) => Promise<t.EventSubscription>;
+        /** Delete an Event Subscription. */
+        delete: (arg: t.Item) => Promise<t.Empty>;
+        /** Get an Event Subscription by ID. */
+        get: (arg: t.Item) => Promise<t.EventSubscription>;
+        /** List this Account's Event Subscriptions. */
+        list: () => Promise<Array<t.EventSubscription>>;
+        _pagedList: (arg: t.Paging) => Promise<t.EventSubscriptionList>;
+        _asyncList: () => AsyncGenerator<t.EventSubscription, void, unknown>;
+        /** Update an Event Subscription. */
+        update: (arg: t.EventSubscriptionUpdate) => Promise<t.EventSubscription>;
+    };
+    EventSources: {
+        /** Add an additional type for which this event subscription will trigger */
+        create: (arg: t.EventSourceCreate) => Promise<t.EventSource>;
+        /** Remove a type for which this event subscription will trigger */
+        delete: (arg: t.EventSourceItem) => Promise<t.Empty>;
+        /** Get the details for a given type that triggers for the given event subscription */
+        get: (arg: t.EventSourceItem) => Promise<t.EventSource>;
+        /** List the types for which this event subscription will trigger */
+        list: (arg: t.EventSourcePaging) => Promise<t.EventSourceList>;
+        /** Update the type for which this event subscription will trigger */
+        update: (arg: t.EventSourceUpdate) => Promise<t.EventSource>;
     };
     IPPolicies: {
         /** Create a new IP policy. It will not apply to any traffic until you associate to a traffic source via an endpoint configuration or IP restriction. */
@@ -89,7 +139,9 @@ export declare class Ngrok {
         /** Get detailed information about an IP policy by ID. */
         get: (arg: t.Item) => Promise<t.IPPolicy>;
         /** List all IP policies on this account */
-        list: (arg: t.Paging) => Promise<t.IPPolicyList>;
+        list: () => Promise<Array<t.IPPolicy>>;
+        _pagedList: (arg: t.Paging) => Promise<t.IPPolicyList>;
+        _asyncList: () => AsyncGenerator<t.IPPolicy, void, unknown>;
         /** Update attributes of an IP policy by ID */
         update: (arg: t.IPPolicyUpdate) => Promise<t.IPPolicy>;
     };
@@ -101,7 +153,9 @@ export declare class Ngrok {
         /** Get detailed information about an IP policy rule by ID. */
         get: (arg: t.Item) => Promise<t.IPPolicyRule>;
         /** List all IP policy rules on this account */
-        list: (arg: t.Paging) => Promise<t.IPPolicyRuleList>;
+        list: () => Promise<Array<t.IPPolicyRule>>;
+        _pagedList: (arg: t.Paging) => Promise<t.IPPolicyRuleList>;
+        _asyncList: () => AsyncGenerator<t.IPPolicyRule, void, unknown>;
         /** Update attributes of an IP policy rule by ID */
         update: (arg: t.IPPolicyRuleUpdate) => Promise<t.IPPolicyRule>;
     };
@@ -113,7 +167,9 @@ export declare class Ngrok {
         /** Get detailed information about an IP restriction */
         get: (arg: t.Item) => Promise<t.IPRestriction>;
         /** List all IP restrictions on this account */
-        list: (arg: t.Paging) => Promise<t.IPRestrictionList>;
+        list: () => Promise<Array<t.IPRestriction>>;
+        _pagedList: (arg: t.Paging) => Promise<t.IPRestrictionList>;
+        _asyncList: () => AsyncGenerator<t.IPRestriction, void, unknown>;
         /** Update attributes of an IP restriction by ID */
         update: (arg: t.IPRestrictionUpdate) => Promise<t.IPRestriction>;
     };
@@ -125,21 +181,11 @@ export declare class Ngrok {
         /** Get detailed information about an IP whitelist entry by ID. */
         get: (arg: t.Item) => Promise<t.IPWhitelistEntry>;
         /** List all IP whitelist entries on this account */
-        list: (arg: t.Paging) => Promise<t.IPWhitelistEntryList>;
+        list: () => Promise<Array<t.IPWhitelistEntry>>;
+        _pagedList: (arg: t.Paging) => Promise<t.IPWhitelistEntryList>;
+        _asyncList: () => AsyncGenerator<t.IPWhitelistEntry, void, unknown>;
         /** Update attributes of an IP whitelist entry by ID */
         update: (arg: t.IPWhitelistEntryUpdate) => Promise<t.IPWhitelistEntry>;
-    };
-    EndpointConfigurations: {
-        /** Create a new endpoint configuration */
-        create: (arg: t.EndpointConfigurationCreate) => Promise<t.EndpointConfiguration>;
-        /** Delete an endpoint configuration. This operation will fail if the endpoint configuration is still referenced by any reserved domain or reserved address. */
-        delete: (arg: t.Item) => Promise<t.Empty>;
-        /** Returns detailed information about an endpoint configuration */
-        get: (arg: t.Item) => Promise<t.EndpointConfiguration>;
-        /** Returns a list of all endpoint configurations on this account */
-        list: (arg: t.Paging) => Promise<t.EndpointConfigurationList>;
-        /** Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API. */
-        update: (arg: t.EndpointConfigurationUpdate) => Promise<t.EndpointConfiguration>;
     };
     EndpointLoggingModule: {
         replace: (arg: t.EndpointLoggingReplace) => Promise<t.EndpointLogging>;
@@ -209,7 +255,9 @@ export declare class Ngrok {
         /** Get the details of a reserved address. */
         get: (arg: t.Item) => Promise<t.ReservedAddr>;
         /** List all reserved addresses on this account. */
-        list: (arg: t.Paging) => Promise<t.ReservedAddrList>;
+        list: () => Promise<Array<t.ReservedAddr>>;
+        _pagedList: (arg: t.Paging) => Promise<t.ReservedAddrList>;
+        _asyncList: () => AsyncGenerator<t.ReservedAddr, void, unknown>;
         /** Update the attributes of a reserved address. */
         update: (arg: t.ReservedAddrUpdate) => Promise<t.ReservedAddr>;
         /** Detach the endpoint configuration attached to a reserved address. */
@@ -223,7 +271,9 @@ export declare class Ngrok {
         /** Get the details of a reserved domain. */
         get: (arg: t.Item) => Promise<t.ReservedDomain>;
         /** List all reserved domains on this account. */
-        list: (arg: t.Paging) => Promise<t.ReservedDomainList>;
+        list: () => Promise<Array<t.ReservedDomain>>;
+        _pagedList: (arg: t.Paging) => Promise<t.ReservedDomainList>;
+        _asyncList: () => AsyncGenerator<t.ReservedDomain, void, unknown>;
         /** Update the attributes of a reserved domain. */
         update: (arg: t.ReservedDomainUpdate) => Promise<t.ReservedDomain>;
         /** Detach the certificate management policy attached to a reserved domain. */
@@ -243,7 +293,9 @@ export declare class Ngrok {
         /** Get detailed information about an SSH Certficate Authority */
         get: (arg: t.Item) => Promise<t.SSHCertificateAuthority>;
         /** List all SSH Certificate Authorities on this account */
-        list: (arg: t.Paging) => Promise<t.SSHCertificateAuthorityList>;
+        list: () => Promise<Array<t.SSHCertificateAuthority>>;
+        _pagedList: (arg: t.Paging) => Promise<t.SSHCertificateAuthorityList>;
+        _asyncList: () => AsyncGenerator<t.SSHCertificateAuthority, void, unknown>;
         /** Update an SSH Certificate Authority */
         update: (arg: t.SSHCertificateAuthorityUpdate) => Promise<t.SSHCertificateAuthority>;
     };
@@ -255,7 +307,9 @@ export declare class Ngrok {
         /** Get detailed information about an ssh_credential */
         get: (arg: t.Item) => Promise<t.SSHCredential>;
         /** List all ssh credentials on this account */
-        list: (arg: t.Paging) => Promise<t.SSHCredentialList>;
+        list: () => Promise<Array<t.SSHCredential>>;
+        _pagedList: (arg: t.Paging) => Promise<t.SSHCredentialList>;
+        _asyncList: () => AsyncGenerator<t.SSHCredential, void, unknown>;
         /** Update attributes of an ssh_credential by ID */
         update: (arg: t.SSHCredentialUpdate) => Promise<t.SSHCredential>;
     };
@@ -267,7 +321,9 @@ export declare class Ngrok {
         /** Get detailed information about an SSH Host Certficate */
         get: (arg: t.Item) => Promise<t.SSHHostCertificate>;
         /** List all SSH Host Certificates issued on this account */
-        list: (arg: t.Paging) => Promise<t.SSHHostCertificateList>;
+        list: () => Promise<Array<t.SSHHostCertificate>>;
+        _pagedList: (arg: t.Paging) => Promise<t.SSHHostCertificateList>;
+        _asyncList: () => AsyncGenerator<t.SSHHostCertificate, void, unknown>;
         /** Update an SSH Host Certificate */
         update: (arg: t.SSHHostCertificateUpdate) => Promise<t.SSHHostCertificate>;
     };
@@ -279,7 +335,9 @@ export declare class Ngrok {
         /** Get detailed information about an SSH User Certficate */
         get: (arg: t.Item) => Promise<t.SSHUserCertificate>;
         /** List all SSH User Certificates issued on this account */
-        list: (arg: t.Paging) => Promise<t.SSHUserCertificateList>;
+        list: () => Promise<Array<t.SSHUserCertificate>>;
+        _pagedList: (arg: t.Paging) => Promise<t.SSHUserCertificateList>;
+        _asyncList: () => AsyncGenerator<t.SSHUserCertificate, void, unknown>;
         /** Update an SSH User Certificate */
         update: (arg: t.SSHUserCertificateUpdate) => Promise<t.SSHUserCertificate>;
     };
@@ -291,13 +349,17 @@ export declare class Ngrok {
         /** Get detailed information about a TLS certificate */
         get: (arg: t.Item) => Promise<t.TLSCertificate>;
         /** List all TLS certificates on this account */
-        list: (arg: t.Paging) => Promise<t.TLSCertificateList>;
+        list: () => Promise<Array<t.TLSCertificate>>;
+        _pagedList: (arg: t.Paging) => Promise<t.TLSCertificateList>;
+        _asyncList: () => AsyncGenerator<t.TLSCertificate, void, unknown>;
         /** Update attributes of a TLS Certificate by ID */
         update: (arg: t.TLSCertificateUpdate) => Promise<t.TLSCertificate>;
     };
     TunnelSessions: {
         /** List all online tunnel sessions running on this account. */
-        list: (arg: t.Paging) => Promise<t.TunnelSessionList>;
+        list: () => Promise<Array<t.TunnelSession>>;
+        _pagedList: (arg: t.Paging) => Promise<t.TunnelSessionList>;
+        _asyncList: () => AsyncGenerator<t.TunnelSession, void, unknown>;
         /** Get the detailed status of a tunnel session by ID */
         get: (arg: t.Item) => Promise<t.TunnelSession>;
         /** Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID. */
@@ -309,6 +371,9 @@ export declare class Ngrok {
     };
     Tunnels: {
         /** List all online tunnels currently running on the account. */
-        list: (arg: t.Paging) => Promise<t.TunnelList>;
+        list: () => Promise<Array<t.Tunnel>>;
+        _pagedList: (arg: t.Paging) => Promise<t.TunnelList>;
+        _asyncList: () => AsyncGenerator<t.Tunnel, void, unknown>;
     };
 }
+//# sourceMappingURL=index.d.ts.map

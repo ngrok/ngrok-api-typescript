@@ -21,8 +21,11 @@ module.exports = {
         "jest"
     ],
     "rules": {
+        "no-fallthrough": "warn",
+        "no-undef": "warn",
+        "no-unsafe-finally": "warn",
         "@typescript-eslint/no-empty-interface": "warn",
         "@typescript-eslint/no-this-alias": "warn",
-        "@typescript-eslint/no-var-requires": "warn"
+        "@typescript-eslint/no-var-requires": "warn",
     }
 };
