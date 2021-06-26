@@ -94,181 +94,6 @@ export interface APIKeyList {
   next_page_uri?: string;
 }
 
-export interface PriorityBackend {
-  /** unique identifier for this Priority backend */
-  id: string;
-  /** timestamp when the backend was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** the ids of the child backends in order */
-  backends: Array<string>;
-}
-
-export interface PriorityBackendCreate {
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** the ids of the child backends in order */
-  backends: Array<string>;
-}
-
-export interface PriorityBackendUpdate {
-  id: string;
-  /** human-readable description of this backend. Optional */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata?: string;
-  /** the ids of the child backends in order */
-  backends: Array<string>;
-}
-
-export interface PriorityBackendList {
-  /** the list of all Priority backends on this account */
-  backends: Array<PriorityBackend>;
-  /** URI of the Priority backends list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
-export interface StaticBackend {
-  /** unique identifier for this static backend */
-  id: string;
-  /** timestamp when the backend was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** the address to forward to */
-  address: string;
-  /** tls configuration to use */
-  tls: StaticBackendTLS;
-}
-
-export interface StaticBackendTLS {
-  /** if tls is checked */
-  enabled: boolean;
-}
-
-export interface StaticBackendCreate {
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** the address to forward to */
-  address: string;
-  /** tls configuration to use */
-  tls: StaticBackendTLS;
-}
-
-export interface StaticBackendUpdate {
-  id: string;
-  /** human-readable description of this backend. Optional */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata?: string;
-  /** the address to forward to */
-  address: string;
-  /** tls configuration to use */
-  tls: StaticBackendTLS;
-}
-
-export interface StaticBackendList {
-  /** the list of all static backends on this account */
-  backends: Array<StaticBackend>;
-  /** URI of the static backends list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
-export interface TunnelGroupBackend {
-  /** unique identifier for this TunnelGroup backend */
-  id: string;
-  /** timestamp when the backend was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
-  labels: Map<string, string>;
-}
-
-export interface TunnelGroupBackendCreate {
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
-  labels: Map<string, string>;
-}
-
-export interface TunnelGroupBackendUpdate {
-  id: string;
-  /** human-readable description of this backend. Optional */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata?: string;
-  /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
-  labels: Map<string, string>;
-}
-
-export interface TunnelGroupBackendList {
-  /** the list of all TunnelGroup backends on this account */
-  backends: Array<TunnelGroupBackend>;
-  /** URI of the TunnelGroup backends list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
-export interface WeightedBackend {
-  /** unique identifier for this Weighted backend */
-  id: string;
-  /** timestamp when the backend was created, RFC 3339 format */
-  created_at: string;
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** the ids of the child backends to their weights (0-10000) */
-  backends: Map<string, number>;
-}
-
-export interface WeightedBackendCreate {
-  /** human-readable description of this backend. Optional */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
-  /** the ids of the child backends to their weights (0-10000) */
-  backends: Map<string, number>;
-}
-
-export interface WeightedBackendUpdate {
-  id: string;
-  /** human-readable description of this backend. Optional */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata?: string;
-  /** the ids of the child backends to their weights (0-10000) */
-  backends: Map<string, number>;
-}
-
-export interface WeightedBackendList {
-  /** the list of all Weighted backends on this account */
-  backends: Array<WeightedBackend>;
-  /** URI of the Weighted backends list API resource */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  next_page_uri?: string;
-}
-
 export interface CertificateAuthorityCreate {
   /** human-readable description of this Certificate Authority. optional, max 255 bytes. */
   description: string;
@@ -516,8 +341,6 @@ export interface EndpointTLSTermination {
   min_version?: string;
 }
 
-export interface EndpointBasicAuth {}
-
 export interface EndpointLogging {
   /** true if the module will be applied to traffic, false to disable. default true if unspecified */
   enabled?: boolean;
@@ -735,89 +558,6 @@ export interface EndpointOIDC {
   scopes: Array<string>;
 }
 
-export interface EndpointBackend {
-  /** true if the module will be applied to traffic, false to disable. default true if unspecified */
-  enabled?: boolean;
-  /** backend to be used to back this endpoint */
-  backend: Ref;
-}
-
-export interface EndpointBackendMutate {}
-
-export interface TCPEdgeCreate {
-  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
-  ip_restriction?: EndpointIPPolicyMutate;
-}
-
-export interface TCPEdgeUpdate {
-  /** unique identifier of this edge */
-  id: string;
-  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata?: string;
-  ip_restriction?: EndpointIPPolicyMutate;
-}
-
-export interface TCPEdge {
-  /** unique identifier of this edge */
-  id: string;
-  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
-  /** timestamp when the edge was created, RFC 3339 format */
-  created_at: string;
-  /** URI of the edge API resource */
-  uri: string;
-  /** edge modules */
-  backend?: EndpointBackend;
-  ip_restriction?: EndpointIPPolicy;
-}
-
-export interface TLSEdgeCreate {
-  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
-  ip_restriction?: EndpointIPPolicyMutate;
-  mutual_tls?: EndpointMutualTLSMutate;
-  tls_termination?: EndpointTLSTermination;
-}
-
-export interface TLSEdgeUpdate {
-  /** unique identifier of this edge */
-  id: string;
-  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-  description?: string;
-  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata?: string;
-  ip_restriction?: EndpointIPPolicyMutate;
-  mutual_tls?: EndpointMutualTLSMutate;
-  tls_termination?: EndpointTLSTermination;
-}
-
-export interface TLSEdge {
-  /** unique identifier of this edge */
-  id: string;
-  /** human-readable description of what this edge will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-  description: string;
-  /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
-  /** timestamp when the edge configuration was created, RFC 3339 format */
-  created_at: string;
-  /** URI of the edge API resource */
-  uri: string;
-  /** edge modules */
-  backend?: EndpointBackend;
-  ip_restriction?: EndpointIPPolicy;
-  mutual_tls?: EndpointMutualTLS;
-  tls_termination?: EndpointTLSTermination;
-}
-
 export interface EventStreamCreate {
   /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
   metadata: string;
@@ -958,23 +698,6 @@ export interface EventTargetCloudwatchLogs {
   log_group_arn: string;
 }
 
-export interface EventTargetS3 {
-  /** Configuration for how to authenticate into your AWS account. Exactly one of role or creds should be configured. */
-  auth: AWSAuth;
-  /** An Amazon Resource Name specifying the S3 bucket to deposit events into. */
-  bucket_arn: string;
-  /** An optional prefix to prepend to S3 object keys. */
-  object_prefix: string;
-  /** Whether or not to compress files with gzip. */
-  compression: boolean;
-  /** How many bytes we should accumulate into a single file before sending to S3. */
-  max_file_size: number;
-  /** How many seconds we should batch up events before sending them to S3. */
-  max_file_age: number;
-}
-
-export interface EventTargetDebug {}
-
 export interface AWSAuth {
   /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
   role?: AWSRole;
@@ -992,10 +715,6 @@ export interface AWSCredentials {
   aws_access_key_id: string;
   /** The secret portion of an AWS access key. */
   aws_secret_access_key?: string;
-}
-
-export interface SentEvent {
-  event_id: string;
 }
 
 export interface EventSubscriptionCreate {
@@ -1282,11 +1001,6 @@ export interface EndpointLoggingReplace {
   module: EndpointLoggingMutate;
 }
 
-export interface EndpointBasicAuthReplace {
-  id: string;
-  module: EndpointBasicAuth;
-}
-
 export interface EndpointCircuitBreakerReplace {
   id: string;
   module: EndpointCircuitBreaker;
@@ -1340,11 +1054,6 @@ export interface EndpointSAMLReplace {
 export interface EndpointOIDCReplace {
   id: string;
   module: EndpointOIDC;
-}
-
-export interface EndpointBackendReplace {
-  id: string;
-  module: EndpointBackendMutate;
 }
 
 export interface ReservedAddrCreate {
@@ -1501,11 +1210,6 @@ export interface ReservedDomainCertJob {
   retries_at?: string;
   /** if present, indicates the dns nameservers that the user must configure to complete the provisioning process of a wildcard certificate */
   ns_targets: Array<ReservedDomainCertNSTarget>;
-}
-
-export interface RootResponse {
-  uri: string;
-  subresource_uris: Map<string, string>;
 }
 
 export interface SSHCertificateAuthorityCreate {

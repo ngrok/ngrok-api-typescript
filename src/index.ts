@@ -51,14 +51,20 @@ export class Ngrok {
   }
 
   AbuseReports = {
-    /** Creates a new abuse report which will be reviewed by our system and abuse response team. This API is only available to authorized accounts. Contact abuse@ngrok.com to request access */
+    /** Creates a new abuse report which will be reviewed by our system and abuse response team. This API is only available to authorized accounts. Contact abuse@ngrok.com to request access
+  
+    https://ngrok.com/docs/api#api-abuse-reports-create
+    */
     create: (arg: t.AbuseReportCreate): Promise<t.AbuseReport> =>
       this.rest
         .url(`/abuse_reports`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Get the detailed status of abuse report by ID. */
+    /** Get the detailed status of abuse report by ID.
+  
+    https://ngrok.com/docs/api#api-abuse-reports-get
+    */
     get: (arg: t.Item): Promise<t.AbuseReport> =>
       this.rest
         .url(`/abuse_reports/${arg.id}`)
@@ -68,28 +74,40 @@ export class Ngrok {
   };
 
   APIKeys = {
-    /** Create a new API key. The generated API key can be used to authenticate to the ngrok API. */
+    /** Create a new API key. The generated API key can be used to authenticate to the ngrok API.
+  
+    https://ngrok.com/docs/api#api-api-keys-create
+    */
     create: (arg: t.APIKeyCreate): Promise<t.APIKey> =>
       this.rest
         .url(`/api_keys`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an API key by ID */
+    /** Delete an API key by ID
+  
+    https://ngrok.com/docs/api#api-api-keys-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/api_keys/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get the details of an API key by ID. */
+    /** Get the details of an API key by ID.
+  
+    https://ngrok.com/docs/api#api-api-keys-get
+    */
     get: (arg: t.Item): Promise<t.APIKey> =>
       this.rest
         .url(`/api_keys/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all API keys owned by this account */
+    /** List all API keys owned by this account
+  
+    https://ngrok.com/docs/api#api-api-keys-list
+    */
     list: async (): Promise<Array<t.APIKey>> => {
       const array: Array<t.APIKey> = [];
       for await (const item of this.APIKeys._asyncList()) {
@@ -126,7 +144,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an API key by ID. */
+    /** Update attributes of an API key by ID.
+  
+    https://ngrok.com/docs/api#api-api-keys-update
+    */
     update: (arg: t.APIKeyUpdate): Promise<t.APIKey> =>
       this.rest
         .url(`/api_keys/${arg.id}`)
@@ -136,7 +157,10 @@ export class Ngrok {
   };
 
   CertificateAuthorities = {
-    /** Upload a new Certificate Authority */
+    /** Upload a new Certificate Authority
+  
+    https://ngrok.com/docs/api#api-certificate-authorities-create
+    */
     create: (
       arg: t.CertificateAuthorityCreate
     ): Promise<t.CertificateAuthority> =>
@@ -145,21 +169,30 @@ export class Ngrok {
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete a Certificate Authority */
+    /** Delete a Certificate Authority
+  
+    https://ngrok.com/docs/api#api-certificate-authorities-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/certificate_authorities/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about a certficate authority */
+    /** Get detailed information about a certficate authority
+  
+    https://ngrok.com/docs/api#api-certificate-authorities-get
+    */
     get: (arg: t.Item): Promise<t.CertificateAuthority> =>
       this.rest
         .url(`/certificate_authorities/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all Certificate Authority on this account */
+    /** List all Certificate Authority on this account
+  
+    https://ngrok.com/docs/api#api-certificate-authorities-list
+    */
     list: async (): Promise<Array<t.CertificateAuthority>> => {
       const array: Array<t.CertificateAuthority> = [];
       for await (const item of this.CertificateAuthorities._asyncList()) {
@@ -197,7 +230,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of a Certificate Authority by ID */
+    /** Update attributes of a Certificate Authority by ID
+  
+    https://ngrok.com/docs/api#api-certificate-authorities-update
+    */
     update: (
       arg: t.CertificateAuthorityUpdate
     ): Promise<t.CertificateAuthority> =>
@@ -209,28 +245,40 @@ export class Ngrok {
   };
 
   Credentials = {
-    /** Create a new tunnel authtoken credential. This authtoken credential can be used to start a new tunnel session. The response to this API call is the only time the generated token is available. If you need it for future use, you must save it securely yourself. */
+    /** Create a new tunnel authtoken credential. This authtoken credential can be used to start a new tunnel session. The response to this API call is the only time the generated token is available. If you need it for future use, you must save it securely yourself.
+  
+    https://ngrok.com/docs/api#api-credentials-create
+    */
     create: (arg: t.CredentialCreate): Promise<t.Credential> =>
       this.rest
         .url(`/credentials`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete a tunnel authtoken credential by ID */
+    /** Delete a tunnel authtoken credential by ID
+  
+    https://ngrok.com/docs/api#api-credentials-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/credentials/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about a tunnel authtoken credential */
+    /** Get detailed information about a tunnel authtoken credential
+  
+    https://ngrok.com/docs/api#api-credentials-get
+    */
     get: (arg: t.Item): Promise<t.Credential> =>
       this.rest
         .url(`/credentials/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all tunnel authtoken credentials on this account */
+    /** List all tunnel authtoken credentials on this account
+  
+    https://ngrok.com/docs/api#api-credentials-list
+    */
     list: async (): Promise<Array<t.Credential>> => {
       const array: Array<t.Credential> = [];
       for await (const item of this.Credentials._asyncList()) {
@@ -267,7 +315,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an tunnel authtoken credential by ID */
+    /** Update attributes of an tunnel authtoken credential by ID
+  
+    https://ngrok.com/docs/api#api-credentials-update
+    */
     update: (arg: t.CredentialUpdate): Promise<t.Credential> =>
       this.rest
         .url(`/credentials/${arg.id}`)
@@ -277,7 +328,10 @@ export class Ngrok {
   };
 
   EndpointConfigurations = {
-    /** Create a new endpoint configuration */
+    /** Create a new endpoint configuration
+  
+    https://ngrok.com/docs/api#api-endpoint-configurations-create
+    */
     create: (
       arg: t.EndpointConfigurationCreate
     ): Promise<t.EndpointConfiguration> =>
@@ -286,21 +340,30 @@ export class Ngrok {
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an endpoint configuration. This operation will fail if the endpoint configuration is still referenced by any reserved domain or reserved address. */
+    /** Delete an endpoint configuration. This operation will fail if the endpoint configuration is still referenced by any reserved domain or reserved address.
+  
+    https://ngrok.com/docs/api#api-endpoint-configurations-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/endpoint_configurations/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Returns detailed information about an endpoint configuration */
+    /** Returns detailed information about an endpoint configuration
+  
+    https://ngrok.com/docs/api#api-endpoint-configurations-get
+    */
     get: (arg: t.Item): Promise<t.EndpointConfiguration> =>
       this.rest
         .url(`/endpoint_configurations/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** Returns a list of all endpoint configurations on this account */
+    /** Returns a list of all endpoint configurations on this account
+  
+    https://ngrok.com/docs/api#api-endpoint-configurations-list
+    */
     list: async (): Promise<Array<t.EndpointConfiguration>> => {
       const array: Array<t.EndpointConfiguration> = [];
       for await (const item of this.EndpointConfigurations._asyncList()) {
@@ -338,7 +401,10 @@ export class Ngrok {
         }
       }
     },
-    /** Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API. */
+    /** Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
+  
+    https://ngrok.com/docs/api#api-endpoint-configurations-update
+    */
     update: (
       arg: t.EndpointConfigurationUpdate
     ): Promise<t.EndpointConfiguration> =>
@@ -350,28 +416,40 @@ export class Ngrok {
   };
 
   EventStreams = {
-    /** Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs. */
+    /** Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs.
+  
+    https://ngrok.com/docs/api#api-event-streams-create
+    */
     create: (arg: t.EventStreamCreate): Promise<t.EventStream> =>
       this.rest
         .url(`/event_streams`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an Event Stream. Associated Event Destinations will be preserved. */
+    /** Delete an Event Stream. Associated Event Destinations will be preserved.
+  
+    https://ngrok.com/docs/api#api-event-streams-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/event_streams/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an Event Stream by ID. */
+    /** Get detailed information about an Event Stream by ID.
+  
+    https://ngrok.com/docs/api#api-event-streams-get
+    */
     get: (arg: t.Item): Promise<t.EventStream> =>
       this.rest
         .url(`/event_streams/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all Event Streams available on this account. */
+    /** List all Event Streams available on this account.
+  
+    https://ngrok.com/docs/api#api-event-streams-list
+    */
     list: async (): Promise<Array<t.EventStream>> => {
       const array: Array<t.EventStream> = [];
       for await (const item of this.EventStreams._asyncList()) {
@@ -408,7 +486,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an Event Stream by ID. */
+    /** Update attributes of an Event Stream by ID.
+  
+    https://ngrok.com/docs/api#api-event-streams-update
+    */
     update: (arg: t.EventStreamUpdate): Promise<t.EventStream> =>
       this.rest
         .url(`/event_streams/${arg.id}`)
@@ -418,28 +499,40 @@ export class Ngrok {
   };
 
   EventDestinations = {
-    /** Create a new Event Destination. It will not apply to anything until it is associated with an Event Stream, and that Event Stream is associated with an Endpoint Config. */
+    /** Create a new Event Destination. It will not apply to anything until it is associated with an Event Stream, and that Event Stream is associated with an Endpoint Config.
+  
+    https://ngrok.com/docs/api#api-event-destinations-create
+    */
     create: (arg: t.EventDestinationCreate): Promise<t.EventDestination> =>
       this.rest
         .url(`/event_destinations`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an Event Destination. If the Event Destination is still referenced by an Event Stream, this will throw an error until that Event Stream has removed that reference. */
+    /** Delete an Event Destination. If the Event Destination is still referenced by an Event Stream, this will throw an error until that Event Stream has removed that reference.
+  
+    https://ngrok.com/docs/api#api-event-destinations-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/event_destinations/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an Event Destination by ID. */
+    /** Get detailed information about an Event Destination by ID.
+  
+    https://ngrok.com/docs/api#api-event-destinations-get
+    */
     get: (arg: t.Item): Promise<t.EventDestination> =>
       this.rest
         .url(`/event_destinations/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all Event Destinations on this account. */
+    /** List all Event Destinations on this account.
+  
+    https://ngrok.com/docs/api#api-event-destinations-list
+    */
     list: async (): Promise<Array<t.EventDestination>> => {
       const array: Array<t.EventDestination> = [];
       for await (const item of this.EventDestinations._asyncList()) {
@@ -476,7 +569,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an Event Destination. */
+    /** Update attributes of an Event Destination.
+  
+    https://ngrok.com/docs/api#api-event-destinations-update
+    */
     update: (arg: t.EventDestinationUpdate): Promise<t.EventDestination> =>
       this.rest
         .url(`/event_destinations/${arg.id}`)
@@ -486,28 +582,40 @@ export class Ngrok {
   };
 
   EventSubscriptions = {
-    /** Create an Event Subscription. */
+    /** Create an Event Subscription.
+  
+    https://ngrok.com/docs/api#api-event-subscriptions-create
+    */
     create: (arg: t.EventSubscriptionCreate): Promise<t.EventSubscription> =>
       this.rest
         .url(`/event_subscriptions`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an Event Subscription. */
+    /** Delete an Event Subscription.
+  
+    https://ngrok.com/docs/api#api-event-subscriptions-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/event_subscriptions/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get an Event Subscription by ID. */
+    /** Get an Event Subscription by ID.
+  
+    https://ngrok.com/docs/api#api-event-subscriptions-get
+    */
     get: (arg: t.Item): Promise<t.EventSubscription> =>
       this.rest
         .url(`/event_subscriptions/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List this Account's Event Subscriptions. */
+    /** List this Account's Event Subscriptions.
+  
+    https://ngrok.com/docs/api#api-event-subscriptions-list
+    */
     list: async (): Promise<Array<t.EventSubscription>> => {
       const array: Array<t.EventSubscription> = [];
       for await (const item of this.EventSubscriptions._asyncList()) {
@@ -544,7 +652,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update an Event Subscription. */
+    /** Update an Event Subscription.
+  
+    https://ngrok.com/docs/api#api-event-subscriptions-update
+    */
     update: (arg: t.EventSubscriptionUpdate): Promise<t.EventSubscription> =>
       this.rest
         .url(`/event_subscriptions/${arg.id}`)
@@ -554,35 +665,50 @@ export class Ngrok {
   };
 
   EventSources = {
-    /** Add an additional type for which this event subscription will trigger */
+    /** Add an additional type for which this event subscription will trigger
+  
+    https://ngrok.com/docs/api#api-event-sources-create
+    */
     create: (arg: t.EventSourceCreate): Promise<t.EventSource> =>
       this.rest
         .url(`/event_subscriptions/${arg.subscription_id}/sources`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Remove a type for which this event subscription will trigger */
+    /** Remove a type for which this event subscription will trigger
+  
+    https://ngrok.com/docs/api#api-event-sources-delete
+    */
     delete: (arg: t.EventSourceItem): Promise<t.Empty> =>
       this.rest
         .url(`/event_subscriptions/${arg.subscription_id}/sources/${arg.type}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get the details for a given type that triggers for the given event subscription */
+    /** Get the details for a given type that triggers for the given event subscription
+  
+    https://ngrok.com/docs/api#api-event-sources-get
+    */
     get: (arg: t.EventSourceItem): Promise<t.EventSource> =>
       this.rest
         .url(`/event_subscriptions/${arg.subscription_id}/sources/${arg.type}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List the types for which this event subscription will trigger */
+    /** List the types for which this event subscription will trigger
+  
+    https://ngrok.com/docs/api#api-event-sources-list
+    */
     list: (arg: t.EventSourcePaging): Promise<t.EventSourceList> =>
       this.rest
         .url(`/event_subscriptions/${arg.subscription_id}/sources`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** Update the type for which this event subscription will trigger */
+    /** Update the type for which this event subscription will trigger
+  
+    https://ngrok.com/docs/api#api-event-sources-update
+    */
     update: (arg: t.EventSourceUpdate): Promise<t.EventSource> =>
       this.rest
         .url(`/event_subscriptions/${arg.subscription_id}/sources/${arg.type}`)
@@ -592,28 +718,40 @@ export class Ngrok {
   };
 
   IPPolicies = {
-    /** Create a new IP policy. It will not apply to any traffic until you associate to a traffic source via an endpoint configuration or IP restriction. */
+    /** Create a new IP policy. It will not apply to any traffic until you associate to a traffic source via an endpoint configuration or IP restriction.
+  
+    https://ngrok.com/docs/api#api-ip-policies-create
+    */
     create: (arg: t.IPPolicyCreate): Promise<t.IPPolicy> =>
       this.rest
         .url(`/ip_policies`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an IP policy. If the IP policy is referenced by another object for the purposes of traffic restriction it will be treated as if the IP policy remains but has zero rules. */
+    /** Delete an IP policy. If the IP policy is referenced by another object for the purposes of traffic restriction it will be treated as if the IP policy remains but has zero rules.
+  
+    https://ngrok.com/docs/api#api-ip-policies-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ip_policies/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an IP policy by ID. */
+    /** Get detailed information about an IP policy by ID.
+  
+    https://ngrok.com/docs/api#api-ip-policies-get
+    */
     get: (arg: t.Item): Promise<t.IPPolicy> =>
       this.rest
         .url(`/ip_policies/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all IP policies on this account */
+    /** List all IP policies on this account
+  
+    https://ngrok.com/docs/api#api-ip-policies-list
+    */
     list: async (): Promise<Array<t.IPPolicy>> => {
       const array: Array<t.IPPolicy> = [];
       for await (const item of this.IPPolicies._asyncList()) {
@@ -650,7 +788,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an IP policy by ID */
+    /** Update attributes of an IP policy by ID
+  
+    https://ngrok.com/docs/api#api-ip-policies-update
+    */
     update: (arg: t.IPPolicyUpdate): Promise<t.IPPolicy> =>
       this.rest
         .url(`/ip_policies/${arg.id}`)
@@ -660,28 +801,40 @@ export class Ngrok {
   };
 
   IPPolicyRules = {
-    /** Create a new IP policy rule attached to an IP Policy. */
+    /** Create a new IP policy rule attached to an IP Policy.
+  
+    https://ngrok.com/docs/api#api-ip-policy-rules-create
+    */
     create: (arg: t.IPPolicyRuleCreate): Promise<t.IPPolicyRule> =>
       this.rest
         .url(`/ip_policy_rules`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an IP policy rule. */
+    /** Delete an IP policy rule.
+  
+    https://ngrok.com/docs/api#api-ip-policy-rules-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ip_policy_rules/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an IP policy rule by ID. */
+    /** Get detailed information about an IP policy rule by ID.
+  
+    https://ngrok.com/docs/api#api-ip-policy-rules-get
+    */
     get: (arg: t.Item): Promise<t.IPPolicyRule> =>
       this.rest
         .url(`/ip_policy_rules/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all IP policy rules on this account */
+    /** List all IP policy rules on this account
+  
+    https://ngrok.com/docs/api#api-ip-policy-rules-list
+    */
     list: async (): Promise<Array<t.IPPolicyRule>> => {
       const array: Array<t.IPPolicyRule> = [];
       for await (const item of this.IPPolicyRules._asyncList()) {
@@ -718,7 +871,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an IP policy rule by ID */
+    /** Update attributes of an IP policy rule by ID
+  
+    https://ngrok.com/docs/api#api-ip-policy-rules-update
+    */
     update: (arg: t.IPPolicyRuleUpdate): Promise<t.IPPolicyRule> =>
       this.rest
         .url(`/ip_policy_rules/${arg.id}`)
@@ -728,28 +884,40 @@ export class Ngrok {
   };
 
   IPRestrictions = {
-    /** Create a new IP restriction */
+    /** Create a new IP restriction
+  
+    https://ngrok.com/docs/api#api-ip-restrictions-create
+    */
     create: (arg: t.IPRestrictionCreate): Promise<t.IPRestriction> =>
       this.rest
         .url(`/ip_restrictions`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an IP restriction */
+    /** Delete an IP restriction
+  
+    https://ngrok.com/docs/api#api-ip-restrictions-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ip_restrictions/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an IP restriction */
+    /** Get detailed information about an IP restriction
+  
+    https://ngrok.com/docs/api#api-ip-restrictions-get
+    */
     get: (arg: t.Item): Promise<t.IPRestriction> =>
       this.rest
         .url(`/ip_restrictions/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all IP restrictions on this account */
+    /** List all IP restrictions on this account
+  
+    https://ngrok.com/docs/api#api-ip-restrictions-list
+    */
     list: async (): Promise<Array<t.IPRestriction>> => {
       const array: Array<t.IPRestriction> = [];
       for await (const item of this.IPRestrictions._asyncList()) {
@@ -786,7 +954,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an IP restriction by ID */
+    /** Update attributes of an IP restriction by ID
+  
+    https://ngrok.com/docs/api#api-ip-restrictions-update
+    */
     update: (arg: t.IPRestrictionUpdate): Promise<t.IPRestriction> =>
       this.rest
         .url(`/ip_restrictions/${arg.id}`)
@@ -796,28 +967,40 @@ export class Ngrok {
   };
 
   IPWhitelist = {
-    /** Create a new IP whitelist entry that will restrict traffic to all tunnel endpoints on the account. */
+    /** Create a new IP whitelist entry that will restrict traffic to all tunnel endpoints on the account.
+  
+    https://ngrok.com/docs/api#api-ip-whitelist-create
+    */
     create: (arg: t.IPWhitelistEntryCreate): Promise<t.IPWhitelistEntry> =>
       this.rest
         .url(`/ip_whitelist`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an IP whitelist entry. */
+    /** Delete an IP whitelist entry.
+  
+    https://ngrok.com/docs/api#api-ip-whitelist-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ip_whitelist/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an IP whitelist entry by ID. */
+    /** Get detailed information about an IP whitelist entry by ID.
+  
+    https://ngrok.com/docs/api#api-ip-whitelist-get
+    */
     get: (arg: t.Item): Promise<t.IPWhitelistEntry> =>
       this.rest
         .url(`/ip_whitelist/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all IP whitelist entries on this account */
+    /** List all IP whitelist entries on this account
+  
+    https://ngrok.com/docs/api#api-ip-whitelist-list
+    */
     list: async (): Promise<Array<t.IPWhitelistEntry>> => {
       const array: Array<t.IPWhitelistEntry> = [];
       for await (const item of this.IPWhitelist._asyncList()) {
@@ -854,7 +1037,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an IP whitelist entry by ID */
+    /** Update attributes of an IP whitelist entry by ID
+  
+    https://ngrok.com/docs/api#api-ip-whitelist-update
+    */
     update: (arg: t.IPWhitelistEntryUpdate): Promise<t.IPWhitelistEntry> =>
       this.rest
         .url(`/ip_whitelist/${arg.id}`)
@@ -1128,28 +1314,40 @@ export class Ngrok {
   };
 
   ReservedAddrs = {
-    /** Create a new reserved address. */
+    /** Create a new reserved address.
+  
+    https://ngrok.com/docs/api#api-reserved-addrs-create
+    */
     create: (arg: t.ReservedAddrCreate): Promise<t.ReservedAddr> =>
       this.rest
         .url(`/reserved_addrs`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete a reserved address. */
+    /** Delete a reserved address.
+  
+    https://ngrok.com/docs/api#api-reserved-addrs-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_addrs/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get the details of a reserved address. */
+    /** Get the details of a reserved address.
+  
+    https://ngrok.com/docs/api#api-reserved-addrs-get
+    */
     get: (arg: t.Item): Promise<t.ReservedAddr> =>
       this.rest
         .url(`/reserved_addrs/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all reserved addresses on this account. */
+    /** List all reserved addresses on this account.
+  
+    https://ngrok.com/docs/api#api-reserved-addrs-list
+    */
     list: async (): Promise<Array<t.ReservedAddr>> => {
       const array: Array<t.ReservedAddr> = [];
       for await (const item of this.ReservedAddrs._asyncList()) {
@@ -1186,14 +1384,20 @@ export class Ngrok {
         }
       }
     },
-    /** Update the attributes of a reserved address. */
+    /** Update the attributes of a reserved address.
+  
+    https://ngrok.com/docs/api#api-reserved-addrs-update
+    */
     update: (arg: t.ReservedAddrUpdate): Promise<t.ReservedAddr> =>
       this.rest
         .url(`/reserved_addrs/${arg.id}`)
         .patch(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Detach the endpoint configuration attached to a reserved address. */
+    /** Detach the endpoint configuration attached to a reserved address.
+  
+    https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config
+    */
     deleteEndpointConfig: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_addrs/${arg.id}/endpoint_configuration`)
@@ -1203,28 +1407,40 @@ export class Ngrok {
   };
 
   ReservedDomains = {
-    /** Create a new reserved domain. */
+    /** Create a new reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-create
+    */
     create: (arg: t.ReservedDomainCreate): Promise<t.ReservedDomain> =>
       this.rest
         .url(`/reserved_domains`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete a reserved domain. */
+    /** Delete a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_domains/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get the details of a reserved domain. */
+    /** Get the details of a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-get
+    */
     get: (arg: t.Item): Promise<t.ReservedDomain> =>
       this.rest
         .url(`/reserved_domains/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all reserved domains on this account. */
+    /** List all reserved domains on this account.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-list
+    */
     list: async (): Promise<Array<t.ReservedDomain>> => {
       const array: Array<t.ReservedDomain> = [];
       for await (const item of this.ReservedDomains._asyncList()) {
@@ -1261,35 +1477,50 @@ export class Ngrok {
         }
       }
     },
-    /** Update the attributes of a reserved domain. */
+    /** Update the attributes of a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-update
+    */
     update: (arg: t.ReservedDomainUpdate): Promise<t.ReservedDomain> =>
       this.rest
         .url(`/reserved_domains/${arg.id}`)
         .patch(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Detach the certificate management policy attached to a reserved domain. */
+    /** Detach the certificate management policy attached to a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-delete-certificate-management-policy
+    */
     deleteCertificateManagementPolicy: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_domains/${arg.id}/certificate_management_policy`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Detach the certificate attached to a reserved domain. */
+    /** Detach the certificate attached to a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-delete-certificate
+    */
     deleteCertificate: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_domains/${arg.id}/certificate`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Detach the http endpoint configuration attached to a reserved domain. */
+    /** Detach the http endpoint configuration attached to a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-delete-http-endpoint-config
+    */
     deleteHTTPEndpointConfig: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_domains/${arg.id}/http_endpoint_configuration`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Detach the https endpoint configuration attached to a reserved domain. */
+    /** Detach the https endpoint configuration attached to a reserved domain.
+  
+    https://ngrok.com/docs/api#api-reserved-domains-delete-https-endpoint-config
+    */
     deleteHTTPSEndpointConfig: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/reserved_domains/${arg.id}/https_endpoint_configuration`)
@@ -1299,7 +1530,10 @@ export class Ngrok {
   };
 
   SSHCertificateAuthorities = {
-    /** Create a new SSH Certificate Authority */
+    /** Create a new SSH Certificate Authority
+  
+    https://ngrok.com/docs/api#api-ssh-certificate-authorities-create
+    */
     create: (
       arg: t.SSHCertificateAuthorityCreate
     ): Promise<t.SSHCertificateAuthority> =>
@@ -1308,21 +1542,30 @@ export class Ngrok {
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an SSH Certificate Authority */
+    /** Delete an SSH Certificate Authority
+  
+    https://ngrok.com/docs/api#api-ssh-certificate-authorities-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ssh_certificate_authorities/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an SSH Certficate Authority */
+    /** Get detailed information about an SSH Certficate Authority
+  
+    https://ngrok.com/docs/api#api-ssh-certificate-authorities-get
+    */
     get: (arg: t.Item): Promise<t.SSHCertificateAuthority> =>
       this.rest
         .url(`/ssh_certificate_authorities/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all SSH Certificate Authorities on this account */
+    /** List all SSH Certificate Authorities on this account
+  
+    https://ngrok.com/docs/api#api-ssh-certificate-authorities-list
+    */
     list: async (): Promise<Array<t.SSHCertificateAuthority>> => {
       const array: Array<t.SSHCertificateAuthority> = [];
       for await (const item of this.SSHCertificateAuthorities._asyncList()) {
@@ -1360,7 +1603,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update an SSH Certificate Authority */
+    /** Update an SSH Certificate Authority
+  
+    https://ngrok.com/docs/api#api-ssh-certificate-authorities-update
+    */
     update: (
       arg: t.SSHCertificateAuthorityUpdate
     ): Promise<t.SSHCertificateAuthority> =>
@@ -1372,28 +1618,40 @@ export class Ngrok {
   };
 
   SSHCredentials = {
-    /** Create a new ssh_credential from an uploaded public SSH key. This ssh credential can be used to start new tunnels via ngrok's SSH gateway. */
+    /** Create a new ssh_credential from an uploaded public SSH key. This ssh credential can be used to start new tunnels via ngrok's SSH gateway.
+  
+    https://ngrok.com/docs/api#api-ssh-credentials-create
+    */
     create: (arg: t.SSHCredentialCreate): Promise<t.SSHCredential> =>
       this.rest
         .url(`/ssh_credentials`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an ssh_credential by ID */
+    /** Delete an ssh_credential by ID
+  
+    https://ngrok.com/docs/api#api-ssh-credentials-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ssh_credentials/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an ssh_credential */
+    /** Get detailed information about an ssh_credential
+  
+    https://ngrok.com/docs/api#api-ssh-credentials-get
+    */
     get: (arg: t.Item): Promise<t.SSHCredential> =>
       this.rest
         .url(`/ssh_credentials/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all ssh credentials on this account */
+    /** List all ssh credentials on this account
+  
+    https://ngrok.com/docs/api#api-ssh-credentials-list
+    */
     list: async (): Promise<Array<t.SSHCredential>> => {
       const array: Array<t.SSHCredential> = [];
       for await (const item of this.SSHCredentials._asyncList()) {
@@ -1430,7 +1688,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of an ssh_credential by ID */
+    /** Update attributes of an ssh_credential by ID
+  
+    https://ngrok.com/docs/api#api-ssh-credentials-update
+    */
     update: (arg: t.SSHCredentialUpdate): Promise<t.SSHCredential> =>
       this.rest
         .url(`/ssh_credentials/${arg.id}`)
@@ -1440,28 +1701,40 @@ export class Ngrok {
   };
 
   SSHHostCertificates = {
-    /** Create a new SSH Host Certificate */
+    /** Create a new SSH Host Certificate
+  
+    https://ngrok.com/docs/api#api-ssh-host-certificates-create
+    */
     create: (arg: t.SSHHostCertificateCreate): Promise<t.SSHHostCertificate> =>
       this.rest
         .url(`/ssh_host_certificates`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an SSH Host Certificate */
+    /** Delete an SSH Host Certificate
+  
+    https://ngrok.com/docs/api#api-ssh-host-certificates-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ssh_host_certificates/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an SSH Host Certficate */
+    /** Get detailed information about an SSH Host Certficate
+  
+    https://ngrok.com/docs/api#api-ssh-host-certificates-get
+    */
     get: (arg: t.Item): Promise<t.SSHHostCertificate> =>
       this.rest
         .url(`/ssh_host_certificates/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all SSH Host Certificates issued on this account */
+    /** List all SSH Host Certificates issued on this account
+  
+    https://ngrok.com/docs/api#api-ssh-host-certificates-list
+    */
     list: async (): Promise<Array<t.SSHHostCertificate>> => {
       const array: Array<t.SSHHostCertificate> = [];
       for await (const item of this.SSHHostCertificates._asyncList()) {
@@ -1498,7 +1771,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update an SSH Host Certificate */
+    /** Update an SSH Host Certificate
+  
+    https://ngrok.com/docs/api#api-ssh-host-certificates-update
+    */
     update: (arg: t.SSHHostCertificateUpdate): Promise<t.SSHHostCertificate> =>
       this.rest
         .url(`/ssh_host_certificates/${arg.id}`)
@@ -1508,28 +1784,40 @@ export class Ngrok {
   };
 
   SSHUserCertificates = {
-    /** Create a new SSH User Certificate */
+    /** Create a new SSH User Certificate
+  
+    https://ngrok.com/docs/api#api-ssh-user-certificates-create
+    */
     create: (arg: t.SSHUserCertificateCreate): Promise<t.SSHUserCertificate> =>
       this.rest
         .url(`/ssh_user_certificates`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete an SSH User Certificate */
+    /** Delete an SSH User Certificate
+  
+    https://ngrok.com/docs/api#api-ssh-user-certificates-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/ssh_user_certificates/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about an SSH User Certficate */
+    /** Get detailed information about an SSH User Certficate
+  
+    https://ngrok.com/docs/api#api-ssh-user-certificates-get
+    */
     get: (arg: t.Item): Promise<t.SSHUserCertificate> =>
       this.rest
         .url(`/ssh_user_certificates/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all SSH User Certificates issued on this account */
+    /** List all SSH User Certificates issued on this account
+  
+    https://ngrok.com/docs/api#api-ssh-user-certificates-list
+    */
     list: async (): Promise<Array<t.SSHUserCertificate>> => {
       const array: Array<t.SSHUserCertificate> = [];
       for await (const item of this.SSHUserCertificates._asyncList()) {
@@ -1566,7 +1854,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update an SSH User Certificate */
+    /** Update an SSH User Certificate
+  
+    https://ngrok.com/docs/api#api-ssh-user-certificates-update
+    */
     update: (arg: t.SSHUserCertificateUpdate): Promise<t.SSHUserCertificate> =>
       this.rest
         .url(`/ssh_user_certificates/${arg.id}`)
@@ -1576,28 +1867,40 @@ export class Ngrok {
   };
 
   TLSCertificates = {
-    /** Upload a new TLS certificate */
+    /** Upload a new TLS certificate
+  
+    https://ngrok.com/docs/api#api-tls-certificates-create
+    */
     create: (arg: t.TLSCertificateCreate): Promise<t.TLSCertificate> =>
       this.rest
         .url(`/tls_certificates`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Delete a TLS certificate */
+    /** Delete a TLS certificate
+  
+    https://ngrok.com/docs/api#api-tls-certificates-delete
+    */
     delete: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/tls_certificates/${arg.id}`)
         .delete()
         .json()
         .then(onFulfilled, onRejected),
-    /** Get detailed information about a TLS certificate */
+    /** Get detailed information about a TLS certificate
+  
+    https://ngrok.com/docs/api#api-tls-certificates-get
+    */
     get: (arg: t.Item): Promise<t.TLSCertificate> =>
       this.rest
         .url(`/tls_certificates/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** List all TLS certificates on this account */
+    /** List all TLS certificates on this account
+  
+    https://ngrok.com/docs/api#api-tls-certificates-list
+    */
     list: async (): Promise<Array<t.TLSCertificate>> => {
       const array: Array<t.TLSCertificate> = [];
       for await (const item of this.TLSCertificates._asyncList()) {
@@ -1634,7 +1937,10 @@ export class Ngrok {
         }
       }
     },
-    /** Update attributes of a TLS Certificate by ID */
+    /** Update attributes of a TLS Certificate by ID
+  
+    https://ngrok.com/docs/api#api-tls-certificates-update
+    */
     update: (arg: t.TLSCertificateUpdate): Promise<t.TLSCertificate> =>
       this.rest
         .url(`/tls_certificates/${arg.id}`)
@@ -1644,7 +1950,10 @@ export class Ngrok {
   };
 
   TunnelSessions = {
-    /** List all online tunnel sessions running on this account. */
+    /** List all online tunnel sessions running on this account.
+  
+    https://ngrok.com/docs/api#api-tunnel-sessions-list
+    */
     list: async (): Promise<Array<t.TunnelSession>> => {
       const array: Array<t.TunnelSession> = [];
       for await (const item of this.TunnelSessions._asyncList()) {
@@ -1681,28 +1990,40 @@ export class Ngrok {
         }
       }
     },
-    /** Get the detailed status of a tunnel session by ID */
+    /** Get the detailed status of a tunnel session by ID
+  
+    https://ngrok.com/docs/api#api-tunnel-sessions-get
+    */
     get: (arg: t.Item): Promise<t.TunnelSession> =>
       this.rest
         .url(`/tunnel_sessions/${arg.id}`)
         .get()
         .json()
         .then(onFulfilled, onRejected),
-    /** Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID. */
+    /** Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID.
+  
+    https://ngrok.com/docs/api#api-tunnel-sessions-restart
+    */
     restart: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/tunnel_sessions/${arg.id}/restart`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Issues a command instructing the ngrok agent that started this tunnel session to exit. */
+    /** Issues a command instructing the ngrok agent that started this tunnel session to exit.
+  
+    https://ngrok.com/docs/api#api-tunnel-sessions-stop
+    */
     stop: (arg: t.Item): Promise<t.Empty> =>
       this.rest
         .url(`/tunnel_sessions/${arg.id}/stop`)
         .post(serializeMap(arg))
         .json()
         .then(onFulfilled, onRejected),
-    /** Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted */
+    /** Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted
+  
+    https://ngrok.com/docs/api#api-tunnel-sessions-update
+    */
     update: (arg: t.TunnelSessionsUpdate): Promise<t.Empty> =>
       this.rest
         .url(`/tunnel_sessions/${arg.id}/update`)
@@ -1712,7 +2033,10 @@ export class Ngrok {
   };
 
   Tunnels = {
-    /** List all online tunnels currently running on the account. */
+    /** List all online tunnels currently running on the account.
+  
+    https://ngrok.com/docs/api#api-tunnels-list
+    */
     list: async (): Promise<Array<t.Tunnel>> => {
       const array: Array<t.Tunnel> = [];
       for await (const item of this.Tunnels._asyncList()) {
