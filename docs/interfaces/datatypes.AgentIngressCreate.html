@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ReservedDomainCertNSTarget | @ngrok/ngrok-api</title>
+	<title>AgentIngressCreate | @ngrok/ngrok-api</title>
 	<meta name="description" content="Documentation for @ngrok/ngrok-api">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/datatypes.html">datatypes</a>
 				</li>
 				<li>
-					<a href="datatypes.ReservedDomainCertNSTarget.html">ReservedDomainCertNSTarget</a>
+					<a href="datatypes.AgentIngressCreate.html">AgentIngressCreate</a>
 				</li>
 			</ul>
-			<h1>Interface ReservedDomainCertNSTarget</h1>
+			<h1>Interface AgentIngressCreate</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ReservedDomainCertNSTarget</span>
+						<span class="target">AgentIngressCreate</span>
 					</li>
 				</ul>
 			</section>
@@ -83,8 +83,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCertNSTarget.html#nameservers" class="tsd-kind-icon">nameservers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCertNSTarget.html#zone" class="tsd-kind-icon">zone</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngressCreate.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngressCreate.html#domain" class="tsd-kind-icon">domain</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngressCreate.html#metadata" class="tsd-kind-icon">metadata</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,32 +94,47 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="nameservers" class="tsd-anchor"></a>
-					<h3>nameservers</h3>
-					<div class="tsd-signature tsd-kind-icon">nameservers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="description" class="tsd-anchor"></a>
+					<h3>description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1199</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L60">datatypes.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>the nameservers the user must add</p>
+							<p>human-readable description of the use of this Agent Ingress. optional, max 255 bytes.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="zone" class="tsd-anchor"></a>
-					<h3>zone</h3>
-					<div class="tsd-signature tsd-kind-icon">zone<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="domain" class="tsd-anchor"></a>
+					<h3>domain</h3>
+					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1197</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L64">datatypes.ts:64</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>the zone that the nameservers need to be applied to</p>
+							<p>the domain that you own to be used as the base domain name to generate regional agent ingress domains.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="metadata" class="tsd-anchor"></a>
+					<h3>metadata</h3>
+					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L62">datatypes.ts:62</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes</p>
 						</div>
 					</div>
 				</section>
@@ -146,13 +162,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="datatypes.ReservedDomainCertNSTarget.html" class="tsd-kind-icon">Reserved<wbr>Domain<wbr>CertNSTarget</a>
+						<a href="datatypes.AgentIngressCreate.html" class="tsd-kind-icon">Agent<wbr>Ingress<wbr>Create</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCertNSTarget.html#nameservers" class="tsd-kind-icon">nameservers</a>
+								<a href="datatypes.AgentIngressCreate.html#description" class="tsd-kind-icon">description</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCertNSTarget.html#zone" class="tsd-kind-icon">zone</a>
+								<a href="datatypes.AgentIngressCreate.html#domain" class="tsd-kind-icon">domain</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.AgentIngressCreate.html#metadata" class="tsd-kind-icon">metadata</a>
 							</li>
 						</ul>
 					</li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IPWhitelistEntry | @ngrok/ngrok-api</title>
+	<title>AgentIngress | @ngrok/ngrok-api</title>
 	<meta name="description" content="Documentation for @ngrok/ngrok-api">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/datatypes.html">datatypes</a>
 				</li>
 				<li>
-					<a href="datatypes.IPWhitelistEntry.html">IPWhitelistEntry</a>
+					<a href="datatypes.AgentIngress.html">AgentIngress</a>
 				</li>
 			</ul>
-			<h1>Interface IPWhitelistEntry</h1>
+			<h1>Interface AgentIngress</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IPWhitelistEntry</span>
+						<span class="target">AgentIngress</span>
 					</li>
 				</ul>
 			</section>
@@ -83,12 +83,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntry.html#createdAt" class="tsd-kind-icon">created<wbr>At</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntry.html#description" class="tsd-kind-icon">description</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntry.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntry.html#ipNet" class="tsd-kind-icon">ip<wbr>Net</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntry.html#metadata" class="tsd-kind-icon">metadata</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntry.html#uri" class="tsd-kind-icon">uri</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#createdAt" class="tsd-kind-icon">created<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#domain" class="tsd-kind-icon">domain</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#nsTargets" class="tsd-kind-icon">ns<wbr>Targets</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#regionDomains" class="tsd-kind-icon">region<wbr>Domains</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngress.html#uri" class="tsd-kind-icon">uri</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,12 +104,12 @@
 					<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:981</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L91">datatypes.ts:91</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>timestamp when the IP whitelist entry was created, RFC 3339 format</p>
+							<p>timestamp when the Agent Ingress was created, RFC 3339 format</p>
 						</div>
 					</div>
 				</section>
@@ -117,12 +119,27 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:983</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L81">datatypes.ts:81</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes.</p>
+							<p>human-readable description of the use of this Agent Ingress. optional, max 255 bytes.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="domain" class="tsd-anchor"></a>
+					<h3>domain</h3>
+					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L85">datatypes.ts:85</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the domain that you own to be used as the base domain name to generate regional agent ingress domains.</p>
 						</div>
 					</div>
 				</section>
@@ -132,27 +149,12 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:977</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L77">datatypes.ts:77</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>unique identifier for this IP whitelist entry</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="ipNet" class="tsd-anchor"></a>
-					<h3>ip<wbr>Net</h3>
-					<div class="tsd-signature tsd-kind-icon">ip<wbr>Net<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in datatypes.ts:987</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints</p>
+							<p>unique Agent Ingress resource identifier</p>
 						</div>
 					</div>
 				</section>
@@ -162,12 +164,42 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:985</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L83">datatypes.ts:83</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes.</p>
+							<p>arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nsTargets" class="tsd-anchor"></a>
+					<h3>ns<wbr>Targets</h3>
+					<div class="tsd-signature tsd-kind-icon">ns<wbr>Targets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L87">datatypes.ts:87</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>a list of target values to use as the values of NS records for the domain property these values will delegate control over the domain to ngrok</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="regionDomains" class="tsd-anchor"></a>
+					<h3>region<wbr>Domains</h3>
+					<div class="tsd-signature tsd-kind-icon">region<wbr>Domains<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L89">datatypes.ts:89</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>a list of regional agent ingress domains that are subdomains of the value of domain this value may increase over time as ngrok adds more regions</p>
 						</div>
 					</div>
 				</section>
@@ -177,12 +209,12 @@
 					<div class="tsd-signature tsd-kind-icon">uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:979</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L79">datatypes.ts:79</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URI of the IP whitelist entry API resource</p>
+							<p>URI to the API resource of this Agent ingress</p>
 						</div>
 					</div>
 				</section>
@@ -210,25 +242,31 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="datatypes.IPWhitelistEntry.html" class="tsd-kind-icon">IPWhitelist<wbr>Entry</a>
+						<a href="datatypes.AgentIngress.html" class="tsd-kind-icon">Agent<wbr>Ingress</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntry.html#createdAt" class="tsd-kind-icon">created<wbr>At</a>
+								<a href="datatypes.AgentIngress.html#createdAt" class="tsd-kind-icon">created<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntry.html#description" class="tsd-kind-icon">description</a>
+								<a href="datatypes.AgentIngress.html#description" class="tsd-kind-icon">description</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntry.html#id" class="tsd-kind-icon">id</a>
+								<a href="datatypes.AgentIngress.html#domain" class="tsd-kind-icon">domain</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntry.html#ipNet" class="tsd-kind-icon">ip<wbr>Net</a>
+								<a href="datatypes.AgentIngress.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntry.html#metadata" class="tsd-kind-icon">metadata</a>
+								<a href="datatypes.AgentIngress.html#metadata" class="tsd-kind-icon">metadata</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntry.html#uri" class="tsd-kind-icon">uri</a>
+								<a href="datatypes.AgentIngress.html#nsTargets" class="tsd-kind-icon">ns<wbr>Targets</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.AgentIngress.html#regionDomains" class="tsd-kind-icon">region<wbr>Domains</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.AgentIngress.html#uri" class="tsd-kind-icon">uri</a>
 							</li>
 						</ul>
 					</li>

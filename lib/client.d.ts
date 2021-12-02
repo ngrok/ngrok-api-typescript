@@ -12,6 +12,7 @@ export declare class Ngrok {
    ngrok that violate ngrok's terms of service.
      */
     abuseReports: services.AbuseReports;
+    agentIngresses: services.AgentIngresses;
     /**
      * API Keys are used to authenticate to the [ngrok
    API](https://ngrok.com/docs/api#authentication). You may use the API itself
@@ -66,11 +67,6 @@ export declare class Ngrok {
    public-facing endpoints.
      */
     ipRestrictions: services.IPRestrictions;
-    /**
-     * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
-   with an `endpoints` type instead.
-     */
-    ipWhitelist: services.IPWhitelist;
     /**
      * Reserved Addresses are TCP addresses that can be used to listen for traffic.
    TCP address hostnames and ports are assigned by ngrok, they cannot be

@@ -17,6 +17,33 @@ export declare class AbuseReports {
      */
     get(arg: datatypes.Item): Promise<datatypes.AbuseReport>;
 }
+export declare class AgentIngresses {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>agentIngresses</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new Agent Ingress. The ngrok agent can be configured to connect to ngrok via the new set of addresses on the returned Agent Ingress.
+     */
+    create(arg: datatypes.AgentIngressCreate): Promise<datatypes.AgentIngress>;
+    /**
+     * Delete an Agent Ingress by ID
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+    /**
+     * Get the details of an Agent Ingress by ID.
+     */
+    get(arg: datatypes.Item): Promise<datatypes.AgentIngress>;
+    /**
+     * List all Agent Ingresses owned by this account
+     */
+    list(): Promise<Array<datatypes.AgentIngress>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update attributes of an Agent Ingress by ID.
+     */
+    update(arg: datatypes.AgentIngressUpdate): Promise<datatypes.AgentIngress>;
+}
 /**
  * API Keys are used to authenticate to the [ngrok
  API](https://ngrok.com/docs/api#authentication). You may use the API itself
@@ -354,37 +381,6 @@ export declare class IPRestrictions {
      * Update attributes of an IP restriction by ID
      */
     update(arg: datatypes.IPRestrictionUpdate): Promise<datatypes.IPRestriction>;
-}
-/**
- * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
- with an `endpoints` type instead.
- */
-export declare class IPWhitelist {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>ipWhitelist</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    /**
-     * Create a new IP whitelist entry that will restrict traffic to all tunnel endpoints on the account.
-     */
-    create(arg: datatypes.IPWhitelistEntryCreate): Promise<datatypes.IPWhitelistEntry>;
-    /**
-     * Delete an IP whitelist entry.
-     */
-    delete(arg: datatypes.Item): Promise<void>;
-    /**
-     * Get detailed information about an IP whitelist entry by ID.
-     */
-    get(arg: datatypes.Item): Promise<datatypes.IPWhitelistEntry>;
-    /**
-     * List all IP whitelist entries on this account
-     */
-    list(): Promise<Array<datatypes.IPWhitelistEntry>>;
-    private _pagedList;
-    private _asyncList;
-    /**
-     * Update attributes of an IP whitelist entry by ID
-     */
-    update(arg: datatypes.IPWhitelistEntryUpdate): Promise<datatypes.IPWhitelistEntry>;
 }
 export declare class EndpointLoggingModule {
     private httpClient;

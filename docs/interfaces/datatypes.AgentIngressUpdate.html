@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IPWhitelistEntryCreate | @ngrok/ngrok-api</title>
+	<title>AgentIngressUpdate | @ngrok/ngrok-api</title>
 	<meta name="description" content="Documentation for @ngrok/ngrok-api">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/datatypes.html">datatypes</a>
 				</li>
 				<li>
-					<a href="datatypes.IPWhitelistEntryCreate.html">IPWhitelistEntryCreate</a>
+					<a href="datatypes.AgentIngressUpdate.html">AgentIngressUpdate</a>
 				</li>
 			</ul>
-			<h1>Interface IPWhitelistEntryCreate</h1>
+			<h1>Interface AgentIngressUpdate</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IPWhitelistEntryCreate</span>
+						<span class="target">AgentIngressUpdate</span>
 					</li>
 				</ul>
 			</section>
@@ -83,9 +83,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntryCreate.html#description" class="tsd-kind-icon">description</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntryCreate.html#ipNet" class="tsd-kind-icon">ip<wbr>Net</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.IPWhitelistEntryCreate.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngressUpdate.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngressUpdate.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.AgentIngressUpdate.html#metadata" class="tsd-kind-icon">metadata</a></li>
 							</ul>
 						</section>
 					</div>
@@ -95,46 +95,41 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="description" class="tsd-anchor"></a>
-					<h3>description</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> description</h3>
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:960</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L70">datatypes.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes.</p>
+							<p>human-readable description of the use of this Agent Ingress. optional, max 255 bytes.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="ipNet" class="tsd-anchor"></a>
-					<h3>ip<wbr>Net</h3>
-					<div class="tsd-signature tsd-kind-icon">ip<wbr>Net<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:964</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L68">datatypes.ts:68</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="metadata" class="tsd-anchor"></a>
-					<h3>metadata</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> metadata</h3>
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:962</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L72">datatypes.ts:72</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes.</p>
+							<p>arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes</p>
 						</div>
 					</div>
 				</section>
@@ -162,16 +157,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="datatypes.IPWhitelistEntryCreate.html" class="tsd-kind-icon">IPWhitelist<wbr>Entry<wbr>Create</a>
+						<a href="datatypes.AgentIngressUpdate.html" class="tsd-kind-icon">Agent<wbr>Ingress<wbr>Update</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntryCreate.html#description" class="tsd-kind-icon">description</a>
+								<a href="datatypes.AgentIngressUpdate.html#description" class="tsd-kind-icon">description</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntryCreate.html#ipNet" class="tsd-kind-icon">ip<wbr>Net</a>
+								<a href="datatypes.AgentIngressUpdate.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.IPWhitelistEntryCreate.html#metadata" class="tsd-kind-icon">metadata</a>
+								<a href="datatypes.AgentIngressUpdate.html#metadata" class="tsd-kind-icon">metadata</a>
 							</li>
 						</ul>
 					</li>

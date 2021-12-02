@@ -48,6 +48,47 @@ export interface AbuseReportCreate {
     /** arbitrary user-defined data about this abuse report. Optional, max 4096 bytes. */
     metadata: string;
 }
+export interface AgentIngressCreate {
+    /** human-readable description of the use of this Agent Ingress. optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes */
+    metadata: string;
+    /** the domain that you own to be used as the base domain name to generate regional agent ingress domains. */
+    domain: string;
+}
+export interface AgentIngressUpdate {
+    id: string;
+    /** human-readable description of the use of this Agent Ingress. optional, max 255 bytes. */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes */
+    metadata?: string;
+}
+export interface AgentIngress {
+    /** unique Agent Ingress resource identifier */
+    id: string;
+    /** URI to the API resource of this Agent ingress */
+    uri: string;
+    /** human-readable description of the use of this Agent Ingress. optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes */
+    metadata: string;
+    /** the domain that you own to be used as the base domain name to generate regional agent ingress domains. */
+    domain: string;
+    /** a list of target values to use as the values of NS records for the domain property these values will delegate control over the domain to ngrok */
+    nsTargets: Array<string>;
+    /** a list of regional agent ingress domains that are subdomains of the value of domain this value may increase over time as ngrok adds more regions */
+    regionDomains: Array<string>;
+    /** timestamp when the Agent Ingress was created, RFC 3339 format */
+    createdAt: string;
+}
+export interface AgentIngressList {
+    /** the list of Agent Ingresses owned by this account */
+    ingresses: Array<AgentIngress>;
+    /** URI of the Agent Ingress list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
 export interface APIKeyCreate {
     /** human-readable description of what uses the API key to authenticate. optional, max 255 bytes. */
     description: string;
@@ -284,7 +325,7 @@ export interface EndpointConfigurationCreate {
 export interface EndpointWebhookValidation {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
-    /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: `SLACK`, `SNS`, `STRIPE`, `GITHUB`, `TWILIO`, `SHOPIFY`, `GITLAB`, `INTERCOM`. */
+    /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: `SLACK`, `SNS`, `STRIPE`, `GITHUB`, `TWILIO`, `SHOPIFY`, `GITLAB`, `INTERCOM`, `SENDGRID`, `XERO`. */
     provider: string;
     /** a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret */
     secret: string;
@@ -473,6 +514,8 @@ export interface EndpointSAML {
     requestSigningCertificatePem: string;
     /** A public URL where the SP's metadata is hosted. If an IdP supports dynamic configuration, this is the URL it can use to retrieve the SP metadata. */
     metadataUrl: string;
+    /** Defines the name identifier format the SP expects the IdP to use in its assertions to identify subjects. If unspecified, a default value of `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent` will be used. A subset of the allowed values enumerated by the SAML specification are supported. */
+    nameidFormat: string;
 }
 export interface EndpointSAMLMutate {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
@@ -493,6 +536,8 @@ export interface EndpointSAMLMutate {
     allowIdpInitiated?: boolean;
     /** If present, only users who are a member of one of the listed groups may access the target endpoint. */
     authorizedGroups: Array<string>;
+    /** Defines the name identifier format the SP expects the IdP to use in its assertions to identify subjects. If unspecified, a default value of `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent` will be used. A subset of the allowed values enumerated by the SAML specification are supported. */
+    nameidFormat: string;
 }
 export interface EndpointOIDC {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
@@ -873,43 +918,6 @@ export interface IPRestrictionList {
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
 }
-export interface IPWhitelistEntryCreate {
-    /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
-    description: string;
-    /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
-    metadata: string;
-    /** an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints */
-    ipNet: string;
-}
-export interface IPWhitelistEntryUpdate {
-    id: string;
-    /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
-    description?: string;
-    /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
-    metadata?: string;
-}
-export interface IPWhitelistEntry {
-    /** unique identifier for this IP whitelist entry */
-    id: string;
-    /** URI of the IP whitelist entry API resource */
-    uri: string;
-    /** timestamp when the IP whitelist entry was created, RFC 3339 format */
-    createdAt: string;
-    /** human-readable description of the source IPs for this IP whitelist entry. optional, max 255 bytes. */
-    description: string;
-    /** arbitrary user-defined machine-readable data of this IP whitelist entry. optional, max 4096 bytes. */
-    metadata: string;
-    /** an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or 10.1.0.0/16) of addresses that will be whitelisted to communicate with your tunnel endpoints */
-    ipNet: string;
-}
-export interface IPWhitelistEntryList {
-    /** the list of all IP whitelist entries on this account */
-    whitelist: Array<IPWhitelistEntry>;
-    /** URI of the IP whitelist API resource */
-    uri: string;
-    /** URI of the next page, or null if there is no next page */
-    nextPageUri?: string;
-}
 export interface EndpointLoggingReplace {
     id: string;
     module: EndpointLoggingMutate;
@@ -966,7 +974,7 @@ export interface ReservedAddrCreate {
     /** reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
     region: string;
     /** ID of an endpoint configuration of type tcp that will be used to handle inbound traffic to this address */
-    endpointConfigurationId: string;
+    endpointConfigurationId?: string;
 }
 export interface ReservedAddrUpdate {
     id: string;
@@ -1063,6 +1071,8 @@ export interface ReservedDomain {
     certificateManagementPolicy?: ReservedDomainCertPolicy;
     /** status of the automatic certificate management for this domain, or null if automatic management is disabled */
     certificateManagementStatus?: ReservedDomainCertStatus;
+    /** DNS CNAME target for the host _acme-challenge.example.com, where example.com is your reserved domain name. This is required to issue certificates for wildcard, non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok subdomains. */
+    acmeChallengeCnameTarget?: string;
 }
 export interface ReservedDomainList {
     /** the list of all reserved domains on this account */
@@ -1084,12 +1094,6 @@ export interface ReservedDomainCertStatus {
     /** status of the certificate provisioning job, or null if the certificiate isn't being provisioned or renewed */
     provisioningJob?: ReservedDomainCertJob;
 }
-export interface ReservedDomainCertNSTarget {
-    /** the zone that the nameservers need to be applied to */
-    zone: string;
-    /** the nameservers the user must add */
-    nameservers: Array<string>;
-}
 export interface ReservedDomainCertJob {
     /** if present, an error code indicating why provisioning is failing. It may be either a temporary condition (INTERNAL_ERROR), or a permanent one the user must correct (DNS_ERROR). */
     errorCode?: string;
@@ -1099,8 +1103,6 @@ export interface ReservedDomainCertJob {
     startedAt: string;
     /** timestamp when the provisioning job will be retried */
     retriesAt?: string;
-    /** if present, indicates the dns nameservers that the user must configure to complete the provisioning process of a wildcard certificate */
-    nsTargets: Array<ReservedDomainCertNSTarget>;
 }
 export interface SSHCertificateAuthorityCreate {
     /** human-readable description of this SSH Certificate Authority. optional, max 255 bytes. */
