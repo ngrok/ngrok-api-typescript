@@ -83,6 +83,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomain.html#acmeChallengeCnameTarget" class="tsd-kind-icon">acme<wbr>Challenge<wbr>Cname<wbr>Target</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomain.html#certificate" class="tsd-kind-icon">certificate</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomain.html#certificateManagementPolicy" class="tsd-kind-icon">certificate<wbr>Management<wbr>Policy</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomain.html#certificateManagementStatus" class="tsd-kind-icon">certificate<wbr>Management<wbr>Status</a></li>
@@ -104,12 +105,27 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="acmeChallengeCnameTarget" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> acme<wbr>Challenge<wbr>Cname<wbr>Target</h3>
+					<div class="tsd-signature tsd-kind-icon">acme<wbr>Challenge<wbr>Cname<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1179">datatypes.ts:1179</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>DNS CNAME target for the host _acme-challenge.example.com, where example.com is your reserved domain name. This is required to issue certificates for wildcard, non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok subdomains.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="certificate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> certificate</h3>
 					<div class="tsd-signature tsd-kind-icon">certificate<span class="tsd-signature-symbol">:</span> <a href="datatypes.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1165</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1173">datatypes.ts:1173</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -124,7 +140,7 @@
 					<div class="tsd-signature tsd-kind-icon">certificate<wbr>Management<wbr>Policy<span class="tsd-signature-symbol">:</span> <a href="datatypes.ReservedDomainCertPolicy.html" class="tsd-signature-type" data-tsd-kind="Interface">ReservedDomainCertPolicy</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1167</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1175">datatypes.ts:1175</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">certificate<wbr>Management<wbr>Status<span class="tsd-signature-symbol">:</span> <a href="datatypes.ReservedDomainCertStatus.html" class="tsd-signature-type" data-tsd-kind="Interface">ReservedDomainCertStatus</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1169</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1177">datatypes.ts:1177</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">cname<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1159</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1167">datatypes.ts:1167</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -169,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1149</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1157">datatypes.ts:1157</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +200,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1151</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1159">datatypes.ts:1159</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1155</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1163">datatypes.ts:1163</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -214,7 +230,7 @@
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Endpoint<wbr>Configuration<span class="tsd-signature-symbol">:</span> <a href="datatypes.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1161</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1169">datatypes.ts:1169</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -229,7 +245,7 @@
 					<div class="tsd-signature tsd-kind-icon">https<wbr>Endpoint<wbr>Configuration<span class="tsd-signature-symbol">:</span> <a href="datatypes.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1163</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1171">datatypes.ts:1171</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -244,7 +260,7 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1145</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1153">datatypes.ts:1153</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -259,7 +275,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1153</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1161">datatypes.ts:1161</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -274,7 +290,7 @@
 					<div class="tsd-signature tsd-kind-icon">region<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1157</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1165">datatypes.ts:1165</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -289,7 +305,7 @@
 					<div class="tsd-signature tsd-kind-icon">uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in datatypes.ts:1147</li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1155">datatypes.ts:1155</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -324,6 +340,9 @@
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
 						<a href="datatypes.ReservedDomain.html" class="tsd-kind-icon">Reserved<wbr>Domain</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.ReservedDomain.html#acmeChallengeCnameTarget" class="tsd-kind-icon">acme<wbr>Challenge<wbr>Cname<wbr>Target</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="datatypes.ReservedDomain.html#certificate" class="tsd-kind-icon">certificate</a>
 							</li>

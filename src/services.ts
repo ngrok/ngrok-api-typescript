@@ -39,6 +39,104 @@ export class AbuseReports {
   }
 }
 
+export class AgentIngresses {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>agentIngresses</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new Agent Ingress. The ngrok agent can be configured to connect to ngrok via the new set of addresses on the returned Agent Ingress.
+   */
+  public create(
+    arg: datatypes.AgentIngressCreate
+  ): Promise<datatypes.AgentIngress> {
+    return this.httpClient
+      .url(`/agent_ingresses`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete an Agent Ingress by ID
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/agent_ingresses/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Get the details of an Agent Ingress by ID.
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.AgentIngress> {
+    return this.httpClient
+      .url(`/agent_ingresses/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * List all Agent Ingresses owned by this account
+   */
+  public async list(): Promise<Array<datatypes.AgentIngress>> {
+    const array: Array<datatypes.AgentIngress> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.AgentIngressList> {
+    return this.httpClient
+      .url(`/agent_ingresses`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.AgentIngress[] = pagedList.ingresses;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Update attributes of an Agent Ingress by ID.
+   */
+  public update(
+    arg: datatypes.AgentIngressUpdate
+  ): Promise<datatypes.AgentIngress> {
+    return this.httpClient
+      .url(`/agent_ingresses/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
 /**
  * API Keys are used to authenticate to the [ngrok
  API](https://ngrok.com/docs/api#authentication). You may use the API itself
@@ -1113,108 +1211,6 @@ export class IPRestrictions {
   ): Promise<datatypes.IPRestriction> {
     return this.httpClient
       .url(`/ip_restrictions/${arg.id}`)
-      .patch(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-/**
- * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
- with an `endpoints` type instead.
- */
-export class IPWhitelist {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>ipWhitelist</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  /**
-   * Create a new IP whitelist entry that will restrict traffic to all tunnel endpoints on the account.
-   */
-  public create(
-    arg: datatypes.IPWhitelistEntryCreate
-  ): Promise<datatypes.IPWhitelistEntry> {
-    return this.httpClient
-      .url(`/ip_whitelist`)
-      .post(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Delete an IP whitelist entry.
-   */
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/ip_whitelist/${arg.id}`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Get detailed information about an IP whitelist entry by ID.
-   */
-  public get(arg: datatypes.Item): Promise<datatypes.IPWhitelistEntry> {
-    return this.httpClient
-      .url(`/ip_whitelist/${arg.id}`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * List all IP whitelist entries on this account
-   */
-  public async list(): Promise<Array<datatypes.IPWhitelistEntry>> {
-    const array: Array<datatypes.IPWhitelistEntry> = [];
-    for await (const item of this._asyncList()) {
-      array.push(item);
-    }
-    return array;
-  }
-  private _pagedList(
-    arg: datatypes.Paging
-  ): Promise<datatypes.IPWhitelistEntryList> {
-    return this.httpClient
-      .url(`/ip_whitelist`)
-      .query(arg)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(util.onFulfilled, util.onRejected);
-  }
-  private async *_asyncList() {
-    const limit = '100';
-    let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
-
-    while (nextPage) {
-      const pagedList = await this._pagedList(page);
-      nextPage = pagedList.nextPageUri;
-      const items: datatypes.IPWhitelistEntry[] = pagedList.whitelist;
-
-      if (nextPage) {
-        page = {
-          beforeId: items[items.length - 1].id,
-          limit: limit,
-        };
-      }
-
-      for (const item of items) {
-        yield item;
-      }
-    }
-  }
-  /**
-   * Update attributes of an IP whitelist entry by ID
-   */
-  public update(
-    arg: datatypes.IPWhitelistEntryUpdate
-  ): Promise<datatypes.IPWhitelistEntry> {
-    return this.httpClient
-      .url(`/ip_whitelist/${arg.id}`)
       .patch(util.serializeArgument(arg))
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
