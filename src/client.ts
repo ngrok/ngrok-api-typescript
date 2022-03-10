@@ -51,12 +51,11 @@ export class Ngrok {
    */
   public credentials: services.Credentials;
   /**
-   * Endpoint Configurations are a reusable group of modules that encapsulate how
- traffic to a domain or address is handled. Endpoint configurations are only
- applied to Domains and TCP Addresses they have been attached to.
+   * Endpoints provides an API for querying the endpoint objects
+ which define what tunnel or edge is used to serve a hostport.
+ Only active endpoints associated with a tunnel or backend are returned.
    */
-  public endpointConfigurations: services.EndpointConfigurations;
-  public eventStreams: services.EventStreams;
+  public endpoints: services.Endpoints;
   public eventDestinations: services.EventDestinations;
   public eventSubscriptions: services.EventSubscriptions;
   public eventSources: services.EventSources;
@@ -74,7 +73,7 @@ export class Ngrok {
   public ipPolicyRules: services.IPPolicyRules;
   /**
    * An IP restriction is a restriction placed on the CIDRs that are allowed to
- initate traffic to a specific aspect of your ngrok account. An IP
+ initiate traffic to a specific aspect of your ngrok account. An IP
  restriction has a type which defines the ingress it applies to. IP
  restrictions can be used to enforce the source IPs that can make API
  requests, log in to the dashboard, start ngrok agents, and connect to your
@@ -135,19 +134,54 @@ export class Ngrok {
  agent tunnel session or an SSH reverse tunnel session.
    */
   public tunnels: services.Tunnels;
-  public pointcfgModule: {
-    endpointLoggingModule: services.EndpointLoggingModule;
-    endpointCircuitBreakerModule: services.EndpointCircuitBreakerModule;
-    endpointCompressionModule: services.EndpointCompressionModule;
-    endpointTlsTerminationModule: services.EndpointTLSTerminationModule;
-    endpointIpPolicyModule: services.EndpointIPPolicyModule;
-    endpointMutualTlsModule: services.EndpointMutualTLSModule;
-    endpointRequestHeadersModule: services.EndpointRequestHeadersModule;
-    endpointResponseHeadersModule: services.EndpointResponseHeadersModule;
-    endpointOAuthModule: services.EndpointOAuthModule;
-    endpointWebhookValidationModule: services.EndpointWebhookValidationModule;
-    endpointSamlModule: services.EndpointSAMLModule;
-    endpointOidcModule: services.EndpointOIDCModule;
+  public backends: {
+    /**
+     * A Failover backend defines failover behavior within a list of referenced
+ backends. Traffic is sent to the first backend in the list. If that backend
+ is offline or no connection can be established, ngrok attempts to connect to
+ the next backend in the list until one is successful.
+     */
+    failoverBackends: services.FailoverBackends;
+    httpResponseBackends: services.HTTPResponseBackends;
+    /**
+     * A Tunnel Group Backend balances traffic among all online tunnels that match
+ a label selector.
+     */
+    tunnelGroupBackends: services.TunnelGroupBackends;
+    /**
+     * A Weighted Backend balances traffic among the referenced backends. Traffic
+ is assigned proportionally to each based on its weight. The percentage of
+ traffic is calculated by dividing a backend's weight by the sum of all
+ weights.
+     */
+    weightedBackends: services.WeightedBackends;
+  };
+  public edges: {
+    edgesHttpsRoutes: services.EdgesHTTPSRoutes;
+    edgesHttps: services.EdgesHTTPS;
+    edgesTcp: services.EdgesTCP;
+    edgesTls: services.EdgesTLS;
+  };
+  public edgeModules: {
+    httpsEdgeMutualTlsModule: services.HTTPSEdgeMutualTLSModule;
+    httpsEdgeTlsTerminationModule: services.HTTPSEdgeTLSTerminationModule;
+    edgeRouteBackendModule: services.EdgeRouteBackendModule;
+    edgeRouteIpRestrictionModule: services.EdgeRouteIPRestrictionModule;
+    edgeRouteRequestHeadersModule: services.EdgeRouteRequestHeadersModule;
+    edgeRouteResponseHeadersModule: services.EdgeRouteResponseHeadersModule;
+    edgeRouteCompressionModule: services.EdgeRouteCompressionModule;
+    edgeRouteCircuitBreakerModule: services.EdgeRouteCircuitBreakerModule;
+    edgeRouteWebhookVerificationModule: services.EdgeRouteWebhookVerificationModule;
+    edgeRouteOAuthModule: services.EdgeRouteOAuthModule;
+    edgeRouteSamlModule: services.EdgeRouteSAMLModule;
+    edgeRouteOidcModule: services.EdgeRouteOIDCModule;
+    edgeRouteWebsocketTcpConverterModule: services.EdgeRouteWebsocketTCPConverterModule;
+    tcpEdgeBackendModule: services.TCPEdgeBackendModule;
+    tcpEdgeIpRestrictionModule: services.TCPEdgeIPRestrictionModule;
+    tlsEdgeBackendModule: services.TLSEdgeBackendModule;
+    tlsEdgeIpRestrictionModule: services.TLSEdgeIPRestrictionModule;
+    tlsEdgeMutualTlsModule: services.TLSEdgeMutualTLSModule;
+    tlsEdgeTlsTerminationModule: services.TLSEdgeTLSTerminationModule;
   };
 
   /**
@@ -188,11 +222,7 @@ export class Ngrok {
 
     this.credentials = new services.Credentials(this.httpClient);
 
-    this.endpointConfigurations = new services.EndpointConfigurations(
-      this.httpClient
-    );
-
-    this.eventStreams = new services.EventStreams(this.httpClient);
+    this.endpoints = new services.Endpoints(this.httpClient);
 
     this.eventDestinations = new services.EventDestinations(this.httpClient);
 
@@ -230,36 +260,63 @@ export class Ngrok {
 
     this.tunnels = new services.Tunnels(this.httpClient);
 
-    this.pointcfgModule = {
-      endpointLoggingModule: new services.EndpointLoggingModule(
+    this.backends = {
+      failoverBackends: new services.FailoverBackends(this.httpClient),
+      httpResponseBackends: new services.HTTPResponseBackends(this.httpClient),
+      tunnelGroupBackends: new services.TunnelGroupBackends(this.httpClient),
+      weightedBackends: new services.WeightedBackends(this.httpClient),
+    };
+    this.edges = {
+      edgesHttpsRoutes: new services.EdgesHTTPSRoutes(this.httpClient),
+      edgesHttps: new services.EdgesHTTPS(this.httpClient),
+      edgesTcp: new services.EdgesTCP(this.httpClient),
+      edgesTls: new services.EdgesTLS(this.httpClient),
+    };
+    this.edgeModules = {
+      httpsEdgeMutualTlsModule: new services.HTTPSEdgeMutualTLSModule(
         this.httpClient
       ),
-      endpointCircuitBreakerModule: new services.EndpointCircuitBreakerModule(
+      httpsEdgeTlsTerminationModule: new services.HTTPSEdgeTLSTerminationModule(
         this.httpClient
       ),
-      endpointCompressionModule: new services.EndpointCompressionModule(
+      edgeRouteBackendModule: new services.EdgeRouteBackendModule(
         this.httpClient
       ),
-      endpointTlsTerminationModule: new services.EndpointTLSTerminationModule(
+      edgeRouteIpRestrictionModule: new services.EdgeRouteIPRestrictionModule(
         this.httpClient
       ),
-      endpointIpPolicyModule: new services.EndpointIPPolicyModule(
+      edgeRouteRequestHeadersModule: new services.EdgeRouteRequestHeadersModule(
         this.httpClient
       ),
-      endpointMutualTlsModule: new services.EndpointMutualTLSModule(
+      edgeRouteResponseHeadersModule:
+        new services.EdgeRouteResponseHeadersModule(this.httpClient),
+      edgeRouteCompressionModule: new services.EdgeRouteCompressionModule(
         this.httpClient
       ),
-      endpointRequestHeadersModule: new services.EndpointRequestHeadersModule(
+      edgeRouteCircuitBreakerModule: new services.EdgeRouteCircuitBreakerModule(
         this.httpClient
       ),
-      endpointResponseHeadersModule: new services.EndpointResponseHeadersModule(
+      edgeRouteWebhookVerificationModule:
+        new services.EdgeRouteWebhookVerificationModule(this.httpClient),
+      edgeRouteOAuthModule: new services.EdgeRouteOAuthModule(this.httpClient),
+      edgeRouteSamlModule: new services.EdgeRouteSAMLModule(this.httpClient),
+      edgeRouteOidcModule: new services.EdgeRouteOIDCModule(this.httpClient),
+      edgeRouteWebsocketTcpConverterModule:
+        new services.EdgeRouteWebsocketTCPConverterModule(this.httpClient),
+      tcpEdgeBackendModule: new services.TCPEdgeBackendModule(this.httpClient),
+      tcpEdgeIpRestrictionModule: new services.TCPEdgeIPRestrictionModule(
         this.httpClient
       ),
-      endpointOAuthModule: new services.EndpointOAuthModule(this.httpClient),
-      endpointWebhookValidationModule:
-        new services.EndpointWebhookValidationModule(this.httpClient),
-      endpointSamlModule: new services.EndpointSAMLModule(this.httpClient),
-      endpointOidcModule: new services.EndpointOIDCModule(this.httpClient),
+      tlsEdgeBackendModule: new services.TLSEdgeBackendModule(this.httpClient),
+      tlsEdgeIpRestrictionModule: new services.TLSEdgeIPRestrictionModule(
+        this.httpClient
+      ),
+      tlsEdgeMutualTlsModule: new services.TLSEdgeMutualTLSModule(
+        this.httpClient
+      ),
+      tlsEdgeTlsTerminationModule: new services.TLSEdgeTLSTerminationModule(
+        this.httpClient
+      ),
     };
   }
 }
