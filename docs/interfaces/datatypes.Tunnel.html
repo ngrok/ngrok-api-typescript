@@ -83,7 +83,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#backends" class="tsd-kind-icon">backends</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#endpoint" class="tsd-kind-icon">endpoint</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#forwardsTo" class="tsd-kind-icon">forwards<wbr>To</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#labels" class="tsd-kind-icon">labels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#metadata" class="tsd-kind-icon">metadata</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#proto" class="tsd-kind-icon">proto</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.Tunnel.html#publicUrl" class="tsd-kind-icon">public<wbr>Url</a></li>
@@ -98,12 +102,57 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="backends" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> backends</h3>
+					<div class="tsd-signature tsd-kind-icon">backends<span class="tsd-signature-symbol">:</span> <a href="datatypes.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1934">datatypes.ts:1934</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>tunnel group backends served by this backend tunnel</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="endpoint" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> endpoint</h3>
+					<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <a href="datatypes.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1930">datatypes.ts:1930</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the ephemeral endpoint this tunnel is associated with, if this is an agent-initiated tunnel</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="forwardsTo" class="tsd-anchor"></a>
+					<h3>forwards<wbr>To</h3>
+					<div class="tsd-signature tsd-kind-icon">forwards<wbr>To<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1936">datatypes.ts:1936</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>upstream address the ngrok agent forwards traffic over this tunnel to. this may be expressed as a URL or a network address.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1558">datatypes.ts:1558</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1916">datatypes.ts:1916</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -113,12 +162,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="labels" class="tsd-anchor"></a>
+					<h3>labels</h3>
+					<div class="tsd-signature tsd-kind-icon">labels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1932">datatypes.ts:1932</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the labels the tunnel group backends will match against, if this is a backend tunnel</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="metadata" class="tsd-anchor"></a>
 					<h3>metadata</h3>
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1564">datatypes.ts:1564</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1922">datatypes.ts:1922</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -133,12 +197,12 @@
 					<div class="tsd-signature tsd-kind-icon">proto<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1566">datatypes.ts:1566</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1924">datatypes.ts:1924</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>tunnel protocol. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code></p>
+							<p>tunnel protocol for ephemeral tunnels. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code></p>
 						</div>
 					</div>
 				</section>
@@ -148,12 +212,12 @@
 					<div class="tsd-signature tsd-kind-icon">public<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1560">datatypes.ts:1560</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1918">datatypes.ts:1918</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URL of the tunnel&#39;s public endpoint</p>
+							<p>URL of the ephemeral tunnel&#39;s public endpoint</p>
 						</div>
 					</div>
 				</section>
@@ -163,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">region<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1568">datatypes.ts:1568</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1926">datatypes.ts:1926</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -178,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">started<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1562">datatypes.ts:1562</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1920">datatypes.ts:1920</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -193,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">tunnel<wbr>Session<span class="tsd-signature-symbol">:</span> <a href="datatypes.Ref.html" class="tsd-signature-type" data-tsd-kind="Interface">Ref</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/1a198cb/src/datatypes.ts#L1570">datatypes.ts:1570</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/2b8fd06/src/datatypes.ts#L1928">datatypes.ts:1928</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -229,7 +293,19 @@
 						<a href="datatypes.Tunnel.html" class="tsd-kind-icon">Tunnel</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.Tunnel.html#backends" class="tsd-kind-icon">backends</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.Tunnel.html#endpoint" class="tsd-kind-icon">endpoint</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.Tunnel.html#forwardsTo" class="tsd-kind-icon">forwards<wbr>To</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="datatypes.Tunnel.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.Tunnel.html#labels" class="tsd-kind-icon">labels</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="datatypes.Tunnel.html#metadata" class="tsd-kind-icon">metadata</a>
