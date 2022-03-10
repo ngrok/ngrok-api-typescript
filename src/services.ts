@@ -237,6 +237,399 @@ export class APIKeys {
 }
 
 /**
+ * A Failover backend defines failover behavior within a list of referenced
+ backends. Traffic is sent to the first backend in the list. If that backend
+ is offline or no connection can be established, ngrok attempts to connect to
+ the next backend in the list until one is successful.
+ */
+export class FailoverBackends {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>failoverBackends</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new Failover backend
+   */
+  public create(
+    arg: datatypes.FailoverBackendCreate
+  ): Promise<datatypes.FailoverBackend> {
+    return this.httpClient
+      .url(`/backends/failover`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete a Failover backend by ID. TODO what if used?
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/backends/failover/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Get detailed information about a Failover backend by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.FailoverBackend> {
+    return this.httpClient
+      .url(`/backends/failover/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * List all Failover backends on this account
+   */
+  public async list(): Promise<Array<datatypes.FailoverBackend>> {
+    const array: Array<datatypes.FailoverBackend> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.FailoverBackendList> {
+    return this.httpClient
+      .url(`/backends/failover`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.FailoverBackend[] = pagedList.backends;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Update Failover backend by ID
+   */
+  public update(
+    arg: datatypes.FailoverBackendUpdate
+  ): Promise<datatypes.FailoverBackend> {
+    return this.httpClient
+      .url(`/backends/failover/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class HTTPResponseBackends {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>httpResponseBackends</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public create(
+    arg: datatypes.HTTPResponseBackendCreate
+  ): Promise<datatypes.HTTPResponseBackend> {
+    return this.httpClient
+      .url(`/backends/http_response`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/backends/http_response/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.HTTPResponseBackend> {
+    return this.httpClient
+      .url(`/backends/http_response/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public async list(): Promise<Array<datatypes.HTTPResponseBackend>> {
+    const array: Array<datatypes.HTTPResponseBackend> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.HTTPResponseBackendList> {
+    return this.httpClient
+      .url(`/backends/http_response`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.HTTPResponseBackend[] = pagedList.backends;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  public update(
+    arg: datatypes.HTTPResponseBackendUpdate
+  ): Promise<datatypes.HTTPResponseBackend> {
+    return this.httpClient
+      .url(`/backends/http_response/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+/**
+ * A Tunnel Group Backend balances traffic among all online tunnels that match
+ a label selector.
+ */
+export class TunnelGroupBackends {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tunnelGroupBackends</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new TunnelGroup backend
+   */
+  public create(
+    arg: datatypes.TunnelGroupBackendCreate
+  ): Promise<datatypes.TunnelGroupBackend> {
+    return this.httpClient
+      .url(`/backends/tunnel_group`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete a TunnelGroup backend by ID. TODO what if used?
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/backends/tunnel_group/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Get detailed information about a TunnelGroup backend by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.TunnelGroupBackend> {
+    return this.httpClient
+      .url(`/backends/tunnel_group/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * List all TunnelGroup backends on this account
+   */
+  public async list(): Promise<Array<datatypes.TunnelGroupBackend>> {
+    const array: Array<datatypes.TunnelGroupBackend> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.TunnelGroupBackendList> {
+    return this.httpClient
+      .url(`/backends/tunnel_group`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.TunnelGroupBackend[] = pagedList.backends;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Update TunnelGroup backend by ID
+   */
+  public update(
+    arg: datatypes.TunnelGroupBackendUpdate
+  ): Promise<datatypes.TunnelGroupBackend> {
+    return this.httpClient
+      .url(`/backends/tunnel_group/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+/**
+ * A Weighted Backend balances traffic among the referenced backends. Traffic
+ is assigned proportionally to each based on its weight. The percentage of
+ traffic is calculated by dividing a backend's weight by the sum of all
+ weights.
+ */
+export class WeightedBackends {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>weightedBackends</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new Weighted backend
+   */
+  public create(
+    arg: datatypes.WeightedBackendCreate
+  ): Promise<datatypes.WeightedBackend> {
+    return this.httpClient
+      .url(`/backends/weighted`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete a Weighted backend by ID. TODO what if used?
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/backends/weighted/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Get detailed information about a Weighted backend by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.WeightedBackend> {
+    return this.httpClient
+      .url(`/backends/weighted/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * List all Weighted backends on this account
+   */
+  public async list(): Promise<Array<datatypes.WeightedBackend>> {
+    const array: Array<datatypes.WeightedBackend> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.WeightedBackendList> {
+    return this.httpClient
+      .url(`/backends/weighted`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.WeightedBackend[] = pagedList.backends;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Update Weighted backend by ID
+   */
+  public update(
+    arg: datatypes.WeightedBackendUpdate
+  ): Promise<datatypes.WeightedBackend> {
+    return this.httpClient
+      .url(`/backends/weighted/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+/**
  * Certificate Authorities are x509 certificates that are used to sign other
  x509 certificates. Attach a Certificate Authority to the Mutual TLS module
  to verify that the TLS certificate presented by a client has been signed by
@@ -444,167 +837,104 @@ export class Credentials {
   }
 }
 
-/**
- * Endpoint Configurations are a reusable group of modules that encapsulate how
- traffic to a domain or address is handled. Endpoint configurations are only
- applied to Domains and TCP Addresses they have been attached to.
- */
-export class EndpointConfigurations {
+export class EdgesHTTPSRoutes {
   private httpClient: Wretcher;
 
-  /** Do not construct this object directly, use the <code>endpointConfigurations</code> property of an <code>Ngrok</code> client object instead. */
+  /** Do not construct this object directly, use the <code>edgesHttpsRoutes</code> property of an <code>Ngrok</code> client object instead. */
   public constructor(httpClient: Wretcher) {
     this.httpClient = httpClient;
   }
   /**
-   * Create a new endpoint configuration
+   * Create an HTTPS Edge Route
    */
   public create(
-    arg: datatypes.EndpointConfigurationCreate
-  ): Promise<datatypes.EndpointConfiguration> {
+    arg: datatypes.HTTPSEdgeRouteCreate
+  ): Promise<datatypes.HTTPSEdgeRoute> {
     return this.httpClient
-      .url(`/endpoint_configurations`)
+      .url(`/edges/https/${arg.edgeId}/routes`)
       .post(util.serializeArgument(arg))
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
 
   /**
-   * Delete an endpoint configuration. This operation will fail if the endpoint configuration is still referenced by any reserved domain or reserved address.
+   * Get an HTTPS Edge Route by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.HTTPSEdgeRoute> {
     return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Returns detailed information about an endpoint configuration
-   */
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointConfiguration> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}`)
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}`)
       .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
 
   /**
-   * Returns a list of all endpoint configurations on this account
-   */
-  public async list(): Promise<Array<datatypes.EndpointConfiguration>> {
-    const array: Array<datatypes.EndpointConfiguration> = [];
-    for await (const item of this._asyncList()) {
-      array.push(item);
-    }
-    return array;
-  }
-  private _pagedList(
-    arg: datatypes.Paging
-  ): Promise<datatypes.EndpointConfigurationList> {
-    return this.httpClient
-      .url(`/endpoint_configurations`)
-      .query(arg)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(util.onFulfilled, util.onRejected);
-  }
-  private async *_asyncList() {
-    const limit = '100';
-    let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
-
-    while (nextPage) {
-      const pagedList = await this._pagedList(page);
-      nextPage = pagedList.nextPageUri;
-      const items: datatypes.EndpointConfiguration[] =
-        pagedList.endpointConfigurations;
-
-      if (nextPage) {
-        page = {
-          beforeId: items[items.length - 1].id,
-          limit: limit,
-        };
-      }
-
-      for (const item of items) {
-        yield item;
-      }
-    }
-  }
-  /**
-   * Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
+   * Updates an HTTPS Edge Route by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
    */
   public update(
-    arg: datatypes.EndpointConfigurationUpdate
-  ): Promise<datatypes.EndpointConfiguration> {
+    arg: datatypes.HTTPSEdgeRouteUpdate
+  ): Promise<datatypes.HTTPSEdgeRoute> {
     return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}`)
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}`)
       .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete an HTTPS Edge Route by ID
+   */
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}`)
+      .delete()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
 }
 
-export class EventStreams {
+export class EdgesHTTPS {
   private httpClient: Wretcher;
 
-  /** Do not construct this object directly, use the <code>eventStreams</code> property of an <code>Ngrok</code> client object instead. */
+  /** Do not construct this object directly, use the <code>edgesHttps</code> property of an <code>Ngrok</code> client object instead. */
   public constructor(httpClient: Wretcher) {
     this.httpClient = httpClient;
   }
   /**
-   * Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs.
+   * Create an HTTPS Edge
    */
-  public create(
-    arg: datatypes.EventStreamCreate
-  ): Promise<datatypes.EventStream> {
+  public create(arg: datatypes.HTTPSEdgeCreate): Promise<datatypes.HTTPSEdge> {
     return this.httpClient
-      .url(`/event_streams`)
+      .url(`/edges/https`)
       .post(util.serializeArgument(arg))
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
 
   /**
-   * Delete an Event Stream. Associated Event Destinations will be preserved.
+   * Get an HTTPS Edge by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public get(arg: datatypes.Item): Promise<datatypes.HTTPSEdge> {
     return this.httpClient
-      .url(`/event_streams/${arg.id}`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Get detailed information about an Event Stream by ID.
-   */
-  public get(arg: datatypes.Item): Promise<datatypes.EventStream> {
-    return this.httpClient
-      .url(`/event_streams/${arg.id}`)
+      .url(`/edges/https/${arg.id}`)
       .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
 
   /**
-   * List all Event Streams available on this account.
+   * Returns a list of all HTTPS Edges on this account
    */
-  public async list(): Promise<Array<datatypes.EventStream>> {
-    const array: Array<datatypes.EventStream> = [];
+  public async list(): Promise<Array<datatypes.HTTPSEdge>> {
+    const array: Array<datatypes.HTTPSEdge> = [];
     for await (const item of this._asyncList()) {
       array.push(item);
     }
     return array;
   }
-  private _pagedList(
-    arg: datatypes.Paging
-  ): Promise<datatypes.EventStreamList> {
+  private _pagedList(arg: datatypes.Paging): Promise<datatypes.HTTPSEdgeList> {
     return this.httpClient
-      .url(`/event_streams`)
+      .url(`/edges/https`)
       .query(arg)
       .get()
       .json(payload => util.deserializeResult(payload))
@@ -618,7 +948,7 @@ export class EventStreams {
     while (nextPage) {
       const pagedList = await this._pagedList(page);
       nextPage = pagedList.nextPageUri;
-      const items: datatypes.EventStream[] = pagedList.eventStreams;
+      const items: datatypes.HTTPSEdge[] = pagedList.httpsEdges;
 
       if (nextPage) {
         page = {
@@ -633,14 +963,937 @@ export class EventStreams {
     }
   }
   /**
-   * Update attributes of an Event Stream by ID.
+   * Updates an HTTPS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
    */
-  public update(
-    arg: datatypes.EventStreamUpdate
-  ): Promise<datatypes.EventStream> {
+  public update(arg: datatypes.HTTPSEdgeUpdate): Promise<datatypes.HTTPSEdge> {
     return this.httpClient
-      .url(`/event_streams/${arg.id}`)
+      .url(`/edges/https/${arg.id}`)
       .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete an HTTPS Edge by ID
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class HTTPSEdgeMutualTLSModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>httpsEdgeMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeMutualTLSReplace
+  ): Promise<datatypes.EndpointMutualTLS> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}/mutual_tls`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}/mutual_tls`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}/mutual_tls`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class HTTPSEdgeTLSTerminationModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>httpsEdgeTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeTLSTerminationAtEdgeReplace
+  ): Promise<datatypes.EndpointTLSTermination> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}/tls_termination`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}/tls_termination`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.id}/tls_termination`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteBackendModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteBackendModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteBackendReplace
+  ): Promise<datatypes.EndpointBackend> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/backend`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointBackend> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/backend`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/backend`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteIPRestrictionModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteIPRestrictionReplace
+  ): Promise<datatypes.EndpointIPPolicy> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/ip_restriction`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointIPPolicy> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/ip_restriction`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/ip_restriction`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteRequestHeadersModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteRequestHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteRequestHeadersReplace
+  ): Promise<datatypes.EndpointRequestHeaders> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/request_headers`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointRequestHeaders> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/request_headers`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/request_headers`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteResponseHeadersModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteResponseHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteResponseHeadersReplace
+  ): Promise<datatypes.EndpointResponseHeaders> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/response_headers`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointResponseHeaders> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/response_headers`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/response_headers`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteCompressionModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteCompressionModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteCompressionReplace
+  ): Promise<datatypes.EndpointCompression> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/compression`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointCompression> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/compression`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/compression`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteCircuitBreakerModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteCircuitBreakerModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteCircuitBreakerReplace
+  ): Promise<datatypes.EndpointCircuitBreaker> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/circuit_breaker`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointCircuitBreaker> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/circuit_breaker`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/circuit_breaker`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteWebhookVerificationModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteWebhookVerificationModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteWebhookVerificationReplace
+  ): Promise<datatypes.EndpointWebhookValidation> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/webhook_verification`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointWebhookValidation> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/webhook_verification`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/webhook_verification`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteOAuthModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteOAuthModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteOAuthReplace
+  ): Promise<datatypes.EndpointOAuth> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oauth`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointOAuth> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oauth`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oauth`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteSAMLModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteSamlModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteSAMLReplace
+  ): Promise<datatypes.EndpointSAML> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/saml`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointSAML> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/saml`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/saml`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteOIDCModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteOidcModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteOIDCReplace
+  ): Promise<datatypes.EndpointOIDC> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oidc`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointOIDC> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oidc`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oidc`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgeRouteWebsocketTCPConverterModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgeRouteWebsocketTcpConverterModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeRouteWebsocketTCPConverterReplace
+  ): Promise<datatypes.EndpointWebsocketTCPConverter> {
+    return this.httpClient
+      .url(
+        `/edges/https/${arg.edgeId}/routes/${arg.id}/websocket_tcp_converter`
+      )
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointWebsocketTCPConverter> {
+    return this.httpClient
+      .url(
+        `/edges/https/${arg.edgeId}/routes/${arg.id}/websocket_tcp_converter`
+      )
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
+    return this.httpClient
+      .url(
+        `/edges/https/${arg.edgeId}/routes/${arg.id}/websocket_tcp_converter`
+      )
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgesTCP {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgesTcp</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a TCP Edge
+   */
+  public create(arg: datatypes.TCPEdgeCreate): Promise<datatypes.TCPEdge> {
+    return this.httpClient
+      .url(`/edges/tcp`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Get a TCP Edge by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.TCPEdge> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Returns a list of all TCP Edges on this account
+   */
+  public async list(): Promise<Array<datatypes.TCPEdge>> {
+    const array: Array<datatypes.TCPEdge> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(arg: datatypes.Paging): Promise<datatypes.TCPEdgeList> {
+    return this.httpClient
+      .url(`/edges/tcp`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.TCPEdge[] = pagedList.tcpEdges;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Updates a TCP Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
+   */
+  public update(arg: datatypes.TCPEdgeUpdate): Promise<datatypes.TCPEdge> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete a TCP Edge by ID
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class TCPEdgeBackendModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tcpEdgeBackendModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeBackendReplace
+  ): Promise<datatypes.EndpointBackend> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}/backend`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointBackend> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}/backend`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}/backend`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class TCPEdgeIPRestrictionModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tcpEdgeIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeIPRestrictionReplace
+  ): Promise<datatypes.EndpointIPPolicy> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}/ip_restriction`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}/ip_restriction`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tcp/${arg.id}/ip_restriction`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class EdgesTLS {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>edgesTls</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a TLS Edge
+   */
+  public create(arg: datatypes.TLSEdgeCreate): Promise<datatypes.TLSEdge> {
+    return this.httpClient
+      .url(`/edges/tls`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Get a TLS Edge by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.TLSEdge> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Returns a list of all TLS Edges on this account
+   */
+  public async list(): Promise<Array<datatypes.TLSEdge>> {
+    const array: Array<datatypes.TLSEdge> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(arg: datatypes.Paging): Promise<datatypes.TLSEdgeList> {
+    return this.httpClient
+      .url(`/edges/tls`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.TLSEdge[] = pagedList.tlsEdges;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Updates a TLS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
+   */
+  public update(arg: datatypes.TLSEdgeUpdate): Promise<datatypes.TLSEdge> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  /**
+   * Delete a TLS Edge by ID
+   */
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class TLSEdgeBackendModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tlsEdgeBackendModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeBackendReplace
+  ): Promise<datatypes.EndpointBackend> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/backend`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointBackend> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/backend`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/backend`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class TLSEdgeIPRestrictionModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tlsEdgeIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeIPRestrictionReplace
+  ): Promise<datatypes.EndpointIPPolicy> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/ip_restriction`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/ip_restriction`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/ip_restriction`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class TLSEdgeMutualTLSModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tlsEdgeMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeMutualTLSReplace
+  ): Promise<datatypes.EndpointMutualTLS> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/mutual_tls`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/mutual_tls`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/mutual_tls`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+export class TLSEdgeTLSTerminationModule {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tlsEdgeTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  public replace(
+    arg: datatypes.EdgeTLSTerminationReplace
+  ): Promise<datatypes.EndpointTLSTermination> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/tls_termination`)
+      .put(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/tls_termination`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+
+  public delete(arg: datatypes.Item): Promise<void> {
+    return this.httpClient
+      .url(`/edges/tls/${arg.id}/tls_termination`)
+      .delete()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
+/**
+ * Endpoints provides an API for querying the endpoint objects
+ which define what tunnel or edge is used to serve a hostport.
+ Only active endpoints associated with a tunnel or backend are returned.
+ */
+export class Endpoints {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>endpoints</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * List all active endpoints on the account
+   */
+  public async list(): Promise<Array<datatypes.Endpoint>> {
+    const array: Array<datatypes.Endpoint> = [];
+    for await (const item of this._asyncList()) {
+      array.push(item);
+    }
+    return array;
+  }
+  private _pagedList(arg: datatypes.Paging): Promise<datatypes.EndpointList> {
+    return this.httpClient
+      .url(`/endpoints`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+  private async *_asyncList() {
+    const limit = '100';
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.Endpoint[] = pagedList.endpoints;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Get the status of an endpoint by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.Endpoint> {
+    return this.httpClient
+      .url(`/endpoints/${arg.id}`)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -667,7 +1920,7 @@ export class EventDestinations {
   }
 
   /**
-   * Delete an Event Destination. If the Event Destination is still referenced by an Event Stream, this will throw an error until that Event Stream has removed that reference.
+   * Delete an Event Destination. If the Event Destination is still referenced by an Event Subscription.
    */
   public delete(arg: datatypes.Item): Promise<void> {
     return this.httpClient
@@ -1113,7 +2366,7 @@ export class IPPolicyRules {
 
 /**
  * An IP restriction is a restriction placed on the CIDRs that are allowed to
- initate traffic to a specific aspect of your ngrok account. An IP
+ initiate traffic to a specific aspect of your ngrok account. An IP
  restriction has a type which defines the ingress it applies to. IP
  restrictions can be used to enforce the source IPs that can make API
  requests, log in to the dashboard, start ngrok agents, and connect to your
@@ -1217,416 +2470,6 @@ export class IPRestrictions {
   }
 }
 
-export class EndpointLoggingModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointLoggingModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointLoggingReplace
-  ): Promise<datatypes.EndpointLogging> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/logging`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointLogging> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/logging`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/logging`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointCircuitBreakerModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointCircuitBreakerModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointCircuitBreakerReplace
-  ): Promise<datatypes.EndpointCircuitBreaker> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/circuit_breaker`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointCircuitBreaker> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/circuit_breaker`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/circuit_breaker`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointCompressionModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointCompressionModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointCompressionReplace
-  ): Promise<datatypes.EndpointCompression> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/compression`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointCompression> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/compression`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/compression`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointTLSTerminationModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointTLSTerminationReplace
-  ): Promise<datatypes.EndpointTLSTermination> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/tls_termination`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/tls_termination`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/tls_termination`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointIPPolicyModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointIpPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointIPPolicyReplace
-  ): Promise<datatypes.EndpointIPPolicy> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/ip_policy`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/ip_policy`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/ip_policy`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointMutualTLSModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointMutualTLSReplace
-  ): Promise<datatypes.EndpointMutualTLS> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/mutual_tls`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/mutual_tls`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/mutual_tls`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointRequestHeadersModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointRequestHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointRequestHeadersReplace
-  ): Promise<datatypes.EndpointRequestHeaders> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/request_headers`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointRequestHeaders> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/request_headers`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/request_headers`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointResponseHeadersModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointResponseHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointResponseHeadersReplace
-  ): Promise<datatypes.EndpointResponseHeaders> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/response_headers`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointResponseHeaders> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/response_headers`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/response_headers`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointOAuthModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointOAuthModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointOAuthReplace
-  ): Promise<datatypes.EndpointOAuth> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/oauth`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointOAuth> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/oauth`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/oauth`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointWebhookValidationModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointWebhookValidationModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointWebhookValidationReplace
-  ): Promise<datatypes.EndpointWebhookValidation> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/webhook_validation`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(
-    arg: datatypes.Item
-  ): Promise<datatypes.EndpointWebhookValidation> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/webhook_validation`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/webhook_validation`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointSAMLModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointSamlModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointSAMLReplace
-  ): Promise<datatypes.EndpointSAML> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/saml`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointSAML> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/saml`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/saml`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-export class EndpointOIDCModule {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>endpointOidcModule</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  public replace(
-    arg: datatypes.EndpointOIDCReplace
-  ): Promise<datatypes.EndpointOIDC> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/oidc`)
-      .put(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointOIDC> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/oidc`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  public delete(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/endpoint_configurations/${arg.id}/oidc`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
 /**
  * Reserved Addresses are TCP addresses that can be used to listen for traffic.
  TCP address hostnames and ports are assigned by ngrok, they cannot be
@@ -1725,17 +2568,6 @@ export class ReservedAddrs {
     return this.httpClient
       .url(`/reserved_addrs/${arg.id}`)
       .patch(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Detach the endpoint configuration attached to a reserved address.
-   */
-  public deleteEndpointConfig(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/reserved_addrs/${arg.id}/endpoint_configuration`)
-      .delete()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1861,28 +2693,6 @@ export class ReservedDomains {
   public deleteCertificate(arg: datatypes.Item): Promise<void> {
     return this.httpClient
       .url(`/reserved_domains/${arg.id}/certificate`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Detach the http endpoint configuration attached to a reserved domain.
-   */
-  public deleteHttpEndpointConfig(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/reserved_domains/${arg.id}/http_endpoint_configuration`)
-      .delete()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Detach the https endpoint configuration attached to a reserved domain.
-   */
-  public deleteHttpsEndpointConfig(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/reserved_domains/${arg.id}/https_endpoint_configuration`)
       .delete()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
@@ -2556,5 +3366,15 @@ export class Tunnels {
         yield item;
       }
     }
+  }
+  /**
+   * Get the status of a tunnel by ID
+   */
+  public get(arg: datatypes.Item): Promise<datatypes.Tunnel> {
+    return this.httpClient
+      .url(`/tunnels/${arg.id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
   }
 }
