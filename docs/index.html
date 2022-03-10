@@ -164,33 +164,6 @@
 <span style="color: #000000">  }</span>
 <span style="color: #000000">}</span>
 </code></pre>
-				<a href="#additional-examples" id="additional-examples" style="color: inherit; text-decoration: none;">
-					<h3>Additional Examples</h3>
-				</a>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EndpointConfiguration</span><span style="color: #000000">, </span><span style="color: #001080">Error</span><span style="color: #000000">, </span><span style="color: #001080">Ngrok</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@ngrok/ngrok-api&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">ngrok</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Ngrok</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">apiToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;an api token&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">});</span>
-
-<span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">endpointConfigurations</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">description:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;some endpoint configuration description&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">metadata:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;some endpoint configuration metadata&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">requestHeaders:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #001080">add:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Map</span><span style="color: #000000">([</span>
-<span style="color: #000000">            [</span><span style="color: #A31515">&#039;x-frontend&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;ngrok&#039;</span><span style="color: #000000">]</span>
-<span style="color: #000000">        ]),</span>
-<span style="color: #000000">        </span><span style="color: #001080">remove:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;cache-control&#039;</span><span style="color: #000000">],</span>
-<span style="color: #000000">    },</span>
-<span style="color: #000000">})</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">epc</span><span style="color: #000000">: </span><span style="color: #267F99">EndpointConfiguration</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">epc</span><span style="color: #000000">);</span>
-<span style="color: #000000">    })</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">catch</span><span style="color: #000000">((</span><span style="color: #001080">err</span><span style="color: #000000">: </span><span style="color: #267F99">Error</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000">);</span>
-<span style="color: #000000">    });</span>
-</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

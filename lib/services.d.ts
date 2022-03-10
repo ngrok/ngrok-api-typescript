@@ -79,6 +79,115 @@ export declare class APIKeys {
     update(arg: datatypes.APIKeyUpdate): Promise<datatypes.APIKey>;
 }
 /**
+ * A Failover backend defines failover behavior within a list of referenced
+ backends. Traffic is sent to the first backend in the list. If that backend
+ is offline or no connection can be established, ngrok attempts to connect to
+ the next backend in the list until one is successful.
+ */
+export declare class FailoverBackends {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>failoverBackends</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new Failover backend
+     */
+    create(arg: datatypes.FailoverBackendCreate): Promise<datatypes.FailoverBackend>;
+    /**
+     * Delete a Failover backend by ID. TODO what if used?
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+    /**
+     * Get detailed information about a Failover backend by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.FailoverBackend>;
+    /**
+     * List all Failover backends on this account
+     */
+    list(): Promise<Array<datatypes.FailoverBackend>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update Failover backend by ID
+     */
+    update(arg: datatypes.FailoverBackendUpdate): Promise<datatypes.FailoverBackend>;
+}
+export declare class HTTPResponseBackends {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>httpResponseBackends</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    create(arg: datatypes.HTTPResponseBackendCreate): Promise<datatypes.HTTPResponseBackend>;
+    delete(arg: datatypes.Item): Promise<void>;
+    get(arg: datatypes.Item): Promise<datatypes.HTTPResponseBackend>;
+    list(): Promise<Array<datatypes.HTTPResponseBackend>>;
+    private _pagedList;
+    private _asyncList;
+    update(arg: datatypes.HTTPResponseBackendUpdate): Promise<datatypes.HTTPResponseBackend>;
+}
+/**
+ * A Tunnel Group Backend balances traffic among all online tunnels that match
+ a label selector.
+ */
+export declare class TunnelGroupBackends {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tunnelGroupBackends</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new TunnelGroup backend
+     */
+    create(arg: datatypes.TunnelGroupBackendCreate): Promise<datatypes.TunnelGroupBackend>;
+    /**
+     * Delete a TunnelGroup backend by ID. TODO what if used?
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+    /**
+     * Get detailed information about a TunnelGroup backend by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.TunnelGroupBackend>;
+    /**
+     * List all TunnelGroup backends on this account
+     */
+    list(): Promise<Array<datatypes.TunnelGroupBackend>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update TunnelGroup backend by ID
+     */
+    update(arg: datatypes.TunnelGroupBackendUpdate): Promise<datatypes.TunnelGroupBackend>;
+}
+/**
+ * A Weighted Backend balances traffic among the referenced backends. Traffic
+ is assigned proportionally to each based on its weight. The percentage of
+ traffic is calculated by dividing a backend's weight by the sum of all
+ weights.
+ */
+export declare class WeightedBackends {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>weightedBackends</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new Weighted backend
+     */
+    create(arg: datatypes.WeightedBackendCreate): Promise<datatypes.WeightedBackend>;
+    /**
+     * Delete a Weighted backend by ID. TODO what if used?
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+    /**
+     * Get detailed information about a Weighted backend by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.WeightedBackend>;
+    /**
+     * List all Weighted backends on this account
+     */
+    list(): Promise<Array<datatypes.WeightedBackend>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update Weighted backend by ID
+     */
+    update(arg: datatypes.WeightedBackendUpdate): Promise<datatypes.WeightedBackend>;
+}
+/**
  * Certificate Authorities are x509 certificates that are used to sign other
  x509 certificates. Attach a Certificate Authority to the Mutual TLS module
  to verify that the TLS certificate presented by a client has been signed by
@@ -145,64 +254,279 @@ export declare class Credentials {
      */
     update(arg: datatypes.CredentialUpdate): Promise<datatypes.Credential>;
 }
-/**
- * Endpoint Configurations are a reusable group of modules that encapsulate how
- traffic to a domain or address is handled. Endpoint configurations are only
- applied to Domains and TCP Addresses they have been attached to.
- */
-export declare class EndpointConfigurations {
+export declare class EdgesHTTPSRoutes {
     private httpClient;
-    /** Do not construct this object directly, use the <code>endpointConfigurations</code> property of an <code>Ngrok</code> client object instead. */
+    /** Do not construct this object directly, use the <code>edgesHttpsRoutes</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     /**
-     * Create a new endpoint configuration
+     * Create an HTTPS Edge Route
      */
-    create(arg: datatypes.EndpointConfigurationCreate): Promise<datatypes.EndpointConfiguration>;
+    create(arg: datatypes.HTTPSEdgeRouteCreate): Promise<datatypes.HTTPSEdgeRoute>;
     /**
-     * Delete an endpoint configuration. This operation will fail if the endpoint configuration is still referenced by any reserved domain or reserved address.
+     * Get an HTTPS Edge Route by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.HTTPSEdgeRoute>;
     /**
-     * Returns detailed information about an endpoint configuration
+     * Updates an HTTPS Edge Route by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
      */
-    get(arg: datatypes.Item): Promise<datatypes.EndpointConfiguration>;
+    update(arg: datatypes.HTTPSEdgeRouteUpdate): Promise<datatypes.HTTPSEdgeRoute>;
     /**
-     * Returns a list of all endpoint configurations on this account
+     * Delete an HTTPS Edge Route by ID
      */
-    list(): Promise<Array<datatypes.EndpointConfiguration>>;
-    private _pagedList;
-    private _asyncList;
-    /**
-     * Updates an endpoint configuration. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
-     */
-    update(arg: datatypes.EndpointConfigurationUpdate): Promise<datatypes.EndpointConfiguration>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
 }
-export declare class EventStreams {
+export declare class EdgesHTTPS {
     private httpClient;
-    /** Do not construct this object directly, use the <code>eventStreams</code> property of an <code>Ngrok</code> client object instead. */
+    /** Do not construct this object directly, use the <code>edgesHttps</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     /**
-     * Create a new Event Stream. It will not apply to anything until you associate it with one or more Endpoint Configs.
+     * Create an HTTPS Edge
      */
-    create(arg: datatypes.EventStreamCreate): Promise<datatypes.EventStream>;
+    create(arg: datatypes.HTTPSEdgeCreate): Promise<datatypes.HTTPSEdge>;
     /**
-     * Delete an Event Stream. Associated Event Destinations will be preserved.
+     * Get an HTTPS Edge by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    get(arg: datatypes.Item): Promise<datatypes.HTTPSEdge>;
     /**
-     * Get detailed information about an Event Stream by ID.
+     * Returns a list of all HTTPS Edges on this account
      */
-    get(arg: datatypes.Item): Promise<datatypes.EventStream>;
-    /**
-     * List all Event Streams available on this account.
-     */
-    list(): Promise<Array<datatypes.EventStream>>;
+    list(): Promise<Array<datatypes.HTTPSEdge>>;
     private _pagedList;
     private _asyncList;
     /**
-     * Update attributes of an Event Stream by ID.
+     * Updates an HTTPS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
      */
-    update(arg: datatypes.EventStreamUpdate): Promise<datatypes.EventStream>;
+    update(arg: datatypes.HTTPSEdgeUpdate): Promise<datatypes.HTTPSEdge>;
+    /**
+     * Delete an HTTPS Edge by ID
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class HTTPSEdgeMutualTLSModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>httpsEdgeMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeMutualTLSReplace): Promise<datatypes.EndpointMutualTLS>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class HTTPSEdgeTLSTerminationModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>httpsEdgeTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeTLSTerminationAtEdgeReplace): Promise<datatypes.EndpointTLSTermination>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class EdgeRouteBackendModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteBackendModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteBackendReplace): Promise<datatypes.EndpointBackend>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointBackend>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteIPRestrictionModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteIPRestrictionReplace): Promise<datatypes.EndpointIPPolicy>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointIPPolicy>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteRequestHeadersModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteRequestHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteRequestHeadersReplace): Promise<datatypes.EndpointRequestHeaders>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointRequestHeaders>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteResponseHeadersModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteResponseHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteResponseHeadersReplace): Promise<datatypes.EndpointResponseHeaders>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointResponseHeaders>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteCompressionModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteCompressionModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteCompressionReplace): Promise<datatypes.EndpointCompression>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointCompression>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteCircuitBreakerModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteCircuitBreakerModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteCircuitBreakerReplace): Promise<datatypes.EndpointCircuitBreaker>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointCircuitBreaker>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteWebhookVerificationModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteWebhookVerificationModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteWebhookVerificationReplace): Promise<datatypes.EndpointWebhookValidation>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointWebhookValidation>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteOAuthModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteOAuthModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteOAuthReplace): Promise<datatypes.EndpointOAuth>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointOAuth>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteSAMLModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteSamlModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteSAMLReplace): Promise<datatypes.EndpointSAML>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointSAML>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteOIDCModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteOidcModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteOIDCReplace): Promise<datatypes.EndpointOIDC>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointOIDC>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRouteWebsocketTCPConverterModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteWebsocketTcpConverterModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteWebsocketTCPConverterReplace): Promise<datatypes.EndpointWebsocketTCPConverter>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointWebsocketTCPConverter>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgesTCP {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgesTcp</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a TCP Edge
+     */
+    create(arg: datatypes.TCPEdgeCreate): Promise<datatypes.TCPEdge>;
+    /**
+     * Get a TCP Edge by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.TCPEdge>;
+    /**
+     * Returns a list of all TCP Edges on this account
+     */
+    list(): Promise<Array<datatypes.TCPEdge>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Updates a TCP Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
+     */
+    update(arg: datatypes.TCPEdgeUpdate): Promise<datatypes.TCPEdge>;
+    /**
+     * Delete a TCP Edge by ID
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class TCPEdgeBackendModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tcpEdgeBackendModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeBackendReplace): Promise<datatypes.EndpointBackend>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointBackend>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class TCPEdgeIPRestrictionModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tcpEdgeIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeIPRestrictionReplace): Promise<datatypes.EndpointIPPolicy>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class EdgesTLS {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgesTls</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a TLS Edge
+     */
+    create(arg: datatypes.TLSEdgeCreate): Promise<datatypes.TLSEdge>;
+    /**
+     * Get a TLS Edge by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.TLSEdge>;
+    /**
+     * Returns a list of all TLS Edges on this account
+     */
+    list(): Promise<Array<datatypes.TLSEdge>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Updates a TLS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
+     */
+    update(arg: datatypes.TLSEdgeUpdate): Promise<datatypes.TLSEdge>;
+    /**
+     * Delete a TLS Edge by ID
+     */
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class TLSEdgeBackendModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tlsEdgeBackendModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeBackendReplace): Promise<datatypes.EndpointBackend>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointBackend>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class TLSEdgeIPRestrictionModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tlsEdgeIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeIPRestrictionReplace): Promise<datatypes.EndpointIPPolicy>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class TLSEdgeMutualTLSModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tlsEdgeMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeMutualTLSReplace): Promise<datatypes.EndpointMutualTLS>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+export declare class TLSEdgeTLSTerminationModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tlsEdgeTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeTLSTerminationReplace): Promise<datatypes.EndpointTLSTermination>;
+    get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination>;
+    delete(arg: datatypes.Item): Promise<void>;
+}
+/**
+ * Endpoints provides an API for querying the endpoint objects
+ which define what tunnel or edge is used to serve a hostport.
+ Only active endpoints associated with a tunnel or backend are returned.
+ */
+export declare class Endpoints {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>endpoints</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * List all active endpoints on the account
+     */
+    list(): Promise<Array<datatypes.Endpoint>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Get the status of an endpoint by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.Endpoint>;
 }
 export declare class EventDestinations {
     private httpClient;
@@ -213,7 +537,7 @@ export declare class EventDestinations {
      */
     create(arg: datatypes.EventDestinationCreate): Promise<datatypes.EventDestination>;
     /**
-     * Delete an Event Destination. If the Event Destination is still referenced by an Event Stream, this will throw an error until that Event Stream has removed that reference.
+     * Delete an Event Destination. If the Event Destination is still referenced by an Event Subscription.
      */
     delete(arg: datatypes.Item): Promise<void>;
     /**
@@ -349,7 +673,7 @@ export declare class IPPolicyRules {
 }
 /**
  * An IP restriction is a restriction placed on the CIDRs that are allowed to
- initate traffic to a specific aspect of your ngrok account. An IP
+ initiate traffic to a specific aspect of your ngrok account. An IP
  restriction has a type which defines the ingress it applies to. IP
  restrictions can be used to enforce the source IPs that can make API
  requests, log in to the dashboard, start ngrok agents, and connect to your
@@ -382,102 +706,6 @@ export declare class IPRestrictions {
      */
     update(arg: datatypes.IPRestrictionUpdate): Promise<datatypes.IPRestriction>;
 }
-export declare class EndpointLoggingModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointLoggingModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointLoggingReplace): Promise<datatypes.EndpointLogging>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointLogging>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointCircuitBreakerModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointCircuitBreakerModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointCircuitBreakerReplace): Promise<datatypes.EndpointCircuitBreaker>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointCircuitBreaker>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointCompressionModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointCompressionModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointCompressionReplace): Promise<datatypes.EndpointCompression>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointCompression>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointTLSTerminationModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointTLSTerminationReplace): Promise<datatypes.EndpointTLSTermination>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointIPPolicyModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointIpPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointIPPolicyReplace): Promise<datatypes.EndpointIPPolicy>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointMutualTLSModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointMutualTLSReplace): Promise<datatypes.EndpointMutualTLS>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointRequestHeadersModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointRequestHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointRequestHeadersReplace): Promise<datatypes.EndpointRequestHeaders>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointRequestHeaders>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointResponseHeadersModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointResponseHeadersModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointResponseHeadersReplace): Promise<datatypes.EndpointResponseHeaders>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointResponseHeaders>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointOAuthModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointOAuthModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointOAuthReplace): Promise<datatypes.EndpointOAuth>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointOAuth>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointWebhookValidationModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointWebhookValidationModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointWebhookValidationReplace): Promise<datatypes.EndpointWebhookValidation>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointWebhookValidation>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointSAMLModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointSamlModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointSAMLReplace): Promise<datatypes.EndpointSAML>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointSAML>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
-export declare class EndpointOIDCModule {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>endpointOidcModule</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EndpointOIDCReplace): Promise<datatypes.EndpointOIDC>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointOIDC>;
-    delete(arg: datatypes.Item): Promise<void>;
-}
 /**
  * Reserved Addresses are TCP addresses that can be used to listen for traffic.
  TCP address hostnames and ports are assigned by ngrok, they cannot be
@@ -509,10 +737,6 @@ export declare class ReservedAddrs {
      * Update the attributes of a reserved address.
      */
     update(arg: datatypes.ReservedAddrUpdate): Promise<datatypes.ReservedAddr>;
-    /**
-     * Detach the endpoint configuration attached to a reserved address.
-     */
-    deleteEndpointConfig(arg: datatypes.Item): Promise<void>;
 }
 /**
  * Reserved Domains are hostnames that you can listen for traffic on. Domains
@@ -554,14 +778,6 @@ export declare class ReservedDomains {
      * Detach the certificate attached to a reserved domain.
      */
     deleteCertificate(arg: datatypes.Item): Promise<void>;
-    /**
-     * Detach the http endpoint configuration attached to a reserved domain.
-     */
-    deleteHttpEndpointConfig(arg: datatypes.Item): Promise<void>;
-    /**
-     * Detach the https endpoint configuration attached to a reserved domain.
-     */
-    deleteHttpsEndpointConfig(arg: datatypes.Item): Promise<void>;
 }
 /**
  * An SSH Certificate Authority is a pair of an SSH Certificate and its private
@@ -769,5 +985,9 @@ export declare class Tunnels {
     list(): Promise<Array<datatypes.Tunnel>>;
     private _pagedList;
     private _asyncList;
+    /**
+     * Get the status of a tunnel by ID
+     */
+    get(arg: datatypes.Item): Promise<datatypes.Tunnel>;
 }
 //# sourceMappingURL=services.d.ts.map
