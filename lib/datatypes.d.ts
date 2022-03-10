@@ -124,6 +124,172 @@ export interface APIKeyList {
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
 }
+export interface FailoverBackend {
+    /** unique identifier for this Failover backend */
+    id: string;
+    /** URI of the FailoverBackend API resource */
+    uri: string;
+    /** timestamp when the backend was created, RFC 3339 format */
+    createdAt: string;
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** the ids of the child backends in order */
+    backends: Array<string>;
+}
+export interface FailoverBackendCreate {
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** the ids of the child backends in order */
+    backends: Array<string>;
+}
+export interface FailoverBackendUpdate {
+    id: string;
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** the ids of the child backends in order */
+    backends: Array<string>;
+}
+export interface FailoverBackendList {
+    /** the list of all Failover backends on this account */
+    backends: Array<FailoverBackend>;
+    /** URI of the Failover backends list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
+export interface HTTPResponseBackend {
+    id: string;
+    /** URI of the HTTPResponseBackend API resource */
+    uri: string;
+    /** timestamp when the backend was created, RFC 3339 format */
+    createdAt: string;
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** body to return as fixed content */
+    body: string;
+    /** headers to return */
+    headers: Map<string, string>;
+    /** status code to return */
+    statusCode: number;
+}
+export interface HTTPResponseBackendCreate {
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** body to return as fixed content */
+    body: string;
+    /** headers to return */
+    headers: Map<string, string>;
+    /** status code to return */
+    statusCode?: number;
+}
+export interface HTTPResponseBackendUpdate {
+    id: string;
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** body to return as fixed content */
+    body?: string;
+    /** headers to return */
+    headers?: Map<string, string>;
+    /** status code to return */
+    statusCode?: number;
+}
+export interface HTTPResponseBackendList {
+    backends: Array<HTTPResponseBackend>;
+    uri: string;
+    nextPageUri?: string;
+}
+export interface TunnelGroupBackend {
+    /** unique identifier for this TunnelGroup backend */
+    id: string;
+    /** URI of the TunnelGroupBackend API resource */
+    uri: string;
+    /** timestamp when the backend was created, RFC 3339 format */
+    createdAt: string;
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
+    labels: Map<string, string>;
+    /** tunnels matching this backend */
+    tunnels: Array<Ref>;
+}
+export interface TunnelGroupBackendCreate {
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
+    labels: Map<string, string>;
+}
+export interface TunnelGroupBackendUpdate {
+    id: string;
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
+    labels: Map<string, string>;
+}
+export interface TunnelGroupBackendList {
+    /** the list of all TunnelGroup backends on this account */
+    backends: Array<TunnelGroupBackend>;
+    /** URI of the TunnelGroup backends list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
+export interface WeightedBackend {
+    /** unique identifier for this Weighted backend */
+    id: string;
+    /** URI of the WeightedBackend API resource */
+    uri: string;
+    /** timestamp when the backend was created, RFC 3339 format */
+    createdAt: string;
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** the ids of the child backends to their weights (0-10000) */
+    backends: Map<string, number>;
+}
+export interface WeightedBackendCreate {
+    /** human-readable description of this backend. Optional */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata: string;
+    /** the ids of the child backends to their weights (0-10000) */
+    backends: Map<string, number>;
+}
+export interface WeightedBackendUpdate {
+    id: string;
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** the ids of the child backends to their weights (0-10000) */
+    backends: Map<string, number>;
+}
+export interface WeightedBackendList {
+    /** the list of all Weighted backends on this account */
+    backends: Array<WeightedBackend>;
+    /** URI of the Weighted backends list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
 export interface CertificateAuthorityCreate {
     /** human-readable description of this Certificate Authority. optional, max 255 bytes. */
     description: string;
@@ -212,120 +378,10 @@ export interface CredentialList {
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
 }
-export interface EndpointConfiguration {
-    /** unique identifier of this endpoint configuration */
-    id: string;
-    /** they type of traffic this endpoint configuration can be applied to. one of: `http`, `https`, `tcp` */
-    type: string;
-    /** human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-    description: string;
-    /** arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes. */
-    metadata: string;
-    /** timestamp when the endpoint configuration was created, RFC 3339 format */
-    createdAt: string;
-    /** URI of the endpoint configuration API resource */
-    uri: string;
-    /** circuit breaker module configuration or `null` */
-    circuitBreaker?: EndpointCircuitBreaker;
-    /** compression module configuration or `null` */
-    compression?: EndpointCompression;
-    /** request headers module configuration or `null` */
-    requestHeaders?: EndpointRequestHeaders;
-    /** response headers module configuration or `null` */
-    responseHeaders?: EndpointResponseHeaders;
-    /** ip policy module configuration or `null` */
-    ipPolicy?: EndpointIPPolicy;
-    /** mutual TLS module configuration or `null` */
-    mutualTls?: EndpointMutualTLS;
-    /** TLS termination module configuration or `null` */
-    tlsTermination?: EndpointTLSTermination;
-    /** webhook validation module configuration or `null` */
-    webhookValidation?: EndpointWebhookValidation;
-    /** oauth module configuration or `null` */
-    oauth?: EndpointOAuth;
-    /** logging module configuration or `null` */
-    logging?: EndpointLogging;
-    /** saml module configuration or `null` */
-    saml?: EndpointSAML;
-    /** oidc module configuration or `null` */
-    oidc?: EndpointOIDC;
-}
-export interface EndpointConfigurationList {
-    /** the list of all endpoint configurations on this account */
-    endpointConfigurations: Array<EndpointConfiguration>;
-    /** URI of the endpoint configurations list API resource */
-    uri: string;
-    /** URI of the next page, or null if there is no next page */
-    nextPageUri?: string;
-}
-export interface EndpointConfigurationUpdate {
-    /** unique identifier of this endpoint configuration */
-    id: string;
-    /** human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-    description?: string;
-    /** arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes. */
-    metadata?: string;
-    /** circuit breaker module configuration or `null` */
-    circuitBreaker?: EndpointCircuitBreaker;
-    /** compression module configuration or `null` */
-    compression?: EndpointCompression;
-    /** request headers module configuration or `null` */
-    requestHeaders?: EndpointRequestHeaders;
-    /** response headers module configuration or `null` */
-    responseHeaders?: EndpointResponseHeaders;
-    /** ip policy module configuration or `null` */
-    ipPolicy?: EndpointIPPolicyMutate;
-    /** mutual TLS module configuration or `null` */
-    mutualTls?: EndpointMutualTLSMutate;
-    /** TLS termination module configuration or `null` */
-    tlsTermination?: EndpointTLSTermination;
-    /** webhook validation module configuration or `null` */
-    webhookValidation?: EndpointWebhookValidation;
-    /** oauth module configuration or `null` */
-    oauth?: EndpointOAuth;
-    /** logging module configuration or `null` */
-    logging?: EndpointLoggingMutate;
-    /** saml module configuration or `null` */
-    saml?: EndpointSAMLMutate;
-    /** oidc module configuration or `null` */
-    oidc?: EndpointOIDC;
-}
-export interface EndpointConfigurationCreate {
-    /** they type of traffic this endpoint configuration can be applied to. one of: `http`, `https`, `tcp` */
-    type: string;
-    /** human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes */
-    description: string;
-    /** arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes. */
-    metadata: string;
-    /** circuit breaker module configuration or `null` */
-    circuitBreaker?: EndpointCircuitBreaker;
-    /** compression module configuration or `null` */
-    compression?: EndpointCompression;
-    /** request headers module configuration or `null` */
-    requestHeaders?: EndpointRequestHeaders;
-    /** response headers module configuration or `null` */
-    responseHeaders?: EndpointResponseHeaders;
-    /** ip policy module configuration or `null` */
-    ipPolicy?: EndpointIPPolicyMutate;
-    /** mutual TLS module configuration or `null` */
-    mutualTls?: EndpointMutualTLSMutate;
-    /** TLS termination module configuration or `null` */
-    tlsTermination?: EndpointTLSTermination;
-    /** webhook validation module configuration or `null` */
-    webhookValidation?: EndpointWebhookValidation;
-    /** oauth module configuration or `null` */
-    oauth?: EndpointOAuth;
-    /** logging module configuration or `null` */
-    logging?: EndpointLoggingMutate;
-    /** saml module configuration or `null` */
-    saml?: EndpointSAMLMutate;
-    /** oidc module configuration or `null` */
-    oidc?: EndpointOIDC;
-}
 export interface EndpointWebhookValidation {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
-    /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: `SLACK`, `SNS`, `STRIPE`, `GITHUB`, `TWILIO`, `SHOPIFY`, `GITLAB`, `INTERCOM`, `SENDGRID`, `XERO`. */
+    /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: `SLACK`, `SNS`, `STRIPE`, `GITHUB`, `TWILIO`, `SHOPIFY`, `GITLAB`, `INTERCOM`, `SENDGRID`, `XERO`, `PAGERDUTY`. */
     provider: string;
     /** a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret */
     secret: string;
@@ -354,17 +410,11 @@ export interface EndpointTLSTermination {
     /** The minimum TLS version used for termination and advertised to the client during the TLS handshake. if unspecified, ngrok will choose an industry-safe default. This value must be null if `terminate_at` is set to `upstream`. */
     minVersion?: string;
 }
-export interface EndpointLogging {
+export interface EndpointTLSTerminationAtEdge {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
-    /** list of all EventStreams that will be used to configure and export this endpoint's logs */
-    eventStreams: Array<Ref>;
-}
-export interface EndpointLoggingMutate {
-    /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
-    enabled?: boolean;
-    /** list of all EventStreams that will be used to configure and export this endpoint's logs */
-    eventStreamIds: Array<string>;
+    /** The minimum TLS version used for termination and advertised to the client during the TLS handshake. if unspecified, ngrok will choose an industry-safe default. This value must be null if `terminate_at` is set to `upstream`. */
+    minVersion?: string;
 }
 export interface EndpointRequestHeaders {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
@@ -559,61 +609,403 @@ export interface EndpointOIDC {
     /** The set of scopes to request from the OIDC identity provider. */
     scopes: Array<string>;
 }
-export interface EventStreamCreate {
-    /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
-    metadata: string;
-    /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
-    description: string;
-    /** A list of protocol-specific fields you want to collect on each event. */
-    fields: Array<string>;
-    /** The protocol that determines which events will be collected. Supported values are `tcp_connection_closed` and `http_request_complete`. */
-    eventType: string;
-    /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
-    destinationIds: Array<string>;
-    /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-    samplingRate: number;
+export interface EndpointBackend {
+    /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
+    enabled?: boolean;
+    /** backend to be used to back this endpoint */
+    backend: Ref;
 }
-export interface EventStreamUpdate {
-    /** Unique identifier for this Event Stream. */
+export interface EndpointBackendMutate {
+    /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
+    enabled?: boolean;
+    /** backend to be used to back this endpoint */
+    backendId: string;
+}
+export interface EndpointWebsocketTCPConverter {
+    /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
+    enabled?: boolean;
+}
+export interface EdgeRouteItem {
+    /** unique identifier of this edge */
+    edgeId: string;
+    /** unique identifier of this edge route */
     id: string;
-    /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
-    metadata?: string;
-    /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
-    description?: string;
-    /** A list of protocol-specific fields you want to collect on each event. */
-    fields?: Array<string>;
-    /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
-    destinationIds?: Array<string>;
-    /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-    samplingRate?: number;
 }
-export interface EventStreamList {
-    /** The list of all Event Streams on this account. */
-    eventStreams: Array<EventStream>;
-    /** URI of the Event Stream list API resource. */
+export interface HTTPSEdgeRouteCreate {
+    /** unique identifier of this edge */
+    edgeId: string;
+    /** Type of match to use for this route. Valid values are "exact_path" and "path_prefix". */
+    matchType: string;
+    /** Route selector: "/blog" or "example.com" or "example.com/blog" */
+    match: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** backend module configuration or `null` */
+    backend?: EndpointBackendMutate;
+    /** ip restriction module configuration or `null` */
+    ipRestriction?: EndpointIPPolicyMutate;
+    /** circuit breaker module configuration or `null` */
+    circuitBreaker?: EndpointCircuitBreaker;
+    /** compression module configuration or `null` */
+    compression?: EndpointCompression;
+    /** request headers module configuration or `null` */
+    requestHeaders?: EndpointRequestHeaders;
+    /** response headers module configuration or `null` */
+    responseHeaders?: EndpointResponseHeaders;
+    /** webhook verification module configuration or `null` */
+    webhookVerification?: EndpointWebhookValidation;
+    /** oauth module configuration or `null` */
+    oauth?: EndpointOAuth;
+    /** saml module configuration or `null` */
+    saml?: EndpointSAMLMutate;
+    /** oidc module configuration or `null` */
+    oidc?: EndpointOIDC;
+    /** websocket to tcp adapter configuration or `null` */
+    websocketTcpConverter?: EndpointWebsocketTCPConverter;
+}
+export interface HTTPSEdgeRouteUpdate {
+    /** unique identifier of this edge */
+    edgeId: string;
+    /** unique identifier of this edge route */
+    id: string;
+    /** Type of match to use for this route. Valid values are "exact_path" and "path_prefix". */
+    matchType: string;
+    /** Route selector: "/blog" or "example.com" or "example.com/blog" */
+    match: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** backend module configuration or `null` */
+    backend?: EndpointBackendMutate;
+    /** ip restriction module configuration or `null` */
+    ipRestriction?: EndpointIPPolicyMutate;
+    /** circuit breaker module configuration or `null` */
+    circuitBreaker?: EndpointCircuitBreaker;
+    /** compression module configuration or `null` */
+    compression?: EndpointCompression;
+    /** request headers module configuration or `null` */
+    requestHeaders?: EndpointRequestHeaders;
+    /** response headers module configuration or `null` */
+    responseHeaders?: EndpointResponseHeaders;
+    /** webhook verification module configuration or `null` */
+    webhookVerification?: EndpointWebhookValidation;
+    /** oauth module configuration or `null` */
+    oauth?: EndpointOAuth;
+    /** saml module configuration or `null` */
+    saml?: EndpointSAMLMutate;
+    /** oidc module configuration or `null` */
+    oidc?: EndpointOIDC;
+    /** websocket to tcp adapter configuration or `null` */
+    websocketTcpConverter?: EndpointWebsocketTCPConverter;
+}
+export interface HTTPSEdgeRoute {
+    /** unique identifier of this edge */
+    edgeId: string;
+    /** unique identifier of this edge route */
+    id: string;
+    /** timestamp when the edge configuration was created, RFC 3339 format */
+    createdAt: string;
+    /** Type of match to use for this route. Valid values are "exact_path" and "path_prefix". */
+    matchType: string;
+    /** Route selector: "/blog" or "example.com" or "example.com/blog" */
+    match: string;
+    /** URI of the edge API resource */
     uri: string;
-    /** URI of the next page, or null if there is no next page. */
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** backend module configuration or `null` */
+    backend?: EndpointBackend;
+    /** ip restriction module configuration or `null` */
+    ipRestriction?: EndpointIPPolicy;
+    /** circuit breaker module configuration or `null` */
+    circuitBreaker?: EndpointCircuitBreaker;
+    /** compression module configuration or `null` */
+    compression?: EndpointCompression;
+    /** request headers module configuration or `null` */
+    requestHeaders?: EndpointRequestHeaders;
+    /** response headers module configuration or `null` */
+    responseHeaders?: EndpointResponseHeaders;
+    /** webhook verification module configuration or `null` */
+    webhookVerification?: EndpointWebhookValidation;
+    /** oauth module configuration or `null` */
+    oauth?: EndpointOAuth;
+    /** saml module configuration or `null` */
+    saml?: EndpointSAML;
+    /** oidc module configuration or `null` */
+    oidc?: EndpointOIDC;
+    /** websocket to tcp adapter configuration or `null` */
+    websocketTcpConverter?: EndpointWebsocketTCPConverter;
+}
+export interface HTTPSEdgeList {
+    /** the list of all HTTPS Edges on this account */
+    httpsEdges: Array<HTTPSEdge>;
+    /** URI of the HTTPS Edge list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
 }
-export interface EventStream {
-    /** Unique identifier for this Event Stream. */
-    id: string;
-    /** URI of the Event Stream API resource. */
-    uri: string;
-    /** Timestamp when the Event Stream was created, RFC 3339 format. */
-    createdAt: string;
-    /** Arbitrary user-defined machine-readable data of this Event Stream. Optional, max 4096 bytes. */
-    metadata: string;
-    /** Human-readable description of the Event Stream. Optional, max 255 bytes. */
+export interface HTTPSEdgeCreate {
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
     description: string;
-    /** A list of protocol-specific fields you want to collect on each event. */
-    fields: Array<string>;
-    /** The protocol that determines which events will be collected. Supported values are `tcp_connection_closed` and `http_request_complete`. */
-    eventType: string;
-    /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
-    destinationIds: Array<string>;
-    /** The percentage of all events you would like to capture. Valid values range from 0.01, representing 1% of all events to 1.00, representing 100% of all events. */
-    samplingRate: number;
+    /** arbitrary user-defined machine-readable data of this edge; optional, max 4096 bytes. */
+    metadata: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    mutualTls?: EndpointMutualTLSMutate;
+    tlsTermination?: EndpointTLSTerminationAtEdge;
+}
+export interface HTTPSEdgeUpdate {
+    /** unique identifier of this edge */
+    id: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this edge; optional, max 4096 bytes. */
+    metadata?: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    mutualTls?: EndpointMutualTLSMutate;
+    tlsTermination?: EndpointTLSTerminationAtEdge;
+}
+export interface HTTPSEdge {
+    /** unique identifier of this edge */
+    id: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge; optional, max 4096 bytes. */
+    metadata: string;
+    /** timestamp when the edge configuration was created, RFC 3339 format */
+    createdAt: string;
+    /** URI of the edge API resource */
+    uri: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    mutualTls?: EndpointMutualTLS;
+    tlsTermination?: EndpointTLSTermination;
+    /** routes */
+    routes: Array<HTTPSEdgeRoute>;
+}
+export interface EdgeBackendReplace {
+    id: string;
+    module: EndpointBackendMutate;
+}
+export interface EdgeIPRestrictionReplace {
+    id: string;
+    module: EndpointIPPolicyMutate;
+}
+export interface EdgeMutualTLSReplace {
+    id: string;
+    module: EndpointMutualTLSMutate;
+}
+export interface EdgeTLSTerminationReplace {
+    id: string;
+    module: EndpointTLSTermination;
+}
+export interface EdgeTLSTerminationAtEdgeReplace {
+    id: string;
+    module: EndpointTLSTerminationAtEdge;
+}
+export interface EdgeRouteBackendReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointBackendMutate;
+}
+export interface EdgeRouteIPRestrictionReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointIPPolicyMutate;
+}
+export interface EdgeRouteRequestHeadersReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointRequestHeaders;
+}
+export interface EdgeRouteResponseHeadersReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointResponseHeaders;
+}
+export interface EdgeRouteCompressionReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointCompression;
+}
+export interface EdgeRouteCircuitBreakerReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointCircuitBreaker;
+}
+export interface EdgeRouteWebhookVerificationReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointWebhookValidation;
+}
+export interface EdgeRouteOAuthReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointOAuth;
+}
+export interface EdgeRouteSAMLReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointSAMLMutate;
+}
+export interface EdgeRouteOIDCReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointOIDC;
+}
+export interface EdgeRouteWebsocketTCPConverterReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointWebsocketTCPConverter;
+}
+export interface TCPEdgeList {
+    /** the list of all TCP Edges on this account */
+    tcpEdges: Array<TCPEdge>;
+    /** URI of the TCP Edge list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
+export interface TCPEdgeCreate {
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    backend?: EndpointBackendMutate;
+    ipRestriction?: EndpointIPPolicyMutate;
+}
+export interface TCPEdgeUpdate {
+    /** unique identifier of this edge */
+    id: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata?: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    backend?: EndpointBackendMutate;
+    ipRestriction?: EndpointIPPolicyMutate;
+}
+export interface TCPEdge {
+    /** unique identifier of this edge */
+    id: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** timestamp when the edge was created, RFC 3339 format */
+    createdAt: string;
+    /** URI of the edge API resource */
+    uri: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    backend?: EndpointBackend;
+    ipRestriction?: EndpointIPPolicy;
+}
+export interface TLSEdgeList {
+    /** the list of all TLS Edges on this account */
+    tlsEdges: Array<TLSEdge>;
+    /** URI of the TLS Edge list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
+export interface TLSEdgeCreate {
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    backend?: EndpointBackendMutate;
+    ipRestriction?: EndpointIPPolicyMutate;
+    mutualTls?: EndpointMutualTLSMutate;
+    tlsTermination?: EndpointTLSTermination;
+}
+export interface TLSEdgeUpdate {
+    /** unique identifier of this edge */
+    id: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata?: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    backend?: EndpointBackendMutate;
+    ipRestriction?: EndpointIPPolicyMutate;
+    mutualTls?: EndpointMutualTLSMutate;
+    tlsTermination?: EndpointTLSTermination;
+}
+export interface TLSEdge {
+    /** unique identifier of this edge */
+    id: string;
+    /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
+    description: string;
+    /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
+    metadata: string;
+    /** timestamp when the edge configuration was created, RFC 3339 format */
+    createdAt: string;
+    /** URI of the edge API resource */
+    uri: string;
+    /** hostports served by this edge */
+    hostports?: Array<string>;
+    /** edge modules */
+    backend?: EndpointBackend;
+    ipRestriction?: EndpointIPPolicy;
+    mutualTls?: EndpointMutualTLS;
+    tlsTermination?: EndpointTLSTermination;
+}
+export interface Endpoint {
+    /** unique endpoint resource identifier */
+    id: string;
+    /** identifier of the region this endpoint belongs to */
+    region: string;
+    /** timestamp when the endpoint was created in RFC 3339 format */
+    createdAt: string;
+    /** timestamp when the endpoint was updated in RFC 3339 format */
+    updatedAt: string;
+    /** URL of the hostport served by this endpoint */
+    publicUrl: string;
+    /** protocol served by this endpoint. one of `http`, `https`, `tcp`, or `tls` */
+    proto: string;
+    /** hostport served by this endpoint (hostname:port) */
+    hostport: string;
+    /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) */
+    type: string;
+    /** user-supplied metadata of the associated tunnel or edge object */
+    metadata: string;
+    /** the domain reserved for this endpoint */
+    domain?: Ref;
+    /** the address reserved for this endpoint */
+    tcpAddr?: Ref;
+    /** the tunnel serving requests to this endpoint, if this is an ephemeral endpoint */
+    tunnel?: Ref;
+    /** the edge serving requests to this endpoint, if this is an edge endpoint */
+    edge?: Ref;
+}
+export interface EndpointList {
+    /** the list of all active endpoints on this account */
+    endpoints: Array<Endpoint>;
+    /** URI of the endpoints list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
 }
 export interface EventDestinationCreate {
     /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
@@ -710,7 +1102,7 @@ export interface EventSubscriptionCreate {
     description: string;
     /** Sources containing the types for which this event subscription will trigger */
     sources: Array<EventSourceReplace>;
-    /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+    /** A list of Event Destination IDs which should be used for this Event Subscription. */
     destinationIds: Array<string>;
 }
 export interface EventSubscriptionUpdate {
@@ -722,7 +1114,7 @@ export interface EventSubscriptionUpdate {
     description?: string;
     /** Sources containing the types for which this event subscription will trigger */
     sources?: Array<EventSourceReplace>;
-    /** A list of Event Destination IDs which should be used for this Event Stream. Event Streams are required to have at least one Event Destination. */
+    /** A list of Event Destination IDs which should be used for this Event Subscription. */
     destinationIds?: Array<string>;
 }
 export interface EventSubscriptionList {
@@ -794,8 +1186,6 @@ export interface IPPolicyCreate {
     description: string;
     /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
     metadata: string;
-    /** the IP policy action. Supported values are `allow` or `deny` */
-    action: string;
 }
 export interface IPPolicyUpdate {
     id: string;
@@ -815,8 +1205,6 @@ export interface IPPolicy {
     description: string;
     /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
     metadata: string;
-    /** the IP policy action. Supported values are `allow` or `deny` */
-    action: string;
 }
 export interface IPPolicyList {
     /** the list of all IP policies on this account */
@@ -835,6 +1223,8 @@ export interface IPPolicyRuleCreate {
     cidr: string;
     /** ID of the IP policy this IP policy rule will be attached to */
     ipPolicyId: string;
+    /** the action to apply to the policy rule, either `allow` or `deny` */
+    action?: string;
 }
 export interface IPPolicyRuleUpdate {
     id: string;
@@ -860,6 +1250,8 @@ export interface IPPolicyRule {
     cidr: string;
     /** object describing the IP policy this IP Policy Rule belongs to */
     ipPolicy: Ref;
+    /** the action to apply to the policy rule, either `allow` or `deny` */
+    action: string;
 }
 export interface IPPolicyRuleList {
     /** the list of all IP policy rules on this account */
@@ -918,54 +1310,6 @@ export interface IPRestrictionList {
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
 }
-export interface EndpointLoggingReplace {
-    id: string;
-    module: EndpointLoggingMutate;
-}
-export interface EndpointCircuitBreakerReplace {
-    id: string;
-    module: EndpointCircuitBreaker;
-}
-export interface EndpointCompressionReplace {
-    id: string;
-    module: EndpointCompression;
-}
-export interface EndpointTLSTerminationReplace {
-    id: string;
-    module: EndpointTLSTermination;
-}
-export interface EndpointIPPolicyReplace {
-    id: string;
-    module: EndpointIPPolicyMutate;
-}
-export interface EndpointMutualTLSReplace {
-    id: string;
-    module: EndpointMutualTLSMutate;
-}
-export interface EndpointRequestHeadersReplace {
-    id: string;
-    module: EndpointRequestHeaders;
-}
-export interface EndpointResponseHeadersReplace {
-    id: string;
-    module: EndpointResponseHeaders;
-}
-export interface EndpointOAuthReplace {
-    id: string;
-    module: EndpointOAuth;
-}
-export interface EndpointWebhookValidationReplace {
-    id: string;
-    module: EndpointWebhookValidation;
-}
-export interface EndpointSAMLReplace {
-    id: string;
-    module: EndpointSAMLMutate;
-}
-export interface EndpointOIDCReplace {
-    id: string;
-    module: EndpointOIDC;
-}
 export interface ReservedAddrCreate {
     /** human-readable description of what this reserved address will be used for */
     description: string;
@@ -973,8 +1317,6 @@ export interface ReservedAddrCreate {
     metadata: string;
     /** reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
     region: string;
-    /** ID of an endpoint configuration of type tcp that will be used to handle inbound traffic to this address */
-    endpointConfigurationId?: string;
 }
 export interface ReservedAddrUpdate {
     id: string;
@@ -982,8 +1324,6 @@ export interface ReservedAddrUpdate {
     description?: string;
     /** arbitrary user-defined machine-readable data of this reserved address. Optional, max 4096 bytes. */
     metadata?: string;
-    /** ID of an endpoint configuration of type tcp that will be used to handle inbound traffic to this address */
-    endpointConfigurationId?: string;
 }
 export interface ReservedAddr {
     /** unique reserved address resource identifier */
@@ -1000,8 +1340,6 @@ export interface ReservedAddr {
     addr: string;
     /** reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
     region: string;
-    /** object reference to the endpoint configuration that will be applied to traffic to this address */
-    endpointConfiguration?: Ref;
 }
 export interface ReservedAddrList {
     /** the list of all reserved addresses on this account */
@@ -1020,10 +1358,6 @@ export interface ReservedDomainCreate {
     description: string;
     /** arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes. */
     metadata: string;
-    /** ID of an endpoint configuration of type http that will be used to handle inbound http traffic to this domain */
-    httpEndpointConfigurationId?: string;
-    /** ID of an endpoint configuration of type https that will be used to handle inbound https traffic to this domain */
-    httpsEndpointConfigurationId?: string;
     /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with `certificate_management_policy`. */
     certificateId?: string;
     /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
@@ -1035,10 +1369,6 @@ export interface ReservedDomainUpdate {
     description?: string;
     /** arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes. */
     metadata?: string;
-    /** ID of an endpoint configuration of type http that will be used to handle inbound http traffic to this domain */
-    httpEndpointConfigurationId?: string;
-    /** ID of an endpoint configuration of type https that will be used to handle inbound https traffic to this domain */
-    httpsEndpointConfigurationId?: string;
     /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with `certificate_management_policy`. */
     certificateId?: string;
     /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
@@ -1061,10 +1391,6 @@ export interface ReservedDomain {
     region: string;
     /** DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of *.ngrok.io */
     cnameTarget?: string;
-    /** object referencing the endpoint configuration applied to http traffic on this domain */
-    httpEndpointConfiguration?: Ref;
-    /** object referencing the endpoint configuration applied to https traffic on this domain */
-    httpsEndpointConfiguration?: Ref;
     /** object referencing the TLS certificate used for connections to this domain. This can be either a user-uploaded certificate, the most recently issued automatic one, or null otherwise. */
     certificate?: Ref;
     /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled */
@@ -1423,18 +1749,26 @@ export interface TunnelSessionsUpdate {
 export interface Tunnel {
     /** unique tunnel resource identifier */
     id: string;
-    /** URL of the tunnel's public endpoint */
+    /** URL of the ephemeral tunnel's public endpoint */
     publicUrl: string;
     /** timestamp when the tunnel was initiated in RFC 3339 format */
     startedAt: string;
     /** user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel [metadata configuration option](https://ngrok.com/docs#tunnel-definitions-metadata) In API version 0, this value was instead pulled from the top-level [metadata configuration option](https://ngrok.com/docs#config_metadata). */
     metadata: string;
-    /** tunnel protocol. one of `http`, `https`, `tcp` or `tls` */
+    /** tunnel protocol for ephemeral tunnels. one of `http`, `https`, `tcp` or `tls` */
     proto: string;
     /** identifier of tune region where the tunnel is running */
     region: string;
     /** reference object pointing to the tunnel session on which this tunnel was started */
     tunnelSession: Ref;
+    /** the ephemeral endpoint this tunnel is associated with, if this is an agent-initiated tunnel */
+    endpoint?: Ref;
+    /** the labels the tunnel group backends will match against, if this is a backend tunnel */
+    labels: Map<string, string>;
+    /** tunnel group backends served by this backend tunnel */
+    backends?: Array<Ref>;
+    /** upstream address the ngrok agent forwards traffic over this tunnel to. this may be expressed as a URL or a network address. */
+    forwardsTo: string;
 }
 export interface TunnelList {
     /** the list of all online tunnels on this account */

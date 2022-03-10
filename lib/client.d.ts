@@ -37,12 +37,11 @@ export declare class Ngrok {
      */
     credentials: services.Credentials;
     /**
-     * Endpoint Configurations are a reusable group of modules that encapsulate how
-   traffic to a domain or address is handled. Endpoint configurations are only
-   applied to Domains and TCP Addresses they have been attached to.
+     * Endpoints provides an API for querying the endpoint objects
+   which define what tunnel or edge is used to serve a hostport.
+   Only active endpoints associated with a tunnel or backend are returned.
      */
-    endpointConfigurations: services.EndpointConfigurations;
-    eventStreams: services.EventStreams;
+    endpoints: services.Endpoints;
     eventDestinations: services.EventDestinations;
     eventSubscriptions: services.EventSubscriptions;
     eventSources: services.EventSources;
@@ -60,7 +59,7 @@ export declare class Ngrok {
     ipPolicyRules: services.IPPolicyRules;
     /**
      * An IP restriction is a restriction placed on the CIDRs that are allowed to
-   initate traffic to a specific aspect of your ngrok account. An IP
+   initiate traffic to a specific aspect of your ngrok account. An IP
    restriction has a type which defines the ingress it applies to. IP
    restrictions can be used to enforce the source IPs that can make API
    requests, log in to the dashboard, start ngrok agents, and connect to your
@@ -121,19 +120,54 @@ export declare class Ngrok {
    agent tunnel session or an SSH reverse tunnel session.
      */
     tunnels: services.Tunnels;
-    pointcfgModule: {
-        endpointLoggingModule: services.EndpointLoggingModule;
-        endpointCircuitBreakerModule: services.EndpointCircuitBreakerModule;
-        endpointCompressionModule: services.EndpointCompressionModule;
-        endpointTlsTerminationModule: services.EndpointTLSTerminationModule;
-        endpointIpPolicyModule: services.EndpointIPPolicyModule;
-        endpointMutualTlsModule: services.EndpointMutualTLSModule;
-        endpointRequestHeadersModule: services.EndpointRequestHeadersModule;
-        endpointResponseHeadersModule: services.EndpointResponseHeadersModule;
-        endpointOAuthModule: services.EndpointOAuthModule;
-        endpointWebhookValidationModule: services.EndpointWebhookValidationModule;
-        endpointSamlModule: services.EndpointSAMLModule;
-        endpointOidcModule: services.EndpointOIDCModule;
+    backends: {
+        /**
+         * A Failover backend defines failover behavior within a list of referenced
+     backends. Traffic is sent to the first backend in the list. If that backend
+     is offline or no connection can be established, ngrok attempts to connect to
+     the next backend in the list until one is successful.
+         */
+        failoverBackends: services.FailoverBackends;
+        httpResponseBackends: services.HTTPResponseBackends;
+        /**
+         * A Tunnel Group Backend balances traffic among all online tunnels that match
+     a label selector.
+         */
+        tunnelGroupBackends: services.TunnelGroupBackends;
+        /**
+         * A Weighted Backend balances traffic among the referenced backends. Traffic
+     is assigned proportionally to each based on its weight. The percentage of
+     traffic is calculated by dividing a backend's weight by the sum of all
+     weights.
+         */
+        weightedBackends: services.WeightedBackends;
+    };
+    edges: {
+        edgesHttpsRoutes: services.EdgesHTTPSRoutes;
+        edgesHttps: services.EdgesHTTPS;
+        edgesTcp: services.EdgesTCP;
+        edgesTls: services.EdgesTLS;
+    };
+    edgeModules: {
+        httpsEdgeMutualTlsModule: services.HTTPSEdgeMutualTLSModule;
+        httpsEdgeTlsTerminationModule: services.HTTPSEdgeTLSTerminationModule;
+        edgeRouteBackendModule: services.EdgeRouteBackendModule;
+        edgeRouteIpRestrictionModule: services.EdgeRouteIPRestrictionModule;
+        edgeRouteRequestHeadersModule: services.EdgeRouteRequestHeadersModule;
+        edgeRouteResponseHeadersModule: services.EdgeRouteResponseHeadersModule;
+        edgeRouteCompressionModule: services.EdgeRouteCompressionModule;
+        edgeRouteCircuitBreakerModule: services.EdgeRouteCircuitBreakerModule;
+        edgeRouteWebhookVerificationModule: services.EdgeRouteWebhookVerificationModule;
+        edgeRouteOAuthModule: services.EdgeRouteOAuthModule;
+        edgeRouteSamlModule: services.EdgeRouteSAMLModule;
+        edgeRouteOidcModule: services.EdgeRouteOIDCModule;
+        edgeRouteWebsocketTcpConverterModule: services.EdgeRouteWebsocketTCPConverterModule;
+        tcpEdgeBackendModule: services.TCPEdgeBackendModule;
+        tcpEdgeIpRestrictionModule: services.TCPEdgeIPRestrictionModule;
+        tlsEdgeBackendModule: services.TLSEdgeBackendModule;
+        tlsEdgeIpRestrictionModule: services.TLSEdgeIPRestrictionModule;
+        tlsEdgeMutualTlsModule: services.TLSEdgeMutualTLSModule;
+        tlsEdgeTlsTerminationModule: services.TLSEdgeTLSTerminationModule;
     };
     /**
      * Creates an instance of the Ngrok HTTP API client
