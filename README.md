@@ -119,31 +119,3 @@ try {
   }
 }
 ```
-
-### Additional Examples
-
-```typescript
-import { EndpointConfiguration, Error, Ngrok } from '@ngrok/ngrok-api';
-
-const ngrok = new Ngrok({
-    apiToken: 'an api token',
-});
-
-ngrok.endpointConfigurations.create({
-    type: 'https',
-    description: 'some endpoint configuration description',
-    metadata: 'some endpoint configuration metadata',
-    requestHeaders: {
-        add: new Map([
-            ['x-frontend', 'ngrok']
-        ]),
-        remove: ['cache-control'],
-    },
-})
-    .then((epc: EndpointConfiguration) => {
-        console.log(epc);
-    })
-    .catch((err: Error) => {
-        console.log(err);
-    });
-```
