@@ -262,7 +262,7 @@ export interface WeightedBackend {
     description: string;
     /** arbitrary user-defined machine-readable data of this backend. Optional */
     metadata: string;
-    /** the ids of the child backends to their weights (0-10000) */
+    /** the ids of the child backends to their weights [0-10000] */
     backends: Map<string, number>;
 }
 export interface WeightedBackendCreate {
@@ -270,7 +270,7 @@ export interface WeightedBackendCreate {
     description: string;
     /** arbitrary user-defined machine-readable data of this backend. Optional */
     metadata: string;
-    /** the ids of the child backends to their weights (0-10000) */
+    /** the ids of the child backends to their weights [0-10000] */
     backends: Map<string, number>;
 }
 export interface WeightedBackendUpdate {
@@ -279,7 +279,7 @@ export interface WeightedBackendUpdate {
     description?: string;
     /** arbitrary user-defined machine-readable data of this backend. Optional */
     metadata?: string;
-    /** the ids of the child backends to their weights (0-10000) */
+    /** the ids of the child backends to their weights [0-10000] */
     backends: Map<string, number>;
 }
 export interface WeightedBackendList {
@@ -365,7 +365,7 @@ export interface Credential {
     description: string;
     /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
     metadata: string;
-    /** the credential's authtoken that can be used to authenticate an ngrok client. **This value is only available one time, on the API response from credential creation, otherwise it is null.** */
+    /** the credential's authtoken that can be used to authenticate an ngrok agent. **This value is only available one time, on the API response from credential creation, otherwise it is null.** */
     token?: string;
     /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
     acl: Array<string>;
@@ -399,7 +399,7 @@ export interface EndpointMutualTLS {
 export interface EndpointMutualTLSMutate {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
-    /** list of certificate authorities that will be used to validate the TLS client certificate presnted by the initiatiator of the TLS connection */
+    /** list of certificate authorities that will be used to validate the TLS client certificate presented by the initiator of the TLS connection */
     certificateAuthorityIds: Array<string>;
 }
 export interface EndpointTLSTermination {
@@ -1305,7 +1305,7 @@ export interface IPRestriction {
 export interface IPRestrictionList {
     /** the list of all IP restrictions on this account */
     ipRestrictions: Array<IPRestriction>;
-    /** URI of the IP resrtrictions list API resource */
+    /** URI of the IP restrictions list API resource */
     uri: string;
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
@@ -1578,7 +1578,7 @@ export interface SSHUserCertificateCreate {
     sshCertificateAuthorityId: string;
     /** a public key in OpenSSH Authorized Keys format that this certificate signs */
     publicKey: string;
-    /** the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizinig the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user. */
+    /** the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizing the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user. */
     principals: Array<string>;
     /** A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: `force-command` and `source-address`. See [the OpenSSH certificate protocol spec](https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for additional details. */
     criticalOptions: Map<string, string>;
@@ -1617,7 +1617,7 @@ export interface SSHUserCertificate {
     keyType: string;
     /** the ssh certificate authority that is used to sign this ssh user certificate */
     sshCertificateAuthorityId: string;
-    /** the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizinig the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user. */
+    /** the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizing the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user. */
     principals: Array<string>;
     /** A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: `force-command` and `source-address`. See [the OpenSSH certificate protocol spec](https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for additional details. */
     criticalOptions: Map<string, string>;

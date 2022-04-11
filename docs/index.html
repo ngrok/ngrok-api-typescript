@@ -58,6 +58,13 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
+				<a href="#unstable" id="unstable" style="color: inherit; text-decoration: none;">
+					<h1>Unstable</h1>
+				</a>
+				<p>This library is currently unstable. We know of rough edges
+					and are working to bring it to parity with our other API client
+					libraries. Please feel free to try it out and let us know if you find
+				it useful!</p>
 				<a href="#ngrok-api-client-library-for-javascript-and-typescript" id="ngrok-api-client-library-for-javascript-and-typescript" style="color: inherit; text-decoration: none;">
 					<h2>ngrok API client library for JavaScript and TypeScript</h2>
 				</a>
@@ -85,12 +92,12 @@
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Ngrok</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@ngrok/ngrok-api&#039;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">ngrok</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Ngrok</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">apiToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&lt;API KEY&gt;&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&lt;API KEY&gt;&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">});</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">domain</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">domains</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;your-name.ngrok.io&#039;</span>
-<span style="color: #000000">})</span>
+<span style="color: #000000">  </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;your-name.ngrok.io&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">domain</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#automatic-paging" id="automatic-paging" style="color: inherit; text-decoration: none;">
@@ -103,7 +110,7 @@
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Ngrok</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@ngrok/ngrok-api&#039;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">ngrok</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Ngrok</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">apiToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&lt;API KEY&gt;&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&lt;API KEY&gt;&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">});</span>
 
 <span style="color: #000000">(</span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">tunnels</span><span style="color: #000000">.</span><span style="color: #795E26">list</span><span style="color: #000000">()).</span><span style="color: #795E26">forEach</span><span style="color: #000000">(</span><span style="color: #001080">t</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">t</span><span style="color: #000000">));</span>
@@ -115,13 +122,13 @@
 					programming. You can use callback chaining with <code>.then()</code> and <code>.catch()</code> syntax
 				or the <code>await</code> keyword to wait for completion of an API call.</p>
 				<pre><code class="language-typescript"><span style="color: #008000">// await style</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cred</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">credentials</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({</span><span style="color: #001080">description:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;example&quot;</span><span style="color: #000000">});</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cred</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">credentials</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({ </span><span style="color: #001080">description:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;example&#039;</span><span style="color: #000000"> });</span>
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">cred</span><span style="color: #000000">);</span>
 
 <span style="color: #008000">// callback chaining</span>
-<span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">credentials</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({</span><span style="color: #001080">description:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;example&quot;</span><span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">cred</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">cred</span><span style="color: #000000">)</span>
-<span style="color: #000000">}));</span>
+<span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">credentials</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({ </span><span style="color: #001080">description:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;example&#039;</span><span style="color: #000000"> }).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">cred</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">cred</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
 </code></pre>
 				<a href="#error-handling" id="error-handling" style="color: inherit; text-decoration: none;">
 					<h3>Error Handling</h3>
@@ -132,17 +139,16 @@
 				conditions.</p>
 				<p>The <code>Error</code> type includes a <code>statusCode</code> property which can be used to
 				distinguish not found errors when a resource does not exist:</p>
-				<pre><code class="language-typescript">
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Error</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@ngrok/ngrok-api&#039;</span><span style="color: #000000">;</span>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Error</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@ngrok/ngrok-api&#039;</span><span style="color: #000000">;</span>
 
 <span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">ipPolicies</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">({</span>
 <span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;someInvalidId&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">description:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;updated description&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  })</span>
+<span style="color: #000000">  });</span>
 <span style="color: #000000">} </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">: </span><span style="color: #267F99">Error</span><span style="color: #000000">) {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">.</span><span style="color: #001080">statusCode</span><span style="color: #000000"> == </span><span style="color: #098658">404</span><span style="color: #000000">) {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;no ip policy with that id to update&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;no ip policy with that id to update&#039;</span><span style="color: #000000">);</span>
 <span style="color: #000000">  }</span>
 <span style="color: #000000">}</span>
 </code></pre>
@@ -155,12 +161,12 @@
 <span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">ngrok</span><span style="color: #000000">.</span><span style="color: #001080">ipPolicies</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">({</span>
 <span style="color: #000000">    </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;something invalid&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  })</span>
+<span style="color: #000000">  });</span>
 <span style="color: #000000">} </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">: </span><span style="color: #267F99">Error</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">.</span><span style="color: #001080">errorCode</span><span style="color: #000000"> == </span><span style="color: #A31515">&quot;ERR_NGROK_1410&quot;</span><span style="color: #000000">) {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;not a valid ip policy action&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">.</span><span style="color: #001080">errorCode</span><span style="color: #000000"> == </span><span style="color: #A31515">&#039;ERR_NGROK_1410&#039;</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;not a valid ip policy action&#039;</span><span style="color: #000000">);</span>
 <span style="color: #000000">  } </span><span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;some other error&#039;</span><span style="color: #000000">, </span><span style="color: #001080">err</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;some other error&#039;</span><span style="color: #000000">, </span><span style="color: #001080">err</span><span style="color: #000000">);</span>
 <span style="color: #000000">  }</span>
 <span style="color: #000000">}</span>
 </code></pre>

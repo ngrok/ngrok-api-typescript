@@ -1,3 +1,10 @@
+# Unstable
+
+This library is currently unstable. We know of rough edges
+and are working to bring it to parity with our other API client
+libraries. Please feel free to try it out and let us know if you find
+it useful!
+
 ## ngrok API client library for JavaScript and TypeScript
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to make it
@@ -29,12 +36,12 @@ key. API resources can be accessed as properties of the `Ngrok` object.
 import { Ngrok } from '@ngrok/ngrok-api';
 
 const ngrok = new Ngrok({
-    apiToken: '<API KEY>',
+  apiToken: '<API KEY>',
 });
 
 const domain = await ngrok.domains.create({
-  name: 'your-name.ngrok.io'
-})
+  name: 'your-name.ngrok.io',
+});
 console.log(domain);
 ```
 
@@ -49,7 +56,7 @@ API for you behind the scenes.
 import { Ngrok } from '@ngrok/ngrok-api';
 
 const ngrok = new Ngrok({
-    apiToken: '<API KEY>',
+  apiToken: '<API KEY>',
 });
 
 (await ngrok.tunnels.list()).forEach(t => console.log(t));
@@ -61,16 +68,15 @@ All API methods return a `Promise` and are suitable for use in asynchronous
 programming. You can use callback chaining with `.then()` and `.catch()` syntax
 or the `await` keyword to wait for completion of an API call.
 
-
 ```typescript
 // await style
-const cred = await ngrok.credentials.create({description: "example"});
+const cred = await ngrok.credentials.create({ description: 'example' });
 console.log(cred);
 
 // callback chaining
-ngrok.credentials.create({description: "example"}).then((cred => {
-    console.log(cred)
-}));
+ngrok.credentials.create({ description: 'example' }).then(cred => {
+  console.log(cred);
+});
 ```
 
 ### Error Handling
@@ -84,17 +90,16 @@ The `Error` type includes a `statusCode` property which can be used to
 distinguish not found errors when a resource does not exist:
 
 ```typescript
-
 import { Error } from '@ngrok/ngrok-api';
 
 try {
   await ngrok.ipPolicies.update({
     id: 'someInvalidId',
     description: 'updated description',
-  })
+  });
 } catch (err: Error) {
   if (err.statusCode == 404) {
-    console.log('no ip policy with that id to update')
+    console.log('no ip policy with that id to update');
   }
 }
 ```
@@ -110,12 +115,12 @@ import { Error } from '@ngrok/ngrok-api';
 try {
   await ngrok.ipPolicies.create({
     action: 'something invalid',
-  })
+  });
 } catch (err: Error) {
-  if (err.errorCode == "ERR_NGROK_1410") {
-    console.log('not a valid ip policy action')
+  if (err.errorCode == 'ERR_NGROK_1410') {
+    console.log('not a valid ip policy action');
   } else {
-    console.log('some other error', err)
+    console.log('some other error', err);
   }
 }
 ```

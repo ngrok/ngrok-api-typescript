@@ -263,7 +263,7 @@ export class FailoverBackends {
   }
 
   /**
-   * Delete a Failover backend by ID. TODO what if used?
+   * Delete a Failover backend by ID.
    */
   public delete(arg: datatypes.Item): Promise<void> {
     return this.httpClient
@@ -448,7 +448,7 @@ export class TunnelGroupBackends {
   }
 
   /**
-   * Delete a TunnelGroup backend by ID. TODO what if used?
+   * Delete a TunnelGroup backend by ID.
    */
   public delete(arg: datatypes.Item): Promise<void> {
     return this.httpClient
@@ -552,7 +552,7 @@ export class WeightedBackends {
   }
 
   /**
-   * Delete a Weighted backend by ID. TODO what if used?
+   * Delete a Weighted backend by ID.
    */
   public delete(arg: datatypes.Item): Promise<void> {
     return this.httpClient
