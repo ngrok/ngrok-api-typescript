@@ -93,7 +93,7 @@ export declare class FailoverBackends {
      */
     create(arg: datatypes.FailoverBackendCreate): Promise<datatypes.FailoverBackend>;
     /**
-     * Delete a Failover backend by ID. TODO what if used?
+     * Delete a Failover backend by ID.
      */
     delete(arg: datatypes.Item): Promise<void>;
     /**
@@ -136,7 +136,7 @@ export declare class TunnelGroupBackends {
      */
     create(arg: datatypes.TunnelGroupBackendCreate): Promise<datatypes.TunnelGroupBackend>;
     /**
-     * Delete a TunnelGroup backend by ID. TODO what if used?
+     * Delete a TunnelGroup backend by ID.
      */
     delete(arg: datatypes.Item): Promise<void>;
     /**
@@ -169,7 +169,7 @@ export declare class WeightedBackends {
      */
     create(arg: datatypes.WeightedBackendCreate): Promise<datatypes.WeightedBackend>;
     /**
-     * Delete a Weighted backend by ID. TODO what if used?
+     * Delete a Weighted backend by ID.
      */
     delete(arg: datatypes.Item): Promise<void>;
     /**

@@ -198,7 +198,7 @@ export class Ngrok {
     if (apiToken) {
       this.token = apiToken;
     } else {
-      throw new Error('Cannot create ngrok client without an API token');
+      throw new Error('Cannot create ngrok agent without an API token');
     }
 
     this.httpClient = wretch()
