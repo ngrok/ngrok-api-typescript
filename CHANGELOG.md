@@ -1,3 +1,10 @@
+## 0.3.0 (October 25, 2022)
+
+ENHANCEMENTS:
+
+* All "description" and "metadata" fields are optional
+
+
 ## 0.2.0 (July 14, 2021)
 
 ENHANCEMENTS:
