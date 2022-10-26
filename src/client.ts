@@ -35,8 +35,6 @@ export class Ngrok {
  ngrok.com dashboard.
    */
   public apiKeys: services.APIKeys;
-  public applicationSessions: services.ApplicationSessions;
-  public applicationUsers: services.ApplicationUsers;
   /**
    * Certificate Authorities are x509 certificates that are used to sign other
  x509 certificates. Attach a Certificate Authority to the Mutual TLS module
@@ -48,7 +46,7 @@ export class Ngrok {
   /**
    * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
  agent to connect the ngrok service as your account. They are installed with
- the `ngrok config add-authtoken` command or by specifying it in the `ngrok.yml`
+ the `ngrok authtoken` command or by specifying it in the `ngrok.yml`
  configuration file with the `authtoken` property.
    */
   public credentials: services.Credentials;
@@ -206,44 +204,62 @@ export class Ngrok {
     this.httpClient = wretch()
       .url(baseUrl)
       .headers({
-        'User-Agent': 'ngrok-api-typescript/0.9.0/' + process.version,
+        'User-Agent': 'ngrok-ts-user-agent',
         'Ngrok-Version': '2',
       })
       .content('application/json')
       .auth('Bearer ' + this.token);
+
     this.abuseReports = new services.AbuseReports(this.httpClient);
+
     this.agentIngresses = new services.AgentIngresses(this.httpClient);
+
     this.apiKeys = new services.APIKeys(this.httpClient);
-    this.applicationSessions = new services.ApplicationSessions(
-      this.httpClient
-    );
-    this.applicationUsers = new services.ApplicationUsers(this.httpClient);
+
     this.certificateAuthorities = new services.CertificateAuthorities(
       this.httpClient
     );
+
     this.credentials = new services.Credentials(this.httpClient);
+
     this.endpoints = new services.Endpoints(this.httpClient);
+
     this.eventDestinations = new services.EventDestinations(this.httpClient);
+
     this.eventSubscriptions = new services.EventSubscriptions(this.httpClient);
+
     this.eventSources = new services.EventSources(this.httpClient);
+
     this.ipPolicies = new services.IPPolicies(this.httpClient);
+
     this.ipPolicyRules = new services.IPPolicyRules(this.httpClient);
+
     this.ipRestrictions = new services.IPRestrictions(this.httpClient);
+
     this.reservedAddrs = new services.ReservedAddrs(this.httpClient);
+
     this.reservedDomains = new services.ReservedDomains(this.httpClient);
+
     this.sshCertificateAuthorities = new services.SSHCertificateAuthorities(
       this.httpClient
     );
+
     this.sshCredentials = new services.SSHCredentials(this.httpClient);
+
     this.sshHostCertificates = new services.SSHHostCertificates(
       this.httpClient
     );
+
     this.sshUserCertificates = new services.SSHUserCertificates(
       this.httpClient
     );
+
     this.tlsCertificates = new services.TLSCertificates(this.httpClient);
+
     this.tunnelSessions = new services.TunnelSessions(this.httpClient);
+
     this.tunnels = new services.Tunnels(this.httpClient);
+
     this.backends = {
       failoverBackends: new services.FailoverBackends(this.httpClient),
       httpResponseBackends: new services.HTTPResponseBackends(this.httpClient),
