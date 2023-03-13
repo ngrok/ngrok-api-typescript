@@ -21,6 +21,8 @@ export declare class Ngrok {
    ngrok.com dashboard.
      */
     apiKeys: services.APIKeys;
+    applicationSessions: services.ApplicationSessions;
+    applicationUsers: services.ApplicationUsers;
     /**
      * Certificate Authorities are x509 certificates that are used to sign other
    x509 certificates. Attach a Certificate Authority to the Mutual TLS module
@@ -32,7 +34,7 @@ export declare class Ngrok {
     /**
      * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
    agent to connect the ngrok service as your account. They are installed with
-   the `ngrok authtoken` command or by specifying it in the `ngrok.yml`
+   the `ngrok config add-authtoken` command or by specifying it in the `ngrok.yml`
    configuration file with the `authtoken` property.
      */
     credentials: services.Credentials;
