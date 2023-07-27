@@ -21,6 +21,14 @@ export declare class Ngrok {
    ngrok.com dashboard.
      */
     apiKeys: services.APIKeys;
+    applicationSessions: services.ApplicationSessions;
+    applicationUsers: services.ApplicationUsers;
+    /**
+     * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
+   sessions that are running and connected to the ngrok service. Each tunnel
+   session can include one or more Tunnels.
+     */
+    tunnelSessions: services.TunnelSessions;
     /**
      * Certificate Authorities are x509 certificates that are used to sign other
    x509 certificates. Attach a Certificate Authority to the Mutual TLS module
@@ -32,7 +40,7 @@ export declare class Ngrok {
     /**
      * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
    agent to connect the ngrok service as your account. They are installed with
-   the `ngrok authtoken` command or by specifying it in the `ngrok.yml`
+   the `ngrok config add-authtoken` command or by specifying it in the `ngrok.yml`
    configuration file with the `authtoken` property.
      */
     credentials: services.Credentials;
@@ -109,12 +117,6 @@ export declare class Ngrok {
    automated certificate provisioning.
      */
     tlsCertificates: services.TLSCertificates;
-    /**
-     * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
-   sessions that are running and connected to the ngrok service. Each tunnel
-   session can include one or more Tunnels.
-     */
-    tunnelSessions: services.TunnelSessions;
     /**
      * Tunnels provide endpoints to access services exposed by a running ngrok
    agent tunnel session or an SSH reverse tunnel session.

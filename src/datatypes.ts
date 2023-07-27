@@ -1,3 +1,5 @@
+// Code generated for API Clients. DO NOT EDIT.
+
 export interface Empty {}
 
 export interface Item {
@@ -30,11 +32,11 @@ export interface AbuseReport {
   /** URI of the abuse report API resource */
   uri: string;
   /** timestamp that the abuse report record was created in RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** a list of URLs containing suspected abusive content */
   urls: Array<string>;
   /** arbitrary user-defined data about this abuse report. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** Indicates whether ngrok has processed the abuse report. one of `PENDING`, `PROCESSED`, or `PARTIALLY_PROCESSED` */
   status: string;
   /** an array of hostname statuses related to the report */
@@ -52,14 +54,14 @@ export interface AbuseReportCreate {
   /** a list of URLs containing suspected abusive content */
   urls: Array<string>;
   /** arbitrary user-defined data about this abuse report. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
 }
 
 export interface AgentIngressCreate {
   /** human-readable description of the use of this Agent Ingress. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes */
-  metadata: string;
+  metadata?: string;
   /** the domain that you own to be used as the base domain name to generate regional agent ingress domains. */
   domain: string;
 }
@@ -78,9 +80,9 @@ export interface AgentIngress {
   /** URI to the API resource of this Agent ingress */
   uri: string;
   /** human-readable description of the use of this Agent Ingress. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this Agent Ingress. optional, max 4096 bytes */
-  metadata: string;
+  metadata?: string;
   /** the domain that you own to be used as the base domain name to generate regional agent ingress domains. */
   domain: string;
   /** a list of target values to use as the values of NS records for the domain property these values will delegate control over the domain to ngrok */
@@ -88,7 +90,7 @@ export interface AgentIngress {
   /** a list of regional agent ingress domains that are subdomains of the value of domain this value may increase over time as ngrok adds more regions */
   regionDomains: Array<string>;
   /** timestamp when the Agent Ingress was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
 }
 
 export interface AgentIngressList {
@@ -102,9 +104,11 @@ export interface AgentIngressList {
 
 export interface APIKeyCreate {
   /** human-readable description of what uses the API key to authenticate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined data of this API key. optional, max 4096 bytes */
-  metadata: string;
+  metadata?: string;
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  ownerId?: string;
 }
 
 export interface APIKeyUpdate {
@@ -121,13 +125,15 @@ export interface APIKey {
   /** URI to the API resource of this API key */
   uri: string;
   /** human-readable description of what uses the API key to authenticate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined data of this API key. optional, max 4096 bytes */
-  metadata: string;
+  metadata?: string;
   /** timestamp when the api key was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** the bearer token that can be placed into the Authorization header to authenticate request to the ngrok API. **This value is only available one time, on the API response from key creation. Otherwise it is null.** */
   token?: string;
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  ownerId?: string;
 }
 
 export interface APIKeyList {
@@ -139,26 +145,170 @@ export interface APIKeyList {
   nextPageUri?: string;
 }
 
+export interface ApplicationSession {
+  /** unique application session resource identifier */
+  id: string;
+  /** URI of the application session API resource */
+  uri: string;
+  /** URL of the hostport served by this endpoint */
+  publicUrl: string;
+  /** browser session details of the application session */
+  browserSession: BrowserSession;
+  /** application user this session is associated with */
+  applicationUser?: Ref;
+  /** timestamp when the user was created in RFC 3339 format */
+  createdAt?: Date;
+  /** timestamp when the user was last active in RFC 3339 format */
+  lastActive?: Date;
+  /** timestamp when session expires in RFC 3339 format */
+  expiresAt?: Date;
+  /** ephemeral endpoint this session is associated with */
+  endpoint?: Ref;
+  /** edge this session is associated with, null if the endpoint is agent-initiated */
+  edge?: Ref;
+  /** route this session is associated with, null if the endpoint is agent-initiated */
+  route?: Ref;
+}
+
+export interface ApplicationSessionList {
+  /** list of all application sessions on this account */
+  applicationSessions: Array<ApplicationSession>;
+  /** URI of the application session list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  nextPageUri?: string;
+}
+
+export interface BrowserSession {
+  /** HTTP User-Agent data */
+  userAgent: UserAgent;
+  /** IP address */
+  ipAddress: string;
+  /** IP geolocation data */
+  location?: Location;
+}
+
+export interface UserAgent {
+  /** raw User-Agent request header */
+  raw: string;
+  /** browser name (e.g. Chrome) */
+  browserName?: string;
+  /** browser version (e.g. 102) */
+  browserVersion?: string;
+  /** type of device (e.g. Desktop) */
+  deviceType?: string;
+  /** operating system name (e.g. MacOS) */
+  osName?: string;
+  /** operating system version (e.g. 10.15.7) */
+  osVersion?: string;
+}
+
+export interface Location {
+  /** ISO country code */
+  countryCode?: string;
+  /** geographical latitude */
+  latitude?: number;
+  /** geographical longitude */
+  longitude?: number;
+  /** accuracy radius of the geographical coordinates */
+  latLongRadiusKm?: number;
+}
+
+export interface ApplicationUser {
+  /** unique application user resource identifier */
+  id: string;
+  /** URI of the application user API resource */
+  uri: string;
+  /** identity provider that the user authenticated with */
+  identityProvider: IdentityProvider;
+  /** unique user identifier */
+  providerUserId: string;
+  /** user username */
+  username?: string;
+  /** user email */
+  email?: string;
+  /** user common name */
+  name?: string;
+  /** timestamp when the user was created in RFC 3339 format */
+  createdAt?: Date;
+  /** timestamp when the user was last active in RFC 3339 format */
+  lastActive?: Date;
+  /** timestamp when the user last signed-in in RFC 3339 format */
+  lastLogin?: Date;
+}
+
+export interface ApplicationUserList {
+  /** list of all application users on this account */
+  applicationUsers: Array<ApplicationUser>;
+  /** URI of the application user list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  nextPageUri?: string;
+}
+
+export interface IdentityProvider {
+  /** name of the identity provider (e.g. Google) */
+  name: string;
+  /** URL of the identity provider (e.g. https://accounts.google.com) */
+  url: string;
+}
+
+export interface TunnelSession {
+  /** version of the ngrok agent that started this ngrok tunnel session */
+  agentVersion: string;
+  /** reference to the tunnel credential or ssh credential used by the ngrok agent to start this tunnel session */
+  credential: Ref;
+  /** unique tunnel session resource identifier */
+  id: string;
+  /** source ip address of the tunnel session */
+  ip: string;
+  /** arbitrary user-defined data specified in the metadata property in the ngrok configuration file. See the metadata configuration option */
+  metadata?: string;
+  /** operating system of the host the ngrok agent is running on */
+  os: string;
+  /** the ngrok region identifier in which this tunnel session was started */
+  region: string;
+  /** time when the tunnel session first connected to the ngrok servers */
+  startedAt: Date;
+  /** the transport protocol used to start the tunnel session. Either `ngrok/v2` or `ssh` */
+  transport: string;
+  /** URI to the API resource of the tunnel session */
+  uri: string;
+}
+
+export interface TunnelSessionList {
+  /** list of all tunnel sessions on this account */
+  tunnelSessions: Array<TunnelSession>;
+  /** URI to the API resource of the tunnel session list */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  nextPageUri?: string;
+}
+
+export interface TunnelSessionsUpdate {
+  id: string;
+}
+
 export interface FailoverBackend {
   /** unique identifier for this Failover backend */
   id: string;
   /** URI of the FailoverBackend API resource */
   uri: string;
   /** timestamp when the backend was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** the ids of the child backends in order */
   backends: Array<string>;
 }
 
 export interface FailoverBackendCreate {
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** the ids of the child backends in order */
   backends: Array<string>;
 }
@@ -187,11 +337,11 @@ export interface HTTPResponseBackend {
   /** URI of the HTTPResponseBackend API resource */
   uri: string;
   /** timestamp when the backend was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** body to return as fixed content */
   body: string;
   /** headers to return */
@@ -202,9 +352,9 @@ export interface HTTPResponseBackend {
 
 export interface HTTPResponseBackendCreate {
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** body to return as fixed content */
   body: string;
   /** headers to return */
@@ -239,11 +389,11 @@ export interface TunnelGroupBackend {
   /** URI of the TunnelGroupBackend API resource */
   uri: string;
   /** timestamp when the backend was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
   labels: Map<string, string>;
   /** tunnels matching this backend */
@@ -252,9 +402,9 @@ export interface TunnelGroupBackend {
 
 export interface TunnelGroupBackendCreate {
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** labels to watch for tunnels on, e.g. app->foo, dc->bar */
   labels: Map<string, string>;
 }
@@ -284,20 +434,20 @@ export interface WeightedBackend {
   /** URI of the WeightedBackend API resource */
   uri: string;
   /** timestamp when the backend was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** the ids of the child backends to their weights [0-10000] */
   backends: Map<string, number>;
 }
 
 export interface WeightedBackendCreate {
   /** human-readable description of this backend. Optional */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this backend. Optional */
-  metadata: string;
+  metadata?: string;
   /** the ids of the child backends to their weights [0-10000] */
   backends: Map<string, number>;
 }
@@ -323,9 +473,9 @@ export interface WeightedBackendList {
 
 export interface CertificateAuthorityCreate {
   /** human-readable description of this Certificate Authority. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this Certificate Authority. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** raw PEM of the Certificate Authority */
   caPem: string;
 }
@@ -344,19 +494,19 @@ export interface CertificateAuthority {
   /** URI of the Certificate Authority API resource */
   uri: string;
   /** timestamp when the Certificate Authority was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this Certificate Authority. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this Certificate Authority. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** raw PEM of the Certificate Authority */
   caPem: string;
   /** subject common name of the Certificate Authority */
   subjectCommonName: string;
   /** timestamp when this Certificate Authority becomes valid, RFC 3339 format */
-  notBefore: string;
+  notBefore: Date;
   /** timestamp when this Certificate Authority becomes invalid, RFC 3339 format */
-  notAfter: string;
+  notAfter: Date;
   /** set of actions the private key of this Certificate Authority can be used for */
   keyUsages: Array<string>;
   /** extended set of actions the private key of this Certificate Authority can be used for */
@@ -374,11 +524,13 @@ export interface CertificateAuthorityList {
 
 export interface CredentialCreate {
   /** human-readable description of who or what will use the credential to authenticate. Optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
-  metadata: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
+  metadata?: string;
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  ownerId?: string;
 }
 
 export interface CredentialUpdate {
@@ -387,7 +539,7 @@ export interface CredentialUpdate {
   description?: string;
   /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
   metadata?: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl?: Array<string>;
 }
 
@@ -397,15 +549,17 @@ export interface Credential {
   /** URI of the tunnel credential API resource */
   uri: string;
   /** timestamp when the tunnel credential was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of who or what will use the credential to authenticate. Optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** the credential's authtoken that can be used to authenticate an ngrok agent. **This value is only available one time, on the API response from credential creation, otherwise it is null.** */
   token?: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  ownerId?: string;
 }
 
 export interface CredentialList {
@@ -420,7 +574,7 @@ export interface CredentialList {
 export interface EndpointWebhookValidation {
   /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
   enabled?: boolean;
-  /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: `SLACK`, `SNS`, `STRIPE`, `GITHUB`, `TWILIO`, `SHOPIFY`, `GITLAB`, `INTERCOM`, `SENDGRID`, `XERO`, `PAGERDUTY`. */
+  /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers defined at https://ngrok.com/docs/cloud-edge/modules/webhook */
   provider: string;
   /** a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret */
   secret: string;
@@ -482,6 +636,7 @@ export interface EndpointResponseHeaders {
 export interface EndpointIPPolicy {
   /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
   enabled?: boolean;
+  /** list of all IP policies that will be used to check if a source IP is allowed access to the endpoint */
   ipPolicies: Array<Ref>;
 }
 
@@ -533,6 +688,14 @@ export interface EndpointOAuthProvider {
   microsoft?: EndpointOAuthMicrosoft;
   /** configuration for using google as the identity provider */
   google?: EndpointOAuthGoogle;
+  /** configuration for using linkedin as the identity provider */
+  linkedin?: EndpointOAuthLinkedIn;
+  /** configuration for using gitlab as the identity provider */
+  gitlab?: EndpointOAuthGitLab;
+  /** configuration for using twitch as the identity provider */
+  twitch?: EndpointOAuthTwitch;
+  /** configuration for using amazon as the identity provider */
+  amazon?: EndpointOAuthAmazon;
 }
 
 export interface EndpointOAuthGitHub {
@@ -541,15 +704,15 @@ export interface EndpointOAuthGitHub {
   /** the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for `client_id`. */
   clientSecret?: string;
   /** a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both `client_id` and `client_secret` to set scopes) */
-  scopes: Array<string>;
+  scopes?: Array<string>;
   /** a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint */
-  emailAddresses: Array<string>;
+  emailAddresses?: Array<string>;
   /** a list of email domains of users authenticated by identity provider who are allowed access to the endpoint */
-  emailDomains: Array<string>;
+  emailDomains?: Array<string>;
   /** a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the 'slug' format qualified with the org name, e.g. `org-name/team-name` */
-  teams: Array<string>;
+  teams?: Array<string>;
   /** a list of github org identifiers. users who are members of any of the listed organizations will be allowed access. identifiers should be the organization's 'slug' */
-  organizations: Array<string>;
+  organizations?: Array<string>;
 }
 
 export interface EndpointOAuthFacebook {
@@ -588,6 +751,38 @@ export interface EndpointOAuthGoogle {
   /** a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint */
   emailAddresses: Array<string>;
   /** a list of email domains of users authenticated by identity provider who are allowed access to the endpoint */
+  emailDomains: Array<string>;
+}
+
+export interface EndpointOAuthLinkedIn {
+  clientId?: string;
+  clientSecret?: string;
+  scopes: Array<string>;
+  emailAddresses: Array<string>;
+  emailDomains: Array<string>;
+}
+
+export interface EndpointOAuthGitLab {
+  clientId?: string;
+  clientSecret?: string;
+  scopes: Array<string>;
+  emailAddresses: Array<string>;
+  emailDomains: Array<string>;
+}
+
+export interface EndpointOAuthTwitch {
+  clientId?: string;
+  clientSecret?: string;
+  scopes: Array<string>;
+  emailAddresses: Array<string>;
+  emailDomains: Array<string>;
+}
+
+export interface EndpointOAuthAmazon {
+  clientId?: string;
+  clientSecret?: string;
+  scopes: Array<string>;
+  emailAddresses: Array<string>;
   emailDomains: Array<string>;
 }
 
@@ -702,9 +897,9 @@ export interface HTTPSEdgeRouteCreate {
   /** Route selector: "/blog" or "example.com" or "example.com/blog" */
   match: string;
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** backend module configuration or `null` */
   backend?: EndpointBackendMutate;
   /** ip restriction module configuration or `null` */
@@ -739,9 +934,9 @@ export interface HTTPSEdgeRouteUpdate {
   /** Route selector: "/blog" or "example.com" or "example.com/blog" */
   match: string;
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** backend module configuration or `null` */
   backend?: EndpointBackendMutate;
   /** ip restriction module configuration or `null` */
@@ -772,7 +967,7 @@ export interface HTTPSEdgeRoute {
   /** unique identifier of this edge route */
   id: string;
   /** timestamp when the edge configuration was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** Type of match to use for this route. Valid values are "exact_path" and "path_prefix". */
   matchType: string;
   /** Route selector: "/blog" or "example.com" or "example.com/blog" */
@@ -780,9 +975,9 @@ export interface HTTPSEdgeRoute {
   /** URI of the edge API resource */
   uri: string;
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** backend module configuration or `null` */
   backend?: EndpointBackend;
   /** ip restriction module configuration or `null` */
@@ -818,9 +1013,9 @@ export interface HTTPSEdgeList {
 
 export interface HTTPSEdgeCreate {
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge; optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** hostports served by this edge */
   hostports?: Array<string>;
   /** edge modules */
@@ -846,11 +1041,11 @@ export interface HTTPSEdge {
   /** unique identifier of this edge */
   id: string;
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge; optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** timestamp when the edge configuration was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** URI of the edge API resource */
   uri: string;
   /** hostports served by this edge */
@@ -964,9 +1159,9 @@ export interface TCPEdgeList {
 
 export interface TCPEdgeCreate {
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** hostports served by this edge */
   hostports?: Array<string>;
   /** edge modules */
@@ -992,11 +1187,11 @@ export interface TCPEdge {
   /** unique identifier of this edge */
   id: string;
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** timestamp when the edge was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** URI of the edge API resource */
   uri: string;
   /** hostports served by this edge */
@@ -1017,9 +1212,9 @@ export interface TLSEdgeList {
 
 export interface TLSEdgeCreate {
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** hostports served by this edge */
   hostports?: Array<string>;
   /** edge modules */
@@ -1049,11 +1244,11 @@ export interface TLSEdge {
   /** unique identifier of this edge */
   id: string;
   /** human-readable description of what this edge will be used for; optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** timestamp when the edge configuration was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** URI of the edge API resource */
   uri: string;
   /** hostports served by this edge */
@@ -1069,11 +1264,11 @@ export interface Endpoint {
   /** unique endpoint resource identifier */
   id: string;
   /** identifier of the region this endpoint belongs to */
-  region: string;
+  region?: string;
   /** timestamp when the endpoint was created in RFC 3339 format */
-  createdAt: string;
+  createdAt?: Date;
   /** timestamp when the endpoint was updated in RFC 3339 format */
-  updatedAt: string;
+  updatedAt?: Date;
   /** URL of the hostport served by this endpoint */
   publicUrl: string;
   /** protocol served by this endpoint. one of `http`, `https`, `tcp`, or `tls` */
@@ -1083,7 +1278,7 @@ export interface Endpoint {
   /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) */
   type: string;
   /** user-supplied metadata of the associated tunnel or edge object */
-  metadata: string;
+  metadata?: string;
   /** the domain reserved for this endpoint */
   domain?: Ref;
   /** the address reserved for this endpoint */
@@ -1105,9 +1300,9 @@ export interface EndpointList {
 
 export interface EventDestinationCreate {
   /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is `JSON`. */
   format: string;
   /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: `kinesis`, `firehose`, `cloudwatch_logs`, or `s3`. */
@@ -1131,11 +1326,11 @@ export interface EventDestination {
   /** Unique identifier for this Event Destination. */
   id: string;
   /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** Timestamp when the Event Destination was created, RFC 3339 format. */
-  createdAt: string;
+  createdAt: Date;
   /** Human-readable description of the Event Destination. Optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** The output format you would like to serialize events into when sending to their target. Currently the only accepted value is `JSON`. */
   format: string;
   /** An object that encapsulates where and how to send your events. An event destination must contain exactly one of the following objects, leaving the rest null: `kinesis`, `firehose`, `cloudwatch_logs`, or `s3`. */
@@ -1160,6 +1355,8 @@ export interface EventTarget {
   kinesis?: EventTargetKinesis;
   /** Configuration used to send events to Amazon CloudWatch Logs. */
   cloudwatchLogs?: EventTargetCloudwatchLogs;
+  /** Configuration used to send events to Datadog. */
+  datadog?: EventTargetDatadog;
 }
 
 export interface EventTargetFirehose {
@@ -1183,6 +1380,17 @@ export interface EventTargetCloudwatchLogs {
   logGroupArn: string;
 }
 
+export interface EventTargetDatadog {
+  /** Datadog API key to use. */
+  apiKey?: string;
+  /** Tags to send with the event. */
+  ddtags?: string;
+  /** Service name to send with the event. */
+  service?: string;
+  /** Datadog site to send event to. */
+  ddsite?: string;
+}
+
 export interface AWSAuth {
   /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
   role?: AWSRole;
@@ -1204,9 +1412,9 @@ export interface AWSCredentials {
 
 export interface EventSubscriptionCreate {
   /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
-  metadata: string;
+  metadata?: string;
   /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
-  description: string;
+  description?: string;
   /** Sources containing the types for which this event subscription will trigger */
   sources: Array<EventSourceReplace>;
   /** A list of Event Destination IDs which should be used for this Event Subscription. */
@@ -1241,11 +1449,11 @@ export interface EventSubscription {
   /** URI of the Event Subscription API resource. */
   uri: string;
   /** When the Event Subscription was created (RFC 3339 format). */
-  createdAt: string;
+  createdAt: Date;
   /** Arbitrary customer supplied information intended to be machine readable. Optional, max 4096 chars. */
-  metadata: string;
+  metadata?: string;
   /** Arbitrary customer supplied information intended to be human readable. Optional, max 255 chars. */
-  description: string;
+  description?: string;
   /** Sources containing the types for which this event subscription will trigger */
   sources: Array<EventSource>;
   /** Destinations to which these events will be sent */
@@ -1301,9 +1509,9 @@ export interface EventSourcePaging {
 
 export interface IPPolicyCreate {
   /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
 }
 
 export interface IPPolicyUpdate {
@@ -1320,11 +1528,11 @@ export interface IPPolicy {
   /** URI of the IP Policy API resource */
   uri: string;
   /** timestamp when the IP policy was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of the source IPs of this IP policy. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
 }
 
 export interface IPPolicyList {
@@ -1338,9 +1546,9 @@ export interface IPPolicyList {
 
 export interface IPPolicyRuleCreate {
   /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
   cidr: string;
   /** ID of the IP policy this IP policy rule will be attached to */
@@ -1365,11 +1573,11 @@ export interface IPPolicyRule {
   /** URI of the IP policy rule API resource */
   uri: string;
   /** timestamp when the IP policy rule was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of the source IPs of this IP rule. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported. */
   cidr: string;
   /** object describing the IP policy this IP Policy Rule belongs to */
@@ -1389,9 +1597,9 @@ export interface IPPolicyRuleList {
 
 export interface IPRestrictionCreate {
   /** human-readable description of this IP restriction. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** true if the IP restriction will be enforced. if false, only warnings will be issued */
   enforced: boolean;
   /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: `dashboard`, `api`, `agent`, and `endpoints` */
@@ -1418,11 +1626,11 @@ export interface IPRestriction {
   /** URI of the IP restriction API resource */
   uri: string;
   /** timestamp when the IP restriction was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this IP restriction. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this IP restriction. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** true if the IP restriction will be enforced. if false, only warnings will be issued */
   enforced: boolean;
   /** the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: `dashboard`, `api`, `agent`, and `endpoints` */
@@ -1442,9 +1650,9 @@ export interface IPRestrictionList {
 
 export interface ReservedAddrCreate {
   /** human-readable description of what this reserved address will be used for */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this reserved address. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
   region: string;
 }
@@ -1463,11 +1671,11 @@ export interface ReservedAddr {
   /** URI of the reserved address API resource */
   uri: string;
   /** timestamp when the reserved address was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of what this reserved address will be used for */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this reserved address. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** hostname:port of the reserved address that was assigned at creation time */
   addr: string;
   /** reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
@@ -1486,12 +1694,14 @@ export interface ReservedAddrList {
 export interface ReservedDomainCreate {
   /** the domain name to reserve. It may be a full domain name like app.example.com. If the name does not contain a '.' it will reserve that subdomain on ngrok.io. */
   name: string;
+  /** hostname of the reserved domain */
+  domain: string;
   /** reserve the domain in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
   region: string;
   /** human-readable description of what this reserved domain will be used for */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with `certificate_management_policy`. */
   certificateId?: string;
   /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
@@ -1516,11 +1726,11 @@ export interface ReservedDomain {
   /** URI of the reserved domain API resource */
   uri: string;
   /** timestamp when the reserved domain was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of what this reserved domain will be used for */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** hostname of the reserved domain */
   domain: string;
   /** reserve the domain in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
@@ -1555,7 +1765,7 @@ export interface ReservedDomainCertPolicy {
 
 export interface ReservedDomainCertStatus {
   /** timestamp when the next renewal will be requested, RFC 3339 format */
-  renewsAt?: string;
+  renewsAt?: Date;
   /** status of the certificate provisioning job, or null if the certificiate isn't being provisioned or renewed */
   provisioningJob?: ReservedDomainCertJob;
 }
@@ -1566,16 +1776,16 @@ export interface ReservedDomainCertJob {
   /** a message describing the current status or error */
   msg: string;
   /** timestamp when the provisioning job started, RFC 3339 format */
-  startedAt: string;
+  startedAt: Date;
   /** timestamp when the provisioning job will be retried */
-  retriesAt?: string;
+  retriesAt?: Date;
 }
 
 export interface SSHCertificateAuthorityCreate {
   /** human-readable description of this SSH Certificate Authority. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this SSH Certificate Authority. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** the type of private key to generate. one of `rsa`, `ecdsa`, `ed25519` */
   privateKeyType: string;
   /** the type of elliptic curve to use when creating an ECDSA key */
@@ -1598,11 +1808,11 @@ export interface SSHCertificateAuthority {
   /** URI of the SSH Certificate Authority API resource */
   uri: string;
   /** timestamp when the SSH Certificate Authority API resource was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this SSH Certificate Authority. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this SSH Certificate Authority. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** raw public key for this SSH Certificate Authority */
   publicKey: string;
   /** the type of private key for this SSH Certificate Authority */
@@ -1620,13 +1830,15 @@ export interface SSHCertificateAuthorityList {
 
 export interface SSHCredentialCreate {
   /** human-readable description of who or what will use the ssh credential to authenticate. Optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this ssh credential. Optional, max 4096 bytes. */
-  metadata: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
+  metadata?: string;
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
   /** the PEM-encoded public key of the SSH keypair that will be used to authenticate */
   publicKey: string;
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  ownerId?: string;
 }
 
 export interface SSHCredentialUpdate {
@@ -1635,7 +1847,7 @@ export interface SSHCredentialUpdate {
   description?: string;
   /** arbitrary user-defined machine-readable data of this ssh credential. Optional, max 4096 bytes. */
   metadata?: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl?: Array<string>;
 }
 
@@ -1645,15 +1857,17 @@ export interface SSHCredential {
   /** URI of the ssh credential API resource */
   uri: string;
   /** timestamp when the ssh credential was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of who or what will use the ssh credential to authenticate. Optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this ssh credential. Optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** the PEM-encoded public key of the SSH keypair that will be used to authenticate */
   publicKey: string;
-  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
+  /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  ownerId?: string;
 }
 
 export interface SSHCredentialList {
@@ -1673,13 +1887,13 @@ export interface SSHHostCertificateCreate {
   /** the list of principals included in the ssh host certificate. This is the list of hostnames and/or IP addresses that are authorized to serve SSH traffic with this certificate. Dangerously, if no principals are specified, this certificate is considered valid for all hosts. */
   principals: Array<string>;
   /** The time when the host certificate becomes valid, in RFC 3339 format. Defaults to the current time if unspecified. */
-  validAfter: string;
+  validAfter: Date;
   /** The time when this host certificate becomes invalid, in RFC 3339 format. If unspecified, a default value of one year in the future will be used. The OpenSSH certificates RFC calls this `valid_before`. */
-  validUntil: string;
+  validUntil: Date;
   /** human-readable description of this SSH Host Certificate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this SSH Host Certificate. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
 }
 
 export interface SSHHostCertificateUpdate {
@@ -1696,11 +1910,11 @@ export interface SSHHostCertificate {
   /** URI of the SSH Host Certificate API resource */
   uri: string;
   /** timestamp when the SSH Host Certificate API resource was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this SSH Host Certificate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this SSH Host Certificate. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** a public key in OpenSSH Authorized Keys format that this certificate signs */
   publicKey: string;
   /** the key type of the `public_key`, one of `rsa`, `ecdsa` or `ed25519` */
@@ -1710,9 +1924,9 @@ export interface SSHHostCertificate {
   /** the list of principals included in the ssh host certificate. This is the list of hostnames and/or IP addresses that are authorized to serve SSH traffic with this certificate. Dangerously, if no principals are specified, this certificate is considered valid for all hosts. */
   principals: Array<string>;
   /** the time when the ssh host certificate becomes valid, in RFC 3339 format. */
-  validAfter: string;
+  validAfter: Date;
   /** the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this `valid_before`. */
-  validUntil: string;
+  validUntil: Date;
   /** the signed SSH certificate in OpenSSH Authorized Keys format. this value should be placed in a `-cert.pub` certificate file on disk that should be referenced in your `sshd_config` configuration file with a `HostCertificate` directive */
   certificate: string;
 }
@@ -1738,13 +1952,13 @@ export interface SSHUserCertificateCreate {
   /** A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: `{"permit-pty": "", "permit-user-rc": ""}` OpenSSH understands a number of predefined extensions. See [the OpenSSH certificate protocol spec](https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for additional details. */
   extensions: Map<string, string>;
   /** The time when the user certificate becomes valid, in RFC 3339 format. Defaults to the current time if unspecified. */
-  validAfter: string;
+  validAfter: Date;
   /** The time when this host certificate becomes invalid, in RFC 3339 format. If unspecified, a default value of 24 hours will be used. The OpenSSH certificates RFC calls this `valid_before`. */
-  validUntil: string;
+  validUntil: Date;
   /** human-readable description of this SSH User Certificate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this SSH User Certificate. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
 }
 
 export interface SSHUserCertificateUpdate {
@@ -1761,11 +1975,11 @@ export interface SSHUserCertificate {
   /** URI of the SSH User Certificate API resource */
   uri: string;
   /** timestamp when the SSH User Certificate API resource was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this SSH User Certificate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this SSH User Certificate. optional, max 4096 bytes. */
-  metadata: string;
+  metadata?: string;
   /** a public key in OpenSSH Authorized Keys format that this certificate signs */
   publicKey: string;
   /** the key type of the `public_key`, one of `rsa`, `ecdsa` or `ed25519` */
@@ -1779,9 +1993,9 @@ export interface SSHUserCertificate {
   /** A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: `{"permit-pty": "", "permit-user-rc": ""}` OpenSSH understands a number of predefined extensions. See [the OpenSSH certificate protocol spec](https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for additional details. */
   extensions: Map<string, string>;
   /** the time when the ssh host certificate becomes valid, in RFC 3339 format. */
-  validAfter: string;
+  validAfter: Date;
   /** the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this `valid_before`. */
-  validUntil: string;
+  validUntil: Date;
   /** the signed SSH certificate in OpenSSH Authorized Keys Format. this value should be placed in a `-cert.pub` certificate file on disk that should be referenced in your `sshd_config` configuration file with a `HostCertificate` directive */
   certificate: string;
 }
@@ -1797,12 +2011,12 @@ export interface SSHUserCertificateList {
 
 export interface TLSCertificateCreate {
   /** human-readable description of this TLS certificate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this TLS certificate. optional, max 4096 bytes. */
-  metadata: string;
-  /** chain of PEM-encoded certificates, leaf first. See [Certificate Bundles](https://ngrok.com/docs/api#tls-certificates-pem). */
+  metadata?: string;
+  /** chain of PEM-encoded certificates, leaf first. See [Certificate Bundles](/cloud-edge/endpoints#certificate-chains). */
   certificatePem: string;
-  /** private key for the TLS certificate, PEM-encoded. See [Private Keys](https://ngrok.com/docs/ngrok-link#tls-certificates-key). */
+  /** private key for the TLS certificate, PEM-encoded. See [Private Keys](/cloud-edge/endpoints#private-keys). */
   privateKeyPem: string;
 }
 
@@ -1820,23 +2034,23 @@ export interface TLSCertificate {
   /** URI of the TLS certificate API resource */
   uri: string;
   /** timestamp when the TLS certificate was created, RFC 3339 format */
-  createdAt: string;
+  createdAt: Date;
   /** human-readable description of this TLS certificate. optional, max 255 bytes. */
-  description: string;
+  description?: string;
   /** arbitrary user-defined machine-readable data of this TLS certificate. optional, max 4096 bytes. */
-  metadata: string;
-  /** chain of PEM-encoded certificates, leaf first. See [Certificate Bundles](https://ngrok.com/docs/api#tls-certificates-pem). */
+  metadata?: string;
+  /** chain of PEM-encoded certificates, leaf first. See [Certificate Bundles](/cloud-edge/endpoints#certificate-chains). */
   certificatePem: string;
   /** subject common name from the leaf of this TLS certificate */
   subjectCommonName: string;
   /** subject alternative names (SANs) from the leaf of this TLS certificate */
   subjectAlternativeNames: TLSCertificateSANs;
   /** timestamp (in RFC 3339 format) when this TLS certificate was issued automatically, or null if this certificate was user-uploaded */
-  issuedAt?: string;
+  issuedAt?: Date;
   /** timestamp when this TLS certificate becomes valid, RFC 3339 format */
-  notBefore: string;
+  notBefore: Date;
   /** timestamp when this TLS certificate becomes invalid, RFC 3339 format */
-  notAfter: string;
+  notAfter: Date;
   /** set of actions the private key of this TLS certificate can be used for */
   keyUsages: Array<string>;
   /** extended set of actions the private key of this TLS certificate can be used for */
@@ -1875,53 +2089,17 @@ export interface TLSCertificateSANs {
   ips: Array<string>;
 }
 
-export interface TunnelSession {
-  /** version of the ngrok agent that started this ngrok tunnel session */
-  agentVersion: string;
-  /** reference to the tunnel credential or ssh credential used by the ngrok agent to start this tunnel session */
-  credential: Ref;
-  /** unique tunnel session resource identifier */
-  id: string;
-  /** source ip address of the tunnel session */
-  ip: string;
-  /** arbitrary user-defined data specified in the metadata property in the ngrok configuration file. See the metadata configuration option */
-  metadata: string;
-  /** operating system of the host the ngrok agent is running on */
-  os: string;
-  /** the ngrok region identifier in which this tunnel session was started */
-  region: string;
-  /** time when the tunnel session first connected to the ngrok servers */
-  startedAt: string;
-  /** the transport protocol used to start the tunnel session. Either `ngrok/v2` or `ssh` */
-  transport: string;
-  /** URI to the API resource of the tunnel session */
-  uri: string;
-}
-
-export interface TunnelSessionList {
-  /** list of all tunnel sessions on this account */
-  tunnelSessions: Array<TunnelSession>;
-  /** URI to the API resource of the tunnel session list */
-  uri: string;
-  /** URI of the next page, or null if there is no next page */
-  nextPageUri?: string;
-}
-
-export interface TunnelSessionsUpdate {
-  id: string;
-}
-
 export interface Tunnel {
   /** unique tunnel resource identifier */
   id: string;
   /** URL of the ephemeral tunnel's public endpoint */
-  publicUrl: string;
+  publicUrl?: string;
   /** timestamp when the tunnel was initiated in RFC 3339 format */
-  startedAt: string;
-  /** user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel [metadata configuration option](https://ngrok.com/docs#tunnel-definitions-metadata) In API version 0, this value was instead pulled from the top-level [metadata configuration option](https://ngrok.com/docs#config_metadata). */
-  metadata: string;
+  startedAt: Date;
+  /** user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel [metadata configuration option](/ngrok-agent/config#common-tunnel-configuration-properties) In API version 0, this value was instead pulled from the top-level [metadata configuration option](/ngrok-agent/config#metadata). */
+  metadata?: string;
   /** tunnel protocol for ephemeral tunnels. one of `http`, `https`, `tcp` or `tls` */
-  proto: string;
+  proto?: string;
   /** identifier of tune region where the tunnel is running */
   region: string;
   /** reference object pointing to the tunnel session on which this tunnel was started */
@@ -1929,7 +2107,7 @@ export interface Tunnel {
   /** the ephemeral endpoint this tunnel is associated with, if this is an agent-initiated tunnel */
   endpoint?: Ref;
   /** the labels the tunnel group backends will match against, if this is a backend tunnel */
-  labels: Map<string, string>;
+  labels?: Map<string, string>;
   /** tunnel group backends served by this backend tunnel */
   backends?: Array<Ref>;
   /** upstream address the ngrok agent forwards traffic over this tunnel to. this may be expressed as a URL or a network address. */
