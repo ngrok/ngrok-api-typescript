@@ -1,3 +1,5 @@
+// Code generated for API Clients. DO NOT EDIT.
+
 import { Wretcher } from 'wretch';
 
 import * as datatypes from './datatypes';
@@ -26,14 +28,13 @@ export class AbuseReports {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get the detailed status of abuse report by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.AbuseReport> {
+  public get(id): Promise<datatypes.AbuseReport> {
     return this.httpClient
-      .url(`/abuse_reports/${arg.id}`)
-      .get()
+      .url(`/abuse_reports/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -58,39 +59,40 @@ export class AgentIngresses {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an Agent Ingress by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/agent_ingresses/${arg.id}`)
-      .delete()
+      .url(`/agent_ingresses/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get the details of an Agent Ingress by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.AgentIngress> {
+  public get(id): Promise<datatypes.AgentIngress> {
     return this.httpClient
-      .url(`/agent_ingresses/${arg.id}`)
-      .get()
+      .url(`/agent_ingresses/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all Agent Ingresses owned by this account
    */
-  public async list(): Promise<Array<datatypes.AgentIngress>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.AgentIngress>> {
     const array: Array<datatypes.AgentIngress> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.AgentIngressList> {
@@ -101,10 +103,14 @@ export class AgentIngresses {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -161,39 +167,40 @@ export class APIKeys {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an API key by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/api_keys/${arg.id}`)
-      .delete()
+      .url(`/api_keys/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get the details of an API key by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.APIKey> {
+  public get(id): Promise<datatypes.APIKey> {
     return this.httpClient
-      .url(`/api_keys/${arg.id}`)
-      .get()
+      .url(`/api_keys/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all API keys owned by this account
    */
-  public async list(): Promise<Array<datatypes.APIKey>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.APIKey>> {
     const array: Array<datatypes.APIKey> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.APIKeyList> {
     return this.httpClient
       .url(`/api_keys`)
@@ -202,10 +209,14 @@ export class APIKeys {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -236,6 +247,269 @@ export class APIKeys {
   }
 }
 
+export class ApplicationSessions {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>applicationSessions</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Get an application session by ID.
+   */
+  public get(id): Promise<datatypes.ApplicationSession> {
+    return this.httpClient
+      .url(`/app/sessions/${id}`)
+      .get(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete an application session by ID.
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/app/sessions/${id}`)
+      .delete(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * List all application sessions for this account.
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.ApplicationSession>> {
+    const array: Array<datatypes.ApplicationSession> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.ApplicationSessionList> {
+    return this.httpClient
+      .url(`/app/sessions`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.ApplicationSession[] =
+        pagedList.applicationSessions;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+}
+
+export class ApplicationUsers {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>applicationUsers</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Get an application user by ID.
+   */
+  public get(id): Promise<datatypes.ApplicationUser> {
+    return this.httpClient
+      .url(`/app/users/${id}`)
+      .get(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete an application user by ID.
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/app/users/${id}`)
+      .delete(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * List all application users for this account.
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.ApplicationUser>> {
+    const array: Array<datatypes.ApplicationUser> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.ApplicationUserList> {
+    return this.httpClient
+      .url(`/app/users`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.ApplicationUser[] = pagedList.applicationUsers;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+}
+
+/**
+ * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
+ sessions that are running and connected to the ngrok service. Each tunnel
+ session can include one or more Tunnels.
+ */
+export class TunnelSessions {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>tunnelSessions</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * List all online tunnel sessions running on this account.
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.TunnelSession>> {
+    const array: Array<datatypes.TunnelSession> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.TunnelSessionList> {
+    return this.httpClient
+      .url(`/tunnel_sessions`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.TunnelSession[] = pagedList.tunnelSessions;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Get the detailed status of a tunnel session by ID
+   */
+  public get(id): Promise<datatypes.TunnelSession> {
+    return this.httpClient
+      .url(`/tunnel_sessions/${id}`)
+      .get(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID.
+   */
+  public restart(id): Promise<void> {
+    return this.httpClient
+      .url(`/tunnel_sessions/${id}/restart`)
+      .post(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Issues a command instructing the ngrok agent that started this tunnel session to exit.
+   */
+  public stop(id): Promise<void> {
+    return this.httpClient
+      .url(`/tunnel_sessions/${id}/stop`)
+      .post(id)
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted
+   */
+  public update(arg: datatypes.TunnelSessionsUpdate): Promise<void> {
+    return this.httpClient
+      .url(`/tunnel_sessions/${arg.id}/update`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+}
+
 /**
  * A Failover backend defines failover behavior within a list of referenced
  backends. Traffic is sent to the first backend in the list. If that backend
@@ -261,39 +535,40 @@ export class FailoverBackends {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a Failover backend by ID.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/backends/failover/${arg.id}`)
-      .delete()
+      .url(`/backends/failover/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about a Failover backend by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.FailoverBackend> {
+  public get(id): Promise<datatypes.FailoverBackend> {
     return this.httpClient
-      .url(`/backends/failover/${arg.id}`)
-      .get()
+      .url(`/backends/failover/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all Failover backends on this account
    */
-  public async list(): Promise<Array<datatypes.FailoverBackend>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.FailoverBackend>> {
     const array: Array<datatypes.FailoverBackend> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.FailoverBackendList> {
@@ -304,10 +579,14 @@ export class FailoverBackends {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -356,30 +635,31 @@ export class HTTPResponseBackends {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/backends/http_response/${arg.id}`)
-      .delete()
+      .url(`/backends/http_response/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.HTTPResponseBackend> {
+  public get(id): Promise<datatypes.HTTPResponseBackend> {
     return this.httpClient
-      .url(`/backends/http_response/${arg.id}`)
-      .get()
+      .url(`/backends/http_response/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public async list(): Promise<Array<datatypes.HTTPResponseBackend>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.HTTPResponseBackend>> {
     const array: Array<datatypes.HTTPResponseBackend> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.HTTPResponseBackendList> {
@@ -390,10 +670,14 @@ export class HTTPResponseBackends {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -446,39 +730,40 @@ export class TunnelGroupBackends {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a TunnelGroup backend by ID.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/backends/tunnel_group/${arg.id}`)
-      .delete()
+      .url(`/backends/tunnel_group/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about a TunnelGroup backend by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.TunnelGroupBackend> {
+  public get(id): Promise<datatypes.TunnelGroupBackend> {
     return this.httpClient
-      .url(`/backends/tunnel_group/${arg.id}`)
-      .get()
+      .url(`/backends/tunnel_group/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all TunnelGroup backends on this account
    */
-  public async list(): Promise<Array<datatypes.TunnelGroupBackend>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.TunnelGroupBackend>> {
     const array: Array<datatypes.TunnelGroupBackend> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.TunnelGroupBackendList> {
@@ -489,10 +774,14 @@ export class TunnelGroupBackends {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -550,39 +839,40 @@ export class WeightedBackends {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a Weighted backend by ID.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/backends/weighted/${arg.id}`)
-      .delete()
+      .url(`/backends/weighted/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about a Weighted backend by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.WeightedBackend> {
+  public get(id): Promise<datatypes.WeightedBackend> {
     return this.httpClient
-      .url(`/backends/weighted/${arg.id}`)
-      .get()
+      .url(`/backends/weighted/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all Weighted backends on this account
    */
-  public async list(): Promise<Array<datatypes.WeightedBackend>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.WeightedBackend>> {
     const array: Array<datatypes.WeightedBackend> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.WeightedBackendList> {
@@ -593,10 +883,14 @@ export class WeightedBackends {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -655,39 +949,40 @@ export class CertificateAuthorities {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a Certificate Authority
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/certificate_authorities/${arg.id}`)
-      .delete()
+      .url(`/certificate_authorities/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about a certficate authority
    */
-  public get(arg: datatypes.Item): Promise<datatypes.CertificateAuthority> {
+  public get(id): Promise<datatypes.CertificateAuthority> {
     return this.httpClient
-      .url(`/certificate_authorities/${arg.id}`)
-      .get()
+      .url(`/certificate_authorities/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all Certificate Authority on this account
    */
-  public async list(): Promise<Array<datatypes.CertificateAuthority>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.CertificateAuthority>> {
     const array: Array<datatypes.CertificateAuthority> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.CertificateAuthorityList> {
@@ -698,10 +993,14 @@ export class CertificateAuthorities {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -738,7 +1037,7 @@ export class CertificateAuthorities {
 /**
  * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
  agent to connect the ngrok service as your account. They are installed with
- the `ngrok authtoken` command or by specifying it in the `ngrok.yml`
+ the `ngrok config add-authtoken` command or by specifying it in the `ngrok.yml`
  configuration file with the `authtoken` property.
  */
 export class Credentials {
@@ -760,39 +1059,40 @@ export class Credentials {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a tunnel authtoken credential by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/credentials/${arg.id}`)
-      .delete()
+      .url(`/credentials/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about a tunnel authtoken credential
    */
-  public get(arg: datatypes.Item): Promise<datatypes.Credential> {
+  public get(id): Promise<datatypes.Credential> {
     return this.httpClient
-      .url(`/credentials/${arg.id}`)
-      .get()
+      .url(`/credentials/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all tunnel authtoken credentials on this account
    */
-  public async list(): Promise<Array<datatypes.Credential>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Credential>> {
     const array: Array<datatypes.Credential> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.CredentialList> {
     return this.httpClient
       .url(`/credentials`)
@@ -801,10 +1101,14 @@ export class Credentials {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -856,7 +1160,6 @@ export class EdgesHTTPSRoutes {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get an HTTPS Edge Route by ID
    */
@@ -867,7 +1170,6 @@ export class EdgesHTTPSRoutes {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Updates an HTTPS Edge Route by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
    */
@@ -880,7 +1182,6 @@ export class EdgesHTTPSRoutes {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an HTTPS Edge Route by ID
    */
@@ -910,28 +1211,30 @@ export class EdgesHTTPS {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get an HTTPS Edge by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.HTTPSEdge> {
+  public get(id): Promise<datatypes.HTTPSEdge> {
     return this.httpClient
-      .url(`/edges/https/${arg.id}`)
-      .get()
+      .url(`/edges/https/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Returns a list of all HTTPS Edges on this account
    */
-  public async list(): Promise<Array<datatypes.HTTPSEdge>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.HTTPSEdge>> {
     const array: Array<datatypes.HTTPSEdge> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.HTTPSEdgeList> {
     return this.httpClient
       .url(`/edges/https`)
@@ -940,10 +1243,14 @@ export class EdgesHTTPS {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -972,14 +1279,13 @@ export class EdgesHTTPS {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an HTTPS Edge by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/https/${arg.id}`)
-      .delete()
+      .url(`/edges/https/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1001,19 +1307,17 @@ export class HTTPSEdgeMutualTLSModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS> {
+  public get(id): Promise<datatypes.EndpointMutualTLS> {
     return this.httpClient
-      .url(`/edges/https/${arg.id}/mutual_tls`)
-      .get()
+      .url(`/edges/https/${id}/mutual_tls`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/https/${arg.id}/mutual_tls`)
-      .delete()
+      .url(`/edges/https/${id}/mutual_tls`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1035,19 +1339,17 @@ export class HTTPSEdgeTLSTerminationModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination> {
+  public get(id): Promise<datatypes.EndpointTLSTermination> {
     return this.httpClient
-      .url(`/edges/https/${arg.id}/tls_termination`)
-      .get()
+      .url(`/edges/https/${id}/tls_termination`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/https/${arg.id}/tls_termination`)
-      .delete()
+      .url(`/edges/https/${id}/tls_termination`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1069,7 +1371,6 @@ export class EdgeRouteBackendModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointBackend> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/backend`)
@@ -1077,7 +1378,6 @@ export class EdgeRouteBackendModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/backend`)
@@ -1103,7 +1403,6 @@ export class EdgeRouteIPRestrictionModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointIPPolicy> {
@@ -1113,7 +1412,6 @@ export class EdgeRouteIPRestrictionModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/ip_restriction`)
@@ -1139,7 +1437,6 @@ export class EdgeRouteRequestHeadersModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointRequestHeaders> {
@@ -1149,7 +1446,6 @@ export class EdgeRouteRequestHeadersModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/request_headers`)
@@ -1175,7 +1471,6 @@ export class EdgeRouteResponseHeadersModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointResponseHeaders> {
@@ -1185,7 +1480,6 @@ export class EdgeRouteResponseHeadersModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/response_headers`)
@@ -1211,7 +1505,6 @@ export class EdgeRouteCompressionModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointCompression> {
@@ -1221,7 +1514,6 @@ export class EdgeRouteCompressionModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/compression`)
@@ -1247,7 +1539,6 @@ export class EdgeRouteCircuitBreakerModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointCircuitBreaker> {
@@ -1257,7 +1548,6 @@ export class EdgeRouteCircuitBreakerModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/circuit_breaker`)
@@ -1283,7 +1573,6 @@ export class EdgeRouteWebhookVerificationModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointWebhookValidation> {
@@ -1293,7 +1582,6 @@ export class EdgeRouteWebhookVerificationModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/webhook_verification`)
@@ -1319,7 +1607,6 @@ export class EdgeRouteOAuthModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointOAuth> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oauth`)
@@ -1327,7 +1614,6 @@ export class EdgeRouteOAuthModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oauth`)
@@ -1353,7 +1639,6 @@ export class EdgeRouteSAMLModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointSAML> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/saml`)
@@ -1361,7 +1646,6 @@ export class EdgeRouteSAMLModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/saml`)
@@ -1387,7 +1671,6 @@ export class EdgeRouteOIDCModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointOIDC> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oidc`)
@@ -1395,7 +1678,6 @@ export class EdgeRouteOIDCModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oidc`)
@@ -1423,7 +1705,6 @@ export class EdgeRouteWebsocketTCPConverterModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public get(
     arg: datatypes.EdgeRouteItem
   ): Promise<datatypes.EndpointWebsocketTCPConverter> {
@@ -1435,7 +1716,6 @@ export class EdgeRouteWebsocketTCPConverterModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
       .url(
@@ -1464,28 +1744,30 @@ export class EdgesTCP {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get a TCP Edge by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.TCPEdge> {
+  public get(id): Promise<datatypes.TCPEdge> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}`)
-      .get()
+      .url(`/edges/tcp/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Returns a list of all TCP Edges on this account
    */
-  public async list(): Promise<Array<datatypes.TCPEdge>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.TCPEdge>> {
     const array: Array<datatypes.TCPEdge> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.TCPEdgeList> {
     return this.httpClient
       .url(`/edges/tcp`)
@@ -1494,10 +1776,14 @@ export class EdgesTCP {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -1526,14 +1812,13 @@ export class EdgesTCP {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a TCP Edge by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}`)
-      .delete()
+      .url(`/edges/tcp/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1555,19 +1840,17 @@ export class TCPEdgeBackendModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointBackend> {
+  public get(id): Promise<datatypes.EndpointBackend> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}/backend`)
-      .get()
+      .url(`/edges/tcp/${id}/backend`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}/backend`)
-      .delete()
+      .url(`/edges/tcp/${id}/backend`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1589,19 +1872,17 @@ export class TCPEdgeIPRestrictionModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy> {
+  public get(id): Promise<datatypes.EndpointIPPolicy> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}/ip_restriction`)
-      .get()
+      .url(`/edges/tcp/${id}/ip_restriction`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}/ip_restriction`)
-      .delete()
+      .url(`/edges/tcp/${id}/ip_restriction`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1624,28 +1905,30 @@ export class EdgesTLS {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get a TLS Edge by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.TLSEdge> {
+  public get(id): Promise<datatypes.TLSEdge> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}`)
-      .get()
+      .url(`/edges/tls/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Returns a list of all TLS Edges on this account
    */
-  public async list(): Promise<Array<datatypes.TLSEdge>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.TLSEdge>> {
     const array: Array<datatypes.TLSEdge> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.TLSEdgeList> {
     return this.httpClient
       .url(`/edges/tls`)
@@ -1654,10 +1937,14 @@ export class EdgesTLS {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -1686,14 +1973,13 @@ export class EdgesTLS {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a TLS Edge by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}`)
-      .delete()
+      .url(`/edges/tls/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1715,19 +2001,17 @@ export class TLSEdgeBackendModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointBackend> {
+  public get(id): Promise<datatypes.EndpointBackend> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/backend`)
-      .get()
+      .url(`/edges/tls/${id}/backend`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/backend`)
-      .delete()
+      .url(`/edges/tls/${id}/backend`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1749,19 +2033,17 @@ export class TLSEdgeIPRestrictionModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy> {
+  public get(id): Promise<datatypes.EndpointIPPolicy> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/ip_restriction`)
-      .get()
+      .url(`/edges/tls/${id}/ip_restriction`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/ip_restriction`)
-      .delete()
+      .url(`/edges/tls/${id}/ip_restriction`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1783,19 +2065,17 @@ export class TLSEdgeMutualTLSModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS> {
+  public get(id): Promise<datatypes.EndpointMutualTLS> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/mutual_tls`)
-      .get()
+      .url(`/edges/tls/${id}/mutual_tls`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/mutual_tls`)
-      .delete()
+      .url(`/edges/tls/${id}/mutual_tls`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1817,19 +2097,17 @@ export class TLSEdgeTLSTerminationModule {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination> {
+  public get(id): Promise<datatypes.EndpointTLSTermination> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/tls_termination`)
-      .get()
+      .url(`/edges/tls/${id}/tls_termination`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/tls_termination`)
-      .delete()
+      .url(`/edges/tls/${id}/tls_termination`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1850,13 +2128,17 @@ export class Endpoints {
   /**
    * List all active endpoints on the account
    */
-  public async list(): Promise<Array<datatypes.Endpoint>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Endpoint>> {
     const array: Array<datatypes.Endpoint> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.EndpointList> {
     return this.httpClient
       .url(`/endpoints`)
@@ -1865,10 +2147,14 @@ export class Endpoints {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -1890,10 +2176,10 @@ export class Endpoints {
   /**
    * Get the status of an endpoint by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.Endpoint> {
+  public get(id): Promise<datatypes.Endpoint> {
     return this.httpClient
-      .url(`/endpoints/${arg.id}`)
-      .get()
+      .url(`/endpoints/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1907,7 +2193,7 @@ export class EventDestinations {
     this.httpClient = httpClient;
   }
   /**
-   * Create a new Event Destination. It will not apply to anything until it is associated with an Event Stream, and that Event Stream is associated with an Endpoint Config.
+   * Create a new Event Destination. It will not apply to anything until it is associated with an Event Subscription.
    */
   public create(
     arg: datatypes.EventDestinationCreate
@@ -1918,39 +2204,40 @@ export class EventDestinations {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an Event Destination. If the Event Destination is still referenced by an Event Subscription.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/event_destinations/${arg.id}`)
-      .delete()
+      .url(`/event_destinations/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an Event Destination by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.EventDestination> {
+  public get(id): Promise<datatypes.EventDestination> {
     return this.httpClient
-      .url(`/event_destinations/${arg.id}`)
-      .get()
+      .url(`/event_destinations/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all Event Destinations on this account.
    */
-  public async list(): Promise<Array<datatypes.EventDestination>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.EventDestination>> {
     const array: Array<datatypes.EventDestination> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.EventDestinationList> {
@@ -1961,10 +2248,14 @@ export class EventDestinations {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2016,39 +2307,40 @@ export class EventSubscriptions {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an Event Subscription.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/event_subscriptions/${arg.id}`)
-      .delete()
+      .url(`/event_subscriptions/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get an Event Subscription by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.EventSubscription> {
+  public get(id): Promise<datatypes.EventSubscription> {
     return this.httpClient
-      .url(`/event_subscriptions/${arg.id}`)
-      .get()
+      .url(`/event_subscriptions/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List this Account's Event Subscriptions.
    */
-  public async list(): Promise<Array<datatypes.EventSubscription>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.EventSubscription>> {
     const array: Array<datatypes.EventSubscription> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.EventSubscriptionList> {
@@ -2059,10 +2351,14 @@ export class EventSubscriptions {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2114,7 +2410,6 @@ export class EventSources {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Remove a type for which this event subscription will trigger
    */
@@ -2125,7 +2420,6 @@ export class EventSources {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get the details for a given type that triggers for the given event subscription
    */
@@ -2136,7 +2430,6 @@ export class EventSources {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List the types for which this event subscription will trigger
    */
@@ -2149,7 +2442,6 @@ export class EventSources {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Update the type for which this event subscription will trigger
    */
@@ -2187,39 +2479,40 @@ export class IPPolicies {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an IP policy. If the IP policy is referenced by another object for the purposes of traffic restriction it will be treated as if the IP policy remains but has zero rules.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ip_policies/${arg.id}`)
-      .delete()
+      .url(`/ip_policies/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an IP policy by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.IPPolicy> {
+  public get(id): Promise<datatypes.IPPolicy> {
     return this.httpClient
-      .url(`/ip_policies/${arg.id}`)
-      .get()
+      .url(`/ip_policies/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all IP policies on this account
    */
-  public async list(): Promise<Array<datatypes.IPPolicy>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.IPPolicy>> {
     const array: Array<datatypes.IPPolicy> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.IPPolicyList> {
     return this.httpClient
       .url(`/ip_policies`)
@@ -2228,10 +2521,14 @@ export class IPPolicies {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2285,39 +2582,40 @@ export class IPPolicyRules {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an IP policy rule.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ip_policy_rules/${arg.id}`)
-      .delete()
+      .url(`/ip_policy_rules/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an IP policy rule by ID.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.IPPolicyRule> {
+  public get(id): Promise<datatypes.IPPolicyRule> {
     return this.httpClient
-      .url(`/ip_policy_rules/${arg.id}`)
-      .get()
+      .url(`/ip_policy_rules/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all IP policy rules on this account
    */
-  public async list(): Promise<Array<datatypes.IPPolicyRule>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.IPPolicyRule>> {
     const array: Array<datatypes.IPPolicyRule> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.IPPolicyRuleList> {
@@ -2328,10 +2626,14 @@ export class IPPolicyRules {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2391,39 +2693,40 @@ export class IPRestrictions {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an IP restriction
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ip_restrictions/${arg.id}`)
-      .delete()
+      .url(`/ip_restrictions/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an IP restriction
    */
-  public get(arg: datatypes.Item): Promise<datatypes.IPRestriction> {
+  public get(id): Promise<datatypes.IPRestriction> {
     return this.httpClient
-      .url(`/ip_restrictions/${arg.id}`)
-      .get()
+      .url(`/ip_restrictions/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all IP restrictions on this account
    */
-  public async list(): Promise<Array<datatypes.IPRestriction>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.IPRestriction>> {
     const array: Array<datatypes.IPRestriction> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.IPRestrictionList> {
@@ -2434,10 +2737,14 @@ export class IPRestrictions {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2494,39 +2801,40 @@ export class ReservedAddrs {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a reserved address.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/reserved_addrs/${arg.id}`)
-      .delete()
+      .url(`/reserved_addrs/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get the details of a reserved address.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.ReservedAddr> {
+  public get(id): Promise<datatypes.ReservedAddr> {
     return this.httpClient
-      .url(`/reserved_addrs/${arg.id}`)
-      .get()
+      .url(`/reserved_addrs/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all reserved addresses on this account.
    */
-  public async list(): Promise<Array<datatypes.ReservedAddr>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.ReservedAddr>> {
     const array: Array<datatypes.ReservedAddr> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.ReservedAddrList> {
@@ -2537,10 +2845,14 @@ export class ReservedAddrs {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2598,39 +2910,40 @@ export class ReservedDomains {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a reserved domain.
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/reserved_domains/${arg.id}`)
-      .delete()
+      .url(`/reserved_domains/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get the details of a reserved domain.
    */
-  public get(arg: datatypes.Item): Promise<datatypes.ReservedDomain> {
+  public get(id): Promise<datatypes.ReservedDomain> {
     return this.httpClient
-      .url(`/reserved_domains/${arg.id}`)
-      .get()
+      .url(`/reserved_domains/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all reserved domains on this account.
    */
-  public async list(): Promise<Array<datatypes.ReservedDomain>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.ReservedDomain>> {
     const array: Array<datatypes.ReservedDomain> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.ReservedDomainList> {
@@ -2641,10 +2954,14 @@ export class ReservedDomains {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2675,25 +2992,23 @@ export class ReservedDomains {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Detach the certificate management policy attached to a reserved domain.
    */
-  public deleteCertificateManagementPolicy(arg: datatypes.Item): Promise<void> {
+  public deleteCertificateManagementPolicy(id): Promise<void> {
     return this.httpClient
-      .url(`/reserved_domains/${arg.id}/certificate_management_policy`)
-      .delete()
+      .url(`/reserved_domains/${id}/certificate_management_policy`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Detach the certificate attached to a reserved domain.
    */
-  public deleteCertificate(arg: datatypes.Item): Promise<void> {
+  public deleteCertificate(id): Promise<void> {
     return this.httpClient
-      .url(`/reserved_domains/${arg.id}/certificate`)
-      .delete()
+      .url(`/reserved_domains/${id}/certificate`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2722,39 +3037,40 @@ export class SSHCertificateAuthorities {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an SSH Certificate Authority
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ssh_certificate_authorities/${arg.id}`)
-      .delete()
+      .url(`/ssh_certificate_authorities/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an SSH Certficate Authority
    */
-  public get(arg: datatypes.Item): Promise<datatypes.SSHCertificateAuthority> {
+  public get(id): Promise<datatypes.SSHCertificateAuthority> {
     return this.httpClient
-      .url(`/ssh_certificate_authorities/${arg.id}`)
-      .get()
+      .url(`/ssh_certificate_authorities/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all SSH Certificate Authorities on this account
    */
-  public async list(): Promise<Array<datatypes.SSHCertificateAuthority>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.SSHCertificateAuthority>> {
     const array: Array<datatypes.SSHCertificateAuthority> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.SSHCertificateAuthorityList> {
@@ -2765,10 +3081,14 @@ export class SSHCertificateAuthorities {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2825,39 +3145,40 @@ export class SSHCredentials {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an ssh_credential by ID
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ssh_credentials/${arg.id}`)
-      .delete()
+      .url(`/ssh_credentials/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an ssh_credential
    */
-  public get(arg: datatypes.Item): Promise<datatypes.SSHCredential> {
+  public get(id): Promise<datatypes.SSHCredential> {
     return this.httpClient
-      .url(`/ssh_credentials/${arg.id}`)
-      .get()
+      .url(`/ssh_credentials/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all ssh credentials on this account
    */
-  public async list(): Promise<Array<datatypes.SSHCredential>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.SSHCredential>> {
     const array: Array<datatypes.SSHCredential> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.SSHCredentialList> {
@@ -2868,10 +3189,14 @@ export class SSHCredentials {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -2928,39 +3253,40 @@ export class SSHHostCertificates {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an SSH Host Certificate
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ssh_host_certificates/${arg.id}`)
-      .delete()
+      .url(`/ssh_host_certificates/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an SSH Host Certficate
    */
-  public get(arg: datatypes.Item): Promise<datatypes.SSHHostCertificate> {
+  public get(id): Promise<datatypes.SSHHostCertificate> {
     return this.httpClient
-      .url(`/ssh_host_certificates/${arg.id}`)
-      .get()
+      .url(`/ssh_host_certificates/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all SSH Host Certificates issued on this account
    */
-  public async list(): Promise<Array<datatypes.SSHHostCertificate>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.SSHHostCertificate>> {
     const array: Array<datatypes.SSHHostCertificate> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.SSHHostCertificateList> {
@@ -2971,10 +3297,14 @@ export class SSHHostCertificates {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -3032,39 +3362,40 @@ export class SSHUserCertificates {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete an SSH User Certificate
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/ssh_user_certificates/${arg.id}`)
-      .delete()
+      .url(`/ssh_user_certificates/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about an SSH User Certficate
    */
-  public get(arg: datatypes.Item): Promise<datatypes.SSHUserCertificate> {
+  public get(id): Promise<datatypes.SSHUserCertificate> {
     return this.httpClient
-      .url(`/ssh_user_certificates/${arg.id}`)
-      .get()
+      .url(`/ssh_user_certificates/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all SSH User Certificates issued on this account
    */
-  public async list(): Promise<Array<datatypes.SSHUserCertificate>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.SSHUserCertificate>> {
     const array: Array<datatypes.SSHUserCertificate> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.SSHUserCertificateList> {
@@ -3075,10 +3406,14 @@ export class SSHUserCertificates {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -3138,39 +3473,40 @@ export class TLSCertificates {
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Delete a TLS certificate
    */
-  public delete(arg: datatypes.Item): Promise<void> {
+  public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/tls_certificates/${arg.id}`)
-      .delete()
+      .url(`/tls_certificates/${id}`)
+      .delete(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * Get detailed information about a TLS certificate
    */
-  public get(arg: datatypes.Item): Promise<datatypes.TLSCertificate> {
+  public get(id): Promise<datatypes.TLSCertificate> {
     return this.httpClient
-      .url(`/tls_certificates/${arg.id}`)
-      .get()
+      .url(`/tls_certificates/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-
   /**
    * List all TLS certificates on this account
    */
-  public async list(): Promise<Array<datatypes.TLSCertificate>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.TLSCertificate>> {
     const array: Array<datatypes.TLSCertificate> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(
     arg: datatypes.Paging
   ): Promise<datatypes.TLSCertificateList> {
@@ -3181,10 +3517,14 @@ export class TLSCertificates {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -3218,105 +3558,6 @@ export class TLSCertificates {
 }
 
 /**
- * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
- sessions that are running and connected to the ngrok service. Each tunnel
- session can include one or more Tunnels.
- */
-export class TunnelSessions {
-  private httpClient: Wretcher;
-
-  /** Do not construct this object directly, use the <code>tunnelSessions</code> property of an <code>Ngrok</code> client object instead. */
-  public constructor(httpClient: Wretcher) {
-    this.httpClient = httpClient;
-  }
-  /**
-   * List all online tunnel sessions running on this account.
-   */
-  public async list(): Promise<Array<datatypes.TunnelSession>> {
-    const array: Array<datatypes.TunnelSession> = [];
-    for await (const item of this._asyncList()) {
-      array.push(item);
-    }
-    return array;
-  }
-  private _pagedList(
-    arg: datatypes.Paging
-  ): Promise<datatypes.TunnelSessionList> {
-    return this.httpClient
-      .url(`/tunnel_sessions`)
-      .query(arg)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(util.onFulfilled, util.onRejected);
-  }
-  private async *_asyncList() {
-    const limit = '100';
-    let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
-
-    while (nextPage) {
-      const pagedList = await this._pagedList(page);
-      nextPage = pagedList.nextPageUri;
-      const items: datatypes.TunnelSession[] = pagedList.tunnelSessions;
-
-      if (nextPage) {
-        page = {
-          beforeId: items[items.length - 1].id,
-          limit: limit,
-        };
-      }
-
-      for (const item of items) {
-        yield item;
-      }
-    }
-  }
-  /**
-   * Get the detailed status of a tunnel session by ID
-   */
-  public get(arg: datatypes.Item): Promise<datatypes.TunnelSession> {
-    return this.httpClient
-      .url(`/tunnel_sessions/${arg.id}`)
-      .get()
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID.
-   */
-  public restart(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/tunnel_sessions/${arg.id}/restart`)
-      .post(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Issues a command instructing the ngrok agent that started this tunnel session to exit.
-   */
-  public stop(arg: datatypes.Item): Promise<void> {
-    return this.httpClient
-      .url(`/tunnel_sessions/${arg.id}/stop`)
-      .post(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-
-  /**
-   * Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted
-   */
-  public update(arg: datatypes.TunnelSessionsUpdate): Promise<void> {
-    return this.httpClient
-      .url(`/tunnel_sessions/${arg.id}/update`)
-      .post(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
-      .then(f => f, util.onRejected);
-  }
-}
-
-/**
  * Tunnels provide endpoints to access services exposed by a running ngrok
  agent tunnel session or an SSH reverse tunnel session.
  */
@@ -3330,13 +3571,17 @@ export class Tunnels {
   /**
    * List all online tunnels currently running on the account.
    */
-  public async list(): Promise<Array<datatypes.Tunnel>> {
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Tunnel>> {
     const array: Array<datatypes.Tunnel> = [];
-    for await (const item of this._asyncList()) {
+    for await (const item of this._asyncList(beforeId, limit)) {
       array.push(item);
     }
     return array;
   }
+
   private _pagedList(arg: datatypes.Paging): Promise<datatypes.TunnelList> {
     return this.httpClient
       .url(`/tunnels`)
@@ -3345,10 +3590,14 @@ export class Tunnels {
       .json(payload => util.deserializeResult(payload))
       .then(util.onFulfilled, util.onRejected);
   }
-  private async *_asyncList() {
-    const limit = '100';
+
+  private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
     let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
 
     while (nextPage) {
       const pagedList = await this._pagedList(page);
@@ -3370,10 +3619,10 @@ export class Tunnels {
   /**
    * Get the status of a tunnel by ID
    */
-  public get(arg: datatypes.Item): Promise<datatypes.Tunnel> {
+  public get(id): Promise<datatypes.Tunnel> {
     return this.httpClient
-      .url(`/tunnels/${arg.id}`)
-      .get()
+      .url(`/tunnels/${id}`)
+      .get(id)
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
