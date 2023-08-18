@@ -1,3 +1,5 @@
+// Code generated for API Clients. DO NOT EDIT.
+
 module.exports = {
   trailingComma: "es5",
   tabWidth: 2,

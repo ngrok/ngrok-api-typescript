@@ -1,3 +1,5 @@
+// Code generated for API Clients. DO NOT EDIT.
+
 export function onFulfilled(f) {
   return f;
 }
