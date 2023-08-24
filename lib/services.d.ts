@@ -15,7 +15,7 @@ export declare class AbuseReports {
     /**
      * Get the detailed status of abuse report by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.AbuseReport>;
+    get(id: any): Promise<datatypes.AbuseReport>;
 }
 export declare class AgentIngresses {
     private httpClient;
@@ -28,15 +28,15 @@ export declare class AgentIngresses {
     /**
      * Delete an Agent Ingress by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get the details of an Agent Ingress by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.AgentIngress>;
+    get(id: any): Promise<datatypes.AgentIngress>;
     /**
      * List all Agent Ingresses owned by this account
      */
-    list(): Promise<Array<datatypes.AgentIngress>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.AgentIngress>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -62,21 +62,91 @@ export declare class APIKeys {
     /**
      * Delete an API key by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get the details of an API key by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.APIKey>;
+    get(id: any): Promise<datatypes.APIKey>;
     /**
      * List all API keys owned by this account
      */
-    list(): Promise<Array<datatypes.APIKey>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.APIKey>>;
     private _pagedList;
     private _asyncList;
     /**
      * Update attributes of an API key by ID.
      */
     update(arg: datatypes.APIKeyUpdate): Promise<datatypes.APIKey>;
+}
+export declare class ApplicationSessions {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>applicationSessions</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Get an application session by ID.
+     */
+    get(id: any): Promise<datatypes.ApplicationSession>;
+    /**
+     * Delete an application session by ID.
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * List all application sessions for this account.
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.ApplicationSession>>;
+    private _pagedList;
+    private _asyncList;
+}
+export declare class ApplicationUsers {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>applicationUsers</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Get an application user by ID.
+     */
+    get(id: any): Promise<datatypes.ApplicationUser>;
+    /**
+     * Delete an application user by ID.
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * List all application users for this account.
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.ApplicationUser>>;
+    private _pagedList;
+    private _asyncList;
+}
+/**
+ * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
+ sessions that are running and connected to the ngrok service. Each tunnel
+ session can include one or more Tunnels.
+ */
+export declare class TunnelSessions {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tunnelSessions</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * List all online tunnel sessions running on this account.
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.TunnelSession>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Get the detailed status of a tunnel session by ID
+     */
+    get(id: any): Promise<datatypes.TunnelSession>;
+    /**
+     * Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID.
+     */
+    restart(id: any): Promise<void>;
+    /**
+     * Issues a command instructing the ngrok agent that started this tunnel session to exit.
+     */
+    stop(id: any): Promise<void>;
+    /**
+     * Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted
+     */
+    update(arg: datatypes.TunnelSessionsUpdate): Promise<void>;
 }
 /**
  * A Failover backend defines failover behavior within a list of referenced
@@ -95,15 +165,15 @@ export declare class FailoverBackends {
     /**
      * Delete a Failover backend by ID.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about a Failover backend by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.FailoverBackend>;
+    get(id: any): Promise<datatypes.FailoverBackend>;
     /**
      * List all Failover backends on this account
      */
-    list(): Promise<Array<datatypes.FailoverBackend>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.FailoverBackend>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -116,9 +186,9 @@ export declare class HTTPResponseBackends {
     /** Do not construct this object directly, use the <code>httpResponseBackends</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     create(arg: datatypes.HTTPResponseBackendCreate): Promise<datatypes.HTTPResponseBackend>;
-    delete(arg: datatypes.Item): Promise<void>;
-    get(arg: datatypes.Item): Promise<datatypes.HTTPResponseBackend>;
-    list(): Promise<Array<datatypes.HTTPResponseBackend>>;
+    delete(id: any): Promise<void>;
+    get(id: any): Promise<datatypes.HTTPResponseBackend>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.HTTPResponseBackend>>;
     private _pagedList;
     private _asyncList;
     update(arg: datatypes.HTTPResponseBackendUpdate): Promise<datatypes.HTTPResponseBackend>;
@@ -138,15 +208,15 @@ export declare class TunnelGroupBackends {
     /**
      * Delete a TunnelGroup backend by ID.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about a TunnelGroup backend by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.TunnelGroupBackend>;
+    get(id: any): Promise<datatypes.TunnelGroupBackend>;
     /**
      * List all TunnelGroup backends on this account
      */
-    list(): Promise<Array<datatypes.TunnelGroupBackend>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.TunnelGroupBackend>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -171,15 +241,15 @@ export declare class WeightedBackends {
     /**
      * Delete a Weighted backend by ID.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about a Weighted backend by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.WeightedBackend>;
+    get(id: any): Promise<datatypes.WeightedBackend>;
     /**
      * List all Weighted backends on this account
      */
-    list(): Promise<Array<datatypes.WeightedBackend>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.WeightedBackend>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -205,15 +275,15 @@ export declare class CertificateAuthorities {
     /**
      * Delete a Certificate Authority
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about a certficate authority
      */
-    get(arg: datatypes.Item): Promise<datatypes.CertificateAuthority>;
+    get(id: any): Promise<datatypes.CertificateAuthority>;
     /**
      * List all Certificate Authority on this account
      */
-    list(): Promise<Array<datatypes.CertificateAuthority>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.CertificateAuthority>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -224,7 +294,7 @@ export declare class CertificateAuthorities {
 /**
  * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
  agent to connect the ngrok service as your account. They are installed with
- the `ngrok authtoken` command or by specifying it in the `ngrok.yml`
+ the `ngrok config add-authtoken` command or by specifying it in the `ngrok.yml`
  configuration file with the `authtoken` property.
  */
 export declare class Credentials {
@@ -238,15 +308,15 @@ export declare class Credentials {
     /**
      * Delete a tunnel authtoken credential by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about a tunnel authtoken credential
      */
-    get(arg: datatypes.Item): Promise<datatypes.Credential>;
+    get(id: any): Promise<datatypes.Credential>;
     /**
      * List all tunnel authtoken credentials on this account
      */
-    list(): Promise<Array<datatypes.Credential>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.Credential>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -286,11 +356,11 @@ export declare class EdgesHTTPS {
     /**
      * Get an HTTPS Edge by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.HTTPSEdge>;
+    get(id: any): Promise<datatypes.HTTPSEdge>;
     /**
      * Returns a list of all HTTPS Edges on this account
      */
-    list(): Promise<Array<datatypes.HTTPSEdge>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.HTTPSEdge>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -300,23 +370,23 @@ export declare class EdgesHTTPS {
     /**
      * Delete an HTTPS Edge by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
 }
 export declare class HTTPSEdgeMutualTLSModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>httpsEdgeMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeMutualTLSReplace): Promise<datatypes.EndpointMutualTLS>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointMutualTLS>;
+    delete(id: any): Promise<void>;
 }
 export declare class HTTPSEdgeTLSTerminationModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>httpsEdgeTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeTLSTerminationAtEdgeReplace): Promise<datatypes.EndpointTLSTermination>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointTLSTermination>;
+    delete(id: any): Promise<void>;
 }
 export declare class EdgeRouteBackendModule {
     private httpClient;
@@ -417,11 +487,11 @@ export declare class EdgesTCP {
     /**
      * Get a TCP Edge by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.TCPEdge>;
+    get(id: any): Promise<datatypes.TCPEdge>;
     /**
      * Returns a list of all TCP Edges on this account
      */
-    list(): Promise<Array<datatypes.TCPEdge>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.TCPEdge>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -431,23 +501,23 @@ export declare class EdgesTCP {
     /**
      * Delete a TCP Edge by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
 }
 export declare class TCPEdgeBackendModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>tcpEdgeBackendModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeBackendReplace): Promise<datatypes.EndpointBackend>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointBackend>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointBackend>;
+    delete(id: any): Promise<void>;
 }
 export declare class TCPEdgeIPRestrictionModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>tcpEdgeIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeIPRestrictionReplace): Promise<datatypes.EndpointIPPolicy>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointIPPolicy>;
+    delete(id: any): Promise<void>;
 }
 export declare class EdgesTLS {
     private httpClient;
@@ -460,11 +530,11 @@ export declare class EdgesTLS {
     /**
      * Get a TLS Edge by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.TLSEdge>;
+    get(id: any): Promise<datatypes.TLSEdge>;
     /**
      * Returns a list of all TLS Edges on this account
      */
-    list(): Promise<Array<datatypes.TLSEdge>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.TLSEdge>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -474,39 +544,39 @@ export declare class EdgesTLS {
     /**
      * Delete a TLS Edge by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
 }
 export declare class TLSEdgeBackendModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>tlsEdgeBackendModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeBackendReplace): Promise<datatypes.EndpointBackend>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointBackend>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointBackend>;
+    delete(id: any): Promise<void>;
 }
 export declare class TLSEdgeIPRestrictionModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>tlsEdgeIpRestrictionModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeIPRestrictionReplace): Promise<datatypes.EndpointIPPolicy>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointIPPolicy>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointIPPolicy>;
+    delete(id: any): Promise<void>;
 }
 export declare class TLSEdgeMutualTLSModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>tlsEdgeMutualTlsModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeMutualTLSReplace): Promise<datatypes.EndpointMutualTLS>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointMutualTLS>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointMutualTLS>;
+    delete(id: any): Promise<void>;
 }
 export declare class TLSEdgeTLSTerminationModule {
     private httpClient;
     /** Do not construct this object directly, use the <code>tlsEdgeTlsTerminationModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeTLSTerminationReplace): Promise<datatypes.EndpointTLSTermination>;
-    get(arg: datatypes.Item): Promise<datatypes.EndpointTLSTermination>;
-    delete(arg: datatypes.Item): Promise<void>;
+    get(id: any): Promise<datatypes.EndpointTLSTermination>;
+    delete(id: any): Promise<void>;
 }
 /**
  * Endpoints provides an API for querying the endpoint objects
@@ -520,34 +590,34 @@ export declare class Endpoints {
     /**
      * List all active endpoints on the account
      */
-    list(): Promise<Array<datatypes.Endpoint>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.Endpoint>>;
     private _pagedList;
     private _asyncList;
     /**
      * Get the status of an endpoint by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.Endpoint>;
+    get(id: any): Promise<datatypes.Endpoint>;
 }
 export declare class EventDestinations {
     private httpClient;
     /** Do not construct this object directly, use the <code>eventDestinations</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     /**
-     * Create a new Event Destination. It will not apply to anything until it is associated with an Event Stream, and that Event Stream is associated with an Endpoint Config.
+     * Create a new Event Destination. It will not apply to anything until it is associated with an Event Subscription.
      */
     create(arg: datatypes.EventDestinationCreate): Promise<datatypes.EventDestination>;
     /**
      * Delete an Event Destination. If the Event Destination is still referenced by an Event Subscription.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an Event Destination by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.EventDestination>;
+    get(id: any): Promise<datatypes.EventDestination>;
     /**
      * List all Event Destinations on this account.
      */
-    list(): Promise<Array<datatypes.EventDestination>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.EventDestination>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -566,15 +636,15 @@ export declare class EventSubscriptions {
     /**
      * Delete an Event Subscription.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get an Event Subscription by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.EventSubscription>;
+    get(id: any): Promise<datatypes.EventSubscription>;
     /**
      * List this Account's Event Subscriptions.
      */
-    list(): Promise<Array<datatypes.EventSubscription>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.EventSubscription>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -624,15 +694,15 @@ export declare class IPPolicies {
     /**
      * Delete an IP policy. If the IP policy is referenced by another object for the purposes of traffic restriction it will be treated as if the IP policy remains but has zero rules.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an IP policy by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.IPPolicy>;
+    get(id: any): Promise<datatypes.IPPolicy>;
     /**
      * List all IP policies on this account
      */
-    list(): Promise<Array<datatypes.IPPolicy>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.IPPolicy>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -655,15 +725,15 @@ export declare class IPPolicyRules {
     /**
      * Delete an IP policy rule.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an IP policy rule by ID.
      */
-    get(arg: datatypes.Item): Promise<datatypes.IPPolicyRule>;
+    get(id: any): Promise<datatypes.IPPolicyRule>;
     /**
      * List all IP policy rules on this account
      */
-    list(): Promise<Array<datatypes.IPPolicyRule>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.IPPolicyRule>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -690,15 +760,15 @@ export declare class IPRestrictions {
     /**
      * Delete an IP restriction
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an IP restriction
      */
-    get(arg: datatypes.Item): Promise<datatypes.IPRestriction>;
+    get(id: any): Promise<datatypes.IPRestriction>;
     /**
      * List all IP restrictions on this account
      */
-    list(): Promise<Array<datatypes.IPRestriction>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.IPRestriction>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -722,15 +792,15 @@ export declare class ReservedAddrs {
     /**
      * Delete a reserved address.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get the details of a reserved address.
      */
-    get(arg: datatypes.Item): Promise<datatypes.ReservedAddr>;
+    get(id: any): Promise<datatypes.ReservedAddr>;
     /**
      * List all reserved addresses on this account.
      */
-    list(): Promise<Array<datatypes.ReservedAddr>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.ReservedAddr>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -755,15 +825,15 @@ export declare class ReservedDomains {
     /**
      * Delete a reserved domain.
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get the details of a reserved domain.
      */
-    get(arg: datatypes.Item): Promise<datatypes.ReservedDomain>;
+    get(id: any): Promise<datatypes.ReservedDomain>;
     /**
      * List all reserved domains on this account.
      */
-    list(): Promise<Array<datatypes.ReservedDomain>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.ReservedDomain>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -773,11 +843,11 @@ export declare class ReservedDomains {
     /**
      * Detach the certificate management policy attached to a reserved domain.
      */
-    deleteCertificateManagementPolicy(arg: datatypes.Item): Promise<void>;
+    deleteCertificateManagementPolicy(id: any): Promise<void>;
     /**
      * Detach the certificate attached to a reserved domain.
      */
-    deleteCertificate(arg: datatypes.Item): Promise<void>;
+    deleteCertificate(id: any): Promise<void>;
 }
 /**
  * An SSH Certificate Authority is a pair of an SSH Certificate and its private
@@ -794,15 +864,15 @@ export declare class SSHCertificateAuthorities {
     /**
      * Delete an SSH Certificate Authority
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an SSH Certficate Authority
      */
-    get(arg: datatypes.Item): Promise<datatypes.SSHCertificateAuthority>;
+    get(id: any): Promise<datatypes.SSHCertificateAuthority>;
     /**
      * List all SSH Certificate Authorities on this account
      */
-    list(): Promise<Array<datatypes.SSHCertificateAuthority>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.SSHCertificateAuthority>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -825,15 +895,15 @@ export declare class SSHCredentials {
     /**
      * Delete an ssh_credential by ID
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an ssh_credential
      */
-    get(arg: datatypes.Item): Promise<datatypes.SSHCredential>;
+    get(id: any): Promise<datatypes.SSHCredential>;
     /**
      * List all ssh credentials on this account
      */
-    list(): Promise<Array<datatypes.SSHCredential>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.SSHCredential>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -857,15 +927,15 @@ export declare class SSHHostCertificates {
     /**
      * Delete an SSH Host Certificate
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an SSH Host Certficate
      */
-    get(arg: datatypes.Item): Promise<datatypes.SSHHostCertificate>;
+    get(id: any): Promise<datatypes.SSHHostCertificate>;
     /**
      * List all SSH Host Certificates issued on this account
      */
-    list(): Promise<Array<datatypes.SSHHostCertificate>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.SSHHostCertificate>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -889,15 +959,15 @@ export declare class SSHUserCertificates {
     /**
      * Delete an SSH User Certificate
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about an SSH User Certficate
      */
-    get(arg: datatypes.Item): Promise<datatypes.SSHUserCertificate>;
+    get(id: any): Promise<datatypes.SSHUserCertificate>;
     /**
      * List all SSH User Certificates issued on this account
      */
-    list(): Promise<Array<datatypes.SSHUserCertificate>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.SSHUserCertificate>>;
     private _pagedList;
     private _asyncList;
     /**
@@ -923,53 +993,21 @@ export declare class TLSCertificates {
     /**
      * Delete a TLS certificate
      */
-    delete(arg: datatypes.Item): Promise<void>;
+    delete(id: any): Promise<void>;
     /**
      * Get detailed information about a TLS certificate
      */
-    get(arg: datatypes.Item): Promise<datatypes.TLSCertificate>;
+    get(id: any): Promise<datatypes.TLSCertificate>;
     /**
      * List all TLS certificates on this account
      */
-    list(): Promise<Array<datatypes.TLSCertificate>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.TLSCertificate>>;
     private _pagedList;
     private _asyncList;
     /**
      * Update attributes of a TLS Certificate by ID
      */
     update(arg: datatypes.TLSCertificateUpdate): Promise<datatypes.TLSCertificate>;
-}
-/**
- * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
- sessions that are running and connected to the ngrok service. Each tunnel
- session can include one or more Tunnels.
- */
-export declare class TunnelSessions {
-    private httpClient;
-    /** Do not construct this object directly, use the <code>tunnelSessions</code> property of an <code>Ngrok</code> client object instead. */
-    constructor(httpClient: Wretcher);
-    /**
-     * List all online tunnel sessions running on this account.
-     */
-    list(): Promise<Array<datatypes.TunnelSession>>;
-    private _pagedList;
-    private _asyncList;
-    /**
-     * Get the detailed status of a tunnel session by ID
-     */
-    get(arg: datatypes.Item): Promise<datatypes.TunnelSession>;
-    /**
-     * Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID.
-     */
-    restart(arg: datatypes.Item): Promise<void>;
-    /**
-     * Issues a command instructing the ngrok agent that started this tunnel session to exit.
-     */
-    stop(arg: datatypes.Item): Promise<void>;
-    /**
-     * Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted
-     */
-    update(arg: datatypes.TunnelSessionsUpdate): Promise<void>;
 }
 /**
  * Tunnels provide endpoints to access services exposed by a running ngrok
@@ -982,12 +1020,12 @@ export declare class Tunnels {
     /**
      * List all online tunnels currently running on the account.
      */
-    list(): Promise<Array<datatypes.Tunnel>>;
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.Tunnel>>;
     private _pagedList;
     private _asyncList;
     /**
      * Get the status of a tunnel by ID
      */
-    get(arg: datatypes.Item): Promise<datatypes.Tunnel>;
+    get(id: any): Promise<datatypes.Tunnel>;
 }
 //# sourceMappingURL=services.d.ts.map

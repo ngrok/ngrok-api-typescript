@@ -85,6 +85,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.APIKeyCreate.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.APIKeyCreate.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.APIKeyCreate.html#ownerId" class="tsd-kind-icon">owner<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,11 +95,11 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="description" class="tsd-anchor"></a>
-					<h3>description</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> description</h3>
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/0593d03/src/datatypes.ts#L105">datatypes.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d76409a/src/datatypes.ts#L140">datatypes.ts:140</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -109,16 +110,31 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="metadata" class="tsd-anchor"></a>
-					<h3>metadata</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> metadata</h3>
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/0593d03/src/datatypes.ts#L107">datatypes.ts:107</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d76409a/src/datatypes.ts#L142">datatypes.ts:142</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>arbitrary user-defined data of this API key. optional, max 4096 bytes</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="ownerId" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> owner<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">owner<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d76409a/src/datatypes.ts#L144">datatypes.ts:144</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot.</p>
 						</div>
 					</div>
 				</section>
@@ -153,6 +169,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="datatypes.APIKeyCreate.html#metadata" class="tsd-kind-icon">metadata</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.APIKeyCreate.html#ownerId" class="tsd-kind-icon">owner<wbr>Id</a>
 							</li>
 						</ul>
 					</li>
