@@ -1,3 +1,5 @@
+<!-- Code generated for API Clients. DO NOT EDIT. -->
+
 # Unstable
 
 This library is currently unstable. We know of rough edges
@@ -5,12 +7,12 @@ and are working to bring it to parity with our other API client
 libraries. Please feel free to try it out and let us know if you find
 it useful!
 
-## ngrok API client library for JavaScript and TypeScript
+# ngrok API client library for JavaScript and TypeScript
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to make it
 easier to consume in JavaScript or TypeScript.
 
-### Installation
+## Installation
 
 The published library is available on
 [npm](https://www.npmjs.com/package/@ngrok/ngrok-api).
@@ -19,7 +21,11 @@ The published library is available on
 npm install @ngrok/ngrok-api
 ```
 
-### Documentation
+## Support
+
+The best place to get support using this library is through the [ngrok Slack Community](https://ngrok.com/slack). If you find any bugs, please contribute by opening a [new GitHub issue](https://github.com/ngrok/ngrok-api-typescript/issues/new/choose).
+
+## Documentation
 
 A quickstart guide and a full API reference are included in the [ngrok
 TypeScript API documentation](https://typescript-api.docs.ngrok.com)
