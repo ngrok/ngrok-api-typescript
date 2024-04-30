@@ -1,7 +1,7 @@
 import * as services from './services';
 export interface NgrokConfig {
     apiToken: string;
-    baseUrl: string;
+    baseUrl?: string;
 }
 export declare class Ngrok {
     private token;
@@ -29,6 +29,7 @@ export declare class Ngrok {
    session can include one or more Tunnels.
      */
     tunnelSessions: services.TunnelSessions;
+    botUsers: services.BotUsers;
     /**
      * Certificate Authorities are x509 certificates that are used to sign other
    x509 certificates. Attach a Certificate Authority to the Mutual TLS module
@@ -132,6 +133,11 @@ export declare class Ngrok {
         failoverBackends: services.FailoverBackends;
         httpResponseBackends: services.HTTPResponseBackends;
         /**
+         * A static backend sends traffic to a TCP address (hostname and port) that
+     is reachable on the public internet.
+         */
+        staticBackends: services.StaticBackends;
+        /**
          * A Tunnel Group Backend balances traffic among all online tunnels that match
      a label selector.
          */
@@ -164,6 +170,7 @@ export declare class Ngrok {
         edgeRouteSamlModule: services.EdgeRouteSAMLModule;
         edgeRouteOidcModule: services.EdgeRouteOIDCModule;
         edgeRouteWebsocketTcpConverterModule: services.EdgeRouteWebsocketTCPConverterModule;
+        edgeRouteUserAgentFilterModule: services.EdgeRouteUserAgentFilterModule;
         tcpEdgeBackendModule: services.TCPEdgeBackendModule;
         tcpEdgeIpRestrictionModule: services.TCPEdgeIPRestrictionModule;
         tlsEdgeBackendModule: services.TLSEdgeBackendModule;

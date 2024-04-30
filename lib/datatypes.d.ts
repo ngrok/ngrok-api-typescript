@@ -377,6 +377,55 @@ export interface HTTPResponseBackendList {
     uri: string;
     nextPageUri?: string;
 }
+export interface StaticBackend {
+    /** unique identifier for this static backend */
+    id: string;
+    /** URI of the StaticBackend API resource */
+    uri: string;
+    /** timestamp when the backend was created, RFC 3339 format */
+    createdAt: Date;
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** the address to forward to */
+    address: string;
+    /** tls configuration to use */
+    tls: StaticBackendTLS;
+}
+export interface StaticBackendTLS {
+    /** if TLS is checked */
+    enabled: boolean;
+}
+export interface StaticBackendCreate {
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** the address to forward to */
+    address: string;
+    /** tls configuration to use */
+    tls: StaticBackendTLS;
+}
+export interface StaticBackendUpdate {
+    id: string;
+    /** human-readable description of this backend. Optional */
+    description?: string;
+    /** arbitrary user-defined machine-readable data of this backend. Optional */
+    metadata?: string;
+    /** the address to forward to */
+    address: string;
+    /** tls configuration to use */
+    tls: StaticBackendTLS;
+}
+export interface StaticBackendList {
+    /** the list of all static backends on this account */
+    backends: Array<StaticBackend>;
+    /** URI of the static backends list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
 export interface TunnelGroupBackend {
     /** unique identifier for this TunnelGroup backend */
     id: string;
@@ -453,6 +502,39 @@ export interface WeightedBackendList {
     /** the list of all Weighted backends on this account */
     backends: Array<WeightedBackend>;
     /** URI of the Weighted backends list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
+    nextPageUri?: string;
+}
+export interface BotUser {
+    /** unique API key resource identifier */
+    id: string;
+    /** URI to the API resource of this bot user */
+    uri: string;
+    /** human-readable name used to identify the bot */
+    name: string;
+    /** whether or not the bot is active */
+    active: boolean;
+    /** timestamp when the api key was created, RFC 3339 format */
+    createdAt: Date;
+}
+export interface BotUserCreate {
+    /** human-readable name used to identify the bot */
+    name: string;
+    /** whether or not the bot is active */
+    active?: boolean;
+}
+export interface BotUserUpdate {
+    id: string;
+    /** human-readable name used to identify the bot */
+    name?: string;
+    /** whether or not the bot is active */
+    active?: boolean;
+}
+export interface BotUserList {
+    /** the list of all bot users on this account */
+    botUsers: Array<BotUser>;
+    /** URI of the bot users list API resource */
     uri: string;
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
@@ -552,7 +634,7 @@ export interface CredentialList {
 export interface EndpointWebhookValidation {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
-    /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers defined at https://ngrok.com/docs/cloud-edge/modules/webhook */
+    /** a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers defined at https://ngrok.com/docs/cloud-edge/modules/webhook-verification */
     provider: string;
     /** a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret */
     secret: string;
@@ -833,6 +915,33 @@ export interface EndpointWebsocketTCPConverter {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
 }
+export interface EndpointUserAgentFilter {
+    enabled?: boolean;
+    allow: Array<string>;
+    deny: Array<string>;
+}
+export interface EndpointPolicy {
+    /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
+    enabled?: boolean;
+    /** the inbound rules of the traffic policy. */
+    inbound: Array<EndpointRule>;
+    /** the outbound rules on the traffic policy. */
+    outbound: Array<EndpointRule>;
+}
+export interface EndpointRule {
+    /** cel expressions that filter traffic the policy rule applies to. */
+    expressions: Array<string>;
+    /** the set of actions on a policy rule. */
+    actions: Array<EndpointAction>;
+    /** the name of the rule that is part of the traffic policy. */
+    name: string;
+}
+export interface EndpointAction {
+    /** the type of action on the policy rule. */
+    type: string;
+    /** the configuration for the action on the policy rule. */
+    config: Record<string, unknown> | undefined;
+}
 export interface EdgeRouteItem {
     /** unique identifier of this edge */
     edgeId: string;
@@ -872,6 +981,9 @@ export interface HTTPSEdgeRouteCreate {
     oidc?: EndpointOIDC;
     /** websocket to tcp adapter configuration or `null` */
     websocketTcpConverter?: EndpointWebsocketTCPConverter;
+    userAgentFilter?: EndpointUserAgentFilter;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface HTTPSEdgeRouteUpdate {
     /** unique identifier of this edge */
@@ -908,6 +1020,9 @@ export interface HTTPSEdgeRouteUpdate {
     oidc?: EndpointOIDC;
     /** websocket to tcp adapter configuration or `null` */
     websocketTcpConverter?: EndpointWebsocketTCPConverter;
+    userAgentFilter?: EndpointUserAgentFilter;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface HTTPSEdgeRoute {
     /** unique identifier of this edge */
@@ -948,6 +1063,9 @@ export interface HTTPSEdgeRoute {
     oidc?: EndpointOIDC;
     /** websocket to tcp adapter configuration or `null` */
     websocketTcpConverter?: EndpointWebsocketTCPConverter;
+    userAgentFilter?: EndpointUserAgentFilter;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface HTTPSEdgeList {
     /** the list of all HTTPS Edges on this account */
@@ -1020,6 +1138,10 @@ export interface EdgeTLSTerminationAtEdgeReplace {
     id: string;
     module: EndpointTLSTerminationAtEdge;
 }
+export interface EdgePolicyReplace {
+    id: string;
+    module: EndpointPolicy;
+}
 export interface EdgeRouteBackendReplace {
     edgeId: string;
     id: string;
@@ -1075,6 +1197,16 @@ export interface EdgeRouteWebsocketTCPConverterReplace {
     id: string;
     module: EndpointWebsocketTCPConverter;
 }
+export interface EdgeRouteUserAgentFilterReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointUserAgentFilter;
+}
+export interface EdgeRoutePolicyReplace {
+    edgeId: string;
+    id: string;
+    module: EndpointPolicy;
+}
 export interface TCPEdgeList {
     /** the list of all TCP Edges on this account */
     tcpEdges: Array<TCPEdge>;
@@ -1093,6 +1225,8 @@ export interface TCPEdgeCreate {
     /** edge modules */
     backend?: EndpointBackendMutate;
     ipRestriction?: EndpointIPPolicyMutate;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface TCPEdgeUpdate {
     /** unique identifier of this edge */
@@ -1106,6 +1240,8 @@ export interface TCPEdgeUpdate {
     /** edge modules */
     backend?: EndpointBackendMutate;
     ipRestriction?: EndpointIPPolicyMutate;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface TCPEdge {
     /** unique identifier of this edge */
@@ -1123,6 +1259,8 @@ export interface TCPEdge {
     /** edge modules */
     backend?: EndpointBackend;
     ipRestriction?: EndpointIPPolicy;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface TLSEdgeList {
     /** the list of all TLS Edges on this account */
@@ -1144,6 +1282,8 @@ export interface TLSEdgeCreate {
     ipRestriction?: EndpointIPPolicyMutate;
     mutualTls?: EndpointMutualTLSMutate;
     tlsTermination?: EndpointTLSTermination;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface TLSEdgeUpdate {
     /** unique identifier of this edge */
@@ -1159,6 +1299,8 @@ export interface TLSEdgeUpdate {
     ipRestriction?: EndpointIPPolicyMutate;
     mutualTls?: EndpointMutualTLSMutate;
     tlsTermination?: EndpointTLSTermination;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface TLSEdge {
     /** unique identifier of this edge */
@@ -1178,6 +1320,8 @@ export interface TLSEdge {
     ipRestriction?: EndpointIPPolicy;
     mutualTls?: EndpointMutualTLS;
     tlsTermination?: EndpointTLSTermination;
+    /** the traffic policy associated with this edge or null */
+    policy?: EndpointPolicy;
 }
 export interface Endpoint {
     /** unique endpoint resource identifier */
@@ -1572,7 +1716,7 @@ export interface ReservedAddrList {
 export interface ReservedDomainCreate {
     /** hostname of the reserved domain */
     domain: string;
-    /** reserve the domain in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
+    /** deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (au, eu, ap, us, jp, in, sa) */
     region: string;
     /** human-readable description of what this reserved domain will be used for */
     description?: string;
@@ -1607,9 +1751,9 @@ export interface ReservedDomain {
     metadata?: string;
     /** hostname of the reserved domain */
     domain: string;
-    /** reserve the domain in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa) */
+    /** deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (au, eu, ap, us, jp, in, sa) */
     region: string;
-    /** DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of *.ngrok.io */
+    /** DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of an ngrok owned domain (e.g. *.ngrok.app) */
     cnameTarget?: string;
     /** object referencing the TLS certificate used for connections to this domain. This can be either a user-uploaded certificate, the most recently issued automatic one, or null otherwise. */
     certificate?: Ref;
