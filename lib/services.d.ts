@@ -194,6 +194,37 @@ export declare class HTTPResponseBackends {
     update(arg: datatypes.HTTPResponseBackendUpdate): Promise<datatypes.HTTPResponseBackend>;
 }
 /**
+ * A static backend sends traffic to a TCP address (hostname and port) that
+ is reachable on the public internet.
+ */
+export declare class StaticBackends {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>staticBackends</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new static backend
+     */
+    create(arg: datatypes.StaticBackendCreate): Promise<datatypes.StaticBackend>;
+    /**
+     * Delete a static backend by ID.
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * Get detailed information about a static backend by ID
+     */
+    get(id: any): Promise<datatypes.StaticBackend>;
+    /**
+     * List all static backends on this account
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.StaticBackend>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update static backend by ID
+     */
+    update(arg: datatypes.StaticBackendUpdate): Promise<datatypes.StaticBackend>;
+}
+/**
  * A Tunnel Group Backend balances traffic among all online tunnels that match
  a label selector.
  */
@@ -256,6 +287,33 @@ export declare class WeightedBackends {
      * Update Weighted backend by ID
      */
     update(arg: datatypes.WeightedBackendUpdate): Promise<datatypes.WeightedBackend>;
+}
+export declare class BotUsers {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>botUsers</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new bot user
+     */
+    create(arg: datatypes.BotUserCreate): Promise<datatypes.BotUser>;
+    /**
+     * Delete a bot user by ID
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * Get the details of a Bot User by ID.
+     */
+    get(id: any): Promise<datatypes.BotUser>;
+    /**
+     * List all bot users in this account.
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.BotUser>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update attributes of a bot user by ID.
+     */
+    update(arg: datatypes.BotUserUpdate): Promise<datatypes.BotUser>;
 }
 /**
  * Certificate Authorities are x509 certificates that are used to sign other
@@ -476,6 +534,22 @@ export declare class EdgeRouteWebsocketTCPConverterModule {
     get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointWebsocketTCPConverter>;
     delete(arg: datatypes.EdgeRouteItem): Promise<void>;
 }
+export declare class EdgeRouteUserAgentFilterModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRouteUserAgentFilterModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRouteUserAgentFilterReplace): Promise<datatypes.EndpointUserAgentFilter>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointUserAgentFilter>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
+export declare class EdgeRoutePolicyModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>edgeRoutePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgeRoutePolicyReplace): Promise<datatypes.EndpointPolicy>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointPolicy>;
+    delete(arg: datatypes.EdgeRouteItem): Promise<void>;
+}
 export declare class EdgesTCP {
     private httpClient;
     /** Do not construct this object directly, use the <code>edgesTcp</code> property of an <code>Ngrok</code> client object instead. */
@@ -517,6 +591,14 @@ export declare class TCPEdgeIPRestrictionModule {
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeIPRestrictionReplace): Promise<datatypes.EndpointIPPolicy>;
     get(id: any): Promise<datatypes.EndpointIPPolicy>;
+    delete(id: any): Promise<void>;
+}
+export declare class TCPEdgePolicyModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tcpEdgePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgePolicyReplace): Promise<datatypes.EndpointPolicy>;
+    get(id: any): Promise<datatypes.EndpointPolicy>;
     delete(id: any): Promise<void>;
 }
 export declare class EdgesTLS {
@@ -576,6 +658,14 @@ export declare class TLSEdgeTLSTerminationModule {
     constructor(httpClient: Wretcher);
     replace(arg: datatypes.EdgeTLSTerminationReplace): Promise<datatypes.EndpointTLSTermination>;
     get(id: any): Promise<datatypes.EndpointTLSTermination>;
+    delete(id: any): Promise<void>;
+}
+export declare class TLSEdgePolicyModule {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>tlsEdgePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    replace(arg: datatypes.EdgePolicyReplace): Promise<datatypes.EndpointPolicy>;
+    get(id: any): Promise<datatypes.EndpointPolicy>;
     delete(id: any): Promise<void>;
 }
 /**

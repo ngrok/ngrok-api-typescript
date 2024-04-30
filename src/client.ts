@@ -14,7 +14,7 @@ wretch().polyfills({
 
 export interface NgrokConfig {
   apiToken: string;
-  baseUrl: string;
+  baseUrl?: string;
 }
 
 export class Ngrok {
@@ -43,6 +43,7 @@ export class Ngrok {
  session can include one or more Tunnels.
    */
   public tunnelSessions: services.TunnelSessions;
+  public botUsers: services.BotUsers;
   /**
    * Certificate Authorities are x509 certificates that are used to sign other
  x509 certificates. Attach a Certificate Authority to the Mutual TLS module
@@ -146,6 +147,11 @@ export class Ngrok {
     failoverBackends: services.FailoverBackends;
     httpResponseBackends: services.HTTPResponseBackends;
     /**
+     * A static backend sends traffic to a TCP address (hostname and port) that
+ is reachable on the public internet.
+     */
+    staticBackends: services.StaticBackends;
+    /**
      * A Tunnel Group Backend balances traffic among all online tunnels that match
  a label selector.
      */
@@ -178,6 +184,7 @@ export class Ngrok {
     edgeRouteSamlModule: services.EdgeRouteSAMLModule;
     edgeRouteOidcModule: services.EdgeRouteOIDCModule;
     edgeRouteWebsocketTcpConverterModule: services.EdgeRouteWebsocketTCPConverterModule;
+    edgeRouteUserAgentFilterModule: services.EdgeRouteUserAgentFilterModule;
     tcpEdgeBackendModule: services.TCPEdgeBackendModule;
     tcpEdgeIpRestrictionModule: services.TCPEdgeIPRestrictionModule;
     tlsEdgeBackendModule: services.TLSEdgeBackendModule;
@@ -219,6 +226,7 @@ export class Ngrok {
     );
     this.applicationUsers = new services.ApplicationUsers(this.httpClient);
     this.tunnelSessions = new services.TunnelSessions(this.httpClient);
+    this.botUsers = new services.BotUsers(this.httpClient);
     this.certificateAuthorities = new services.CertificateAuthorities(
       this.httpClient
     );
@@ -247,6 +255,7 @@ export class Ngrok {
     this.backends = {
       failoverBackends: new services.FailoverBackends(this.httpClient),
       httpResponseBackends: new services.HTTPResponseBackends(this.httpClient),
+      staticBackends: new services.StaticBackends(this.httpClient),
       tunnelGroupBackends: new services.TunnelGroupBackends(this.httpClient),
       weightedBackends: new services.WeightedBackends(this.httpClient),
     };
@@ -287,6 +296,8 @@ export class Ngrok {
       edgeRouteOidcModule: new services.EdgeRouteOIDCModule(this.httpClient),
       edgeRouteWebsocketTcpConverterModule:
         new services.EdgeRouteWebsocketTCPConverterModule(this.httpClient),
+      edgeRouteUserAgentFilterModule:
+        new services.EdgeRouteUserAgentFilterModule(this.httpClient),
       tcpEdgeBackendModule: new services.TCPEdgeBackendModule(this.httpClient),
       tcpEdgeIpRestrictionModule: new services.TCPEdgeIPRestrictionModule(
         this.httpClient
