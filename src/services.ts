@@ -34,7 +34,7 @@ export class AbuseReports {
   public get(id): Promise<datatypes.AbuseReport> {
     return this.httpClient
       .url(`/abuse_reports/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -65,8 +65,8 @@ export class AgentIngresses {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/agent_ingresses/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -75,7 +75,7 @@ export class AgentIngresses {
   public get(id): Promise<datatypes.AgentIngress> {
     return this.httpClient
       .url(`/agent_ingresses/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -173,8 +173,8 @@ export class APIKeys {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/api_keys/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -183,7 +183,7 @@ export class APIKeys {
   public get(id): Promise<datatypes.APIKey> {
     return this.httpClient
       .url(`/api_keys/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -260,7 +260,7 @@ export class ApplicationSessions {
   public get(id): Promise<datatypes.ApplicationSession> {
     return this.httpClient
       .url(`/app/sessions/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -270,8 +270,8 @@ export class ApplicationSessions {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/app/sessions/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -340,7 +340,7 @@ export class ApplicationUsers {
   public get(id): Promise<datatypes.ApplicationUser> {
     return this.httpClient
       .url(`/app/users/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -350,8 +350,8 @@ export class ApplicationUsers {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/app/users/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -474,7 +474,7 @@ export class TunnelSessions {
   public get(id): Promise<datatypes.TunnelSession> {
     return this.httpClient
       .url(`/tunnel_sessions/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -484,8 +484,8 @@ export class TunnelSessions {
   public restart(id): Promise<void> {
     return this.httpClient
       .url(`/tunnel_sessions/${id}/restart`)
-      .post(id)
-      .json(payload => util.deserializeResult(payload))
+      .post('{}')
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -494,8 +494,8 @@ export class TunnelSessions {
   public stop(id): Promise<void> {
     return this.httpClient
       .url(`/tunnel_sessions/${id}/stop`)
-      .post(id)
-      .json(payload => util.deserializeResult(payload))
+      .post('{}')
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -505,7 +505,7 @@ export class TunnelSessions {
     return this.httpClient
       .url(`/tunnel_sessions/${arg.id}/update`)
       .post(util.serializeArgument(arg))
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -541,8 +541,8 @@ export class FailoverBackends {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/backends/failover/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -551,7 +551,7 @@ export class FailoverBackends {
   public get(id): Promise<datatypes.FailoverBackend> {
     return this.httpClient
       .url(`/backends/failover/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -638,14 +638,14 @@ export class HTTPResponseBackends {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/backends/http_response/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   public get(id): Promise<datatypes.HTTPResponseBackend> {
     return this.httpClient
       .url(`/backends/http_response/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -736,8 +736,8 @@ export class StaticBackends {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/backends/static/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -746,7 +746,7 @@ export class StaticBackends {
   public get(id): Promise<datatypes.StaticBackend> {
     return this.httpClient
       .url(`/backends/static/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -843,8 +843,8 @@ export class TunnelGroupBackends {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/backends/tunnel_group/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -853,7 +853,7 @@ export class TunnelGroupBackends {
   public get(id): Promise<datatypes.TunnelGroupBackend> {
     return this.httpClient
       .url(`/backends/tunnel_group/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -952,8 +952,8 @@ export class WeightedBackends {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/backends/weighted/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -962,7 +962,7 @@ export class WeightedBackends {
   public get(id): Promise<datatypes.WeightedBackend> {
     return this.httpClient
       .url(`/backends/weighted/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1053,8 +1053,8 @@ export class BotUsers {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/bot_users/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -1063,7 +1063,7 @@ export class BotUsers {
   public get(id): Promise<datatypes.BotUser> {
     return this.httpClient
       .url(`/bot_users/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1159,8 +1159,8 @@ export class CertificateAuthorities {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/certificate_authorities/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -1169,7 +1169,7 @@ export class CertificateAuthorities {
   public get(id): Promise<datatypes.CertificateAuthority> {
     return this.httpClient
       .url(`/certificate_authorities/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1269,8 +1269,8 @@ export class Credentials {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/credentials/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -1279,7 +1279,7 @@ export class Credentials {
   public get(id): Promise<datatypes.Credential> {
     return this.httpClient
       .url(`/credentials/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1393,7 +1393,7 @@ export class EdgesHTTPSRoutes {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1421,7 +1421,7 @@ export class EdgesHTTPS {
   public get(id): Promise<datatypes.HTTPSEdge> {
     return this.httpClient
       .url(`/edges/https/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -1489,8 +1489,8 @@ export class EdgesHTTPS {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1514,15 +1514,15 @@ export class HTTPSEdgeMutualTLSModule {
   public get(id): Promise<datatypes.EndpointMutualTLS> {
     return this.httpClient
       .url(`/edges/https/${id}/mutual_tls`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${id}/mutual_tls`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1546,15 +1546,15 @@ export class HTTPSEdgeTLSTerminationModule {
   public get(id): Promise<datatypes.EndpointTLSTermination> {
     return this.httpClient
       .url(`/edges/https/${id}/tls_termination`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/https/${id}/tls_termination`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1586,7 +1586,7 @@ export class EdgeRouteBackendModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/backend`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1620,7 +1620,7 @@ export class EdgeRouteIPRestrictionModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/ip_restriction`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1654,7 +1654,7 @@ export class EdgeRouteRequestHeadersModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/request_headers`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1688,7 +1688,7 @@ export class EdgeRouteResponseHeadersModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/response_headers`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1722,7 +1722,7 @@ export class EdgeRouteCompressionModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/compression`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1756,7 +1756,7 @@ export class EdgeRouteCircuitBreakerModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/circuit_breaker`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1790,7 +1790,7 @@ export class EdgeRouteWebhookVerificationModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/webhook_verification`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1822,7 +1822,7 @@ export class EdgeRouteOAuthModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oauth`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1854,7 +1854,7 @@ export class EdgeRouteSAMLModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/saml`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1886,7 +1886,7 @@ export class EdgeRouteOIDCModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/oidc`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1926,7 +1926,7 @@ export class EdgeRouteWebsocketTCPConverterModule {
         `/edges/https/${arg.edgeId}/routes/${arg.id}/websocket_tcp_converter`
       )
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -1960,39 +1960,41 @@ export class EdgeRouteUserAgentFilterModule {
     return this.httpClient
       .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/user_agent_filter`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
 
-export class EdgeRoutePolicyModule {
+export class EdgeRouteTrafficPolicyModule {
   private httpClient: Wretcher;
 
-  /** Do not construct this object directly, use the <code>edgeRoutePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+  /** Do not construct this object directly, use the <code>edgeRouteTrafficPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
   public constructor(httpClient: Wretcher) {
     this.httpClient = httpClient;
   }
   public replace(
-    arg: datatypes.EdgeRoutePolicyReplace
-  ): Promise<datatypes.EndpointPolicy> {
+    arg: datatypes.EdgeRouteTrafficPolicyReplace
+  ): Promise<datatypes.EndpointTrafficPolicy> {
     return this.httpClient
-      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/policy`)
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/traffic_policy`)
       .put(util.serializeArgument(arg))
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-  public get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointPolicy> {
+  public get(
+    arg: datatypes.EdgeRouteItem
+  ): Promise<datatypes.EndpointTrafficPolicy> {
     return this.httpClient
-      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/policy`)
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/traffic_policy`)
       .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(arg: datatypes.EdgeRouteItem): Promise<void> {
     return this.httpClient
-      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/policy`)
+      .url(`/edges/https/${arg.edgeId}/routes/${arg.id}/traffic_policy`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2020,7 +2022,7 @@ export class EdgesTCP {
   public get(id): Promise<datatypes.TCPEdge> {
     return this.httpClient
       .url(`/edges/tcp/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2088,8 +2090,8 @@ export class EdgesTCP {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tcp/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2113,15 +2115,15 @@ export class TCPEdgeBackendModule {
   public get(id): Promise<datatypes.EndpointBackend> {
     return this.httpClient
       .url(`/edges/tcp/${id}/backend`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tcp/${id}/backend`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2145,47 +2147,47 @@ export class TCPEdgeIPRestrictionModule {
   public get(id): Promise<datatypes.EndpointIPPolicy> {
     return this.httpClient
       .url(`/edges/tcp/${id}/ip_restriction`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tcp/${id}/ip_restriction`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
 
-export class TCPEdgePolicyModule {
+export class TCPEdgeTrafficPolicyModule {
   private httpClient: Wretcher;
 
-  /** Do not construct this object directly, use the <code>tcpEdgePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+  /** Do not construct this object directly, use the <code>tcpEdgeTrafficPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
   public constructor(httpClient: Wretcher) {
     this.httpClient = httpClient;
   }
   public replace(
-    arg: datatypes.EdgePolicyReplace
-  ): Promise<datatypes.EndpointPolicy> {
+    arg: datatypes.EdgeTrafficPolicyReplace
+  ): Promise<datatypes.EndpointTrafficPolicy> {
     return this.httpClient
-      .url(`/edges/tcp/${arg.id}/policy`)
+      .url(`/edges/tcp/${arg.id}/traffic_policy`)
       .put(util.serializeArgument(arg))
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-  public get(id): Promise<datatypes.EndpointPolicy> {
+  public get(id): Promise<datatypes.EndpointTrafficPolicy> {
     return this.httpClient
-      .url(`/edges/tcp/${id}/policy`)
-      .get(id)
+      .url(`/edges/tcp/${id}/traffic_policy`)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tcp/${id}/policy`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .url(`/edges/tcp/${id}/traffic_policy`)
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2213,7 +2215,7 @@ export class EdgesTLS {
   public get(id): Promise<datatypes.TLSEdge> {
     return this.httpClient
       .url(`/edges/tls/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2281,8 +2283,8 @@ export class EdgesTLS {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tls/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2306,15 +2308,15 @@ export class TLSEdgeBackendModule {
   public get(id): Promise<datatypes.EndpointBackend> {
     return this.httpClient
       .url(`/edges/tls/${id}/backend`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tls/${id}/backend`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2338,15 +2340,15 @@ export class TLSEdgeIPRestrictionModule {
   public get(id): Promise<datatypes.EndpointIPPolicy> {
     return this.httpClient
       .url(`/edges/tls/${id}/ip_restriction`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tls/${id}/ip_restriction`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2370,15 +2372,15 @@ export class TLSEdgeMutualTLSModule {
   public get(id): Promise<datatypes.EndpointMutualTLS> {
     return this.httpClient
       .url(`/edges/tls/${id}/mutual_tls`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tls/${id}/mutual_tls`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2402,47 +2404,47 @@ export class TLSEdgeTLSTerminationModule {
   public get(id): Promise<datatypes.EndpointTLSTermination> {
     return this.httpClient
       .url(`/edges/tls/${id}/tls_termination`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/edges/tls/${id}/tls_termination`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
 
-export class TLSEdgePolicyModule {
+export class TLSEdgeTrafficPolicyModule {
   private httpClient: Wretcher;
 
-  /** Do not construct this object directly, use the <code>tlsEdgePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+  /** Do not construct this object directly, use the <code>tlsEdgeTrafficPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
   public constructor(httpClient: Wretcher) {
     this.httpClient = httpClient;
   }
   public replace(
-    arg: datatypes.EdgePolicyReplace
-  ): Promise<datatypes.EndpointPolicy> {
+    arg: datatypes.EdgeTrafficPolicyReplace
+  ): Promise<datatypes.EndpointTrafficPolicy> {
     return this.httpClient
-      .url(`/edges/tls/${arg.id}/policy`)
+      .url(`/edges/tls/${arg.id}/traffic_policy`)
       .put(util.serializeArgument(arg))
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
-  public get(id): Promise<datatypes.EndpointPolicy> {
+  public get(id): Promise<datatypes.EndpointTrafficPolicy> {
     return this.httpClient
-      .url(`/edges/tls/${id}/policy`)
-      .get(id)
+      .url(`/edges/tls/${id}/traffic_policy`)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
   public delete(id): Promise<void> {
     return this.httpClient
-      .url(`/edges/tls/${id}/policy`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .url(`/edges/tls/${id}/traffic_policy`)
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -2513,7 +2515,7 @@ export class Endpoints {
   public get(id): Promise<datatypes.Endpoint> {
     return this.httpClient
       .url(`/endpoints/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2544,8 +2546,8 @@ export class EventDestinations {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/event_destinations/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -2554,7 +2556,7 @@ export class EventDestinations {
   public get(id): Promise<datatypes.EventDestination> {
     return this.httpClient
       .url(`/event_destinations/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2647,8 +2649,8 @@ export class EventSubscriptions {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/event_subscriptions/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -2657,7 +2659,7 @@ export class EventSubscriptions {
   public get(id): Promise<datatypes.EventSubscription> {
     return this.httpClient
       .url(`/event_subscriptions/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2751,7 +2753,7 @@ export class EventSources {
     return this.httpClient
       .url(`/event_subscriptions/${arg.subscriptionId}/sources/${arg.type}`)
       .delete()
-      .json(payload => util.deserializeResult(payload))
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -2819,8 +2821,8 @@ export class IPPolicies {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ip_policies/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -2829,7 +2831,7 @@ export class IPPolicies {
   public get(id): Promise<datatypes.IPPolicy> {
     return this.httpClient
       .url(`/ip_policies/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -2922,8 +2924,8 @@ export class IPPolicyRules {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ip_policy_rules/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -2932,7 +2934,7 @@ export class IPPolicyRules {
   public get(id): Promise<datatypes.IPPolicyRule> {
     return this.httpClient
       .url(`/ip_policy_rules/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3033,8 +3035,8 @@ export class IPRestrictions {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ip_restrictions/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3043,7 +3045,7 @@ export class IPRestrictions {
   public get(id): Promise<datatypes.IPRestriction> {
     return this.httpClient
       .url(`/ip_restrictions/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3141,8 +3143,8 @@ export class ReservedAddrs {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/reserved_addrs/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3151,7 +3153,7 @@ export class ReservedAddrs {
   public get(id): Promise<datatypes.ReservedAddr> {
     return this.httpClient
       .url(`/reserved_addrs/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3250,8 +3252,8 @@ export class ReservedDomains {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/reserved_domains/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3260,7 +3262,7 @@ export class ReservedDomains {
   public get(id): Promise<datatypes.ReservedDomain> {
     return this.httpClient
       .url(`/reserved_domains/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3332,8 +3334,8 @@ export class ReservedDomains {
   public deleteCertificateManagementPolicy(id): Promise<void> {
     return this.httpClient
       .url(`/reserved_domains/${id}/certificate_management_policy`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3342,8 +3344,8 @@ export class ReservedDomains {
   public deleteCertificate(id): Promise<void> {
     return this.httpClient
       .url(`/reserved_domains/${id}/certificate`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
@@ -3377,8 +3379,8 @@ export class SSHCertificateAuthorities {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ssh_certificate_authorities/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3387,7 +3389,7 @@ export class SSHCertificateAuthorities {
   public get(id): Promise<datatypes.SSHCertificateAuthority> {
     return this.httpClient
       .url(`/ssh_certificate_authorities/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3485,8 +3487,8 @@ export class SSHCredentials {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ssh_credentials/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3495,7 +3497,7 @@ export class SSHCredentials {
   public get(id): Promise<datatypes.SSHCredential> {
     return this.httpClient
       .url(`/ssh_credentials/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3593,8 +3595,8 @@ export class SSHHostCertificates {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ssh_host_certificates/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3603,7 +3605,7 @@ export class SSHHostCertificates {
   public get(id): Promise<datatypes.SSHHostCertificate> {
     return this.httpClient
       .url(`/ssh_host_certificates/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3702,8 +3704,8 @@ export class SSHUserCertificates {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/ssh_user_certificates/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3712,7 +3714,7 @@ export class SSHUserCertificates {
   public get(id): Promise<datatypes.SSHUserCertificate> {
     return this.httpClient
       .url(`/ssh_user_certificates/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3813,8 +3815,8 @@ export class TLSCertificates {
   public delete(id): Promise<void> {
     return this.httpClient
       .url(`/tls_certificates/${id}`)
-      .delete(id)
-      .json(payload => util.deserializeResult(payload))
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
   /**
@@ -3823,7 +3825,7 @@ export class TLSCertificates {
   public get(id): Promise<datatypes.TLSCertificate> {
     return this.httpClient
       .url(`/tls_certificates/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }
@@ -3956,7 +3958,7 @@ export class Tunnels {
   public get(id): Promise<datatypes.Tunnel> {
     return this.httpClient
       .url(`/tunnels/${id}`)
-      .get(id)
+      .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
   }

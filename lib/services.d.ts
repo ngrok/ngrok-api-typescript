@@ -542,12 +542,12 @@ export declare class EdgeRouteUserAgentFilterModule {
     get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointUserAgentFilter>;
     delete(arg: datatypes.EdgeRouteItem): Promise<void>;
 }
-export declare class EdgeRoutePolicyModule {
+export declare class EdgeRouteTrafficPolicyModule {
     private httpClient;
-    /** Do not construct this object directly, use the <code>edgeRoutePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+    /** Do not construct this object directly, use the <code>edgeRouteTrafficPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EdgeRoutePolicyReplace): Promise<datatypes.EndpointPolicy>;
-    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointPolicy>;
+    replace(arg: datatypes.EdgeRouteTrafficPolicyReplace): Promise<datatypes.EndpointTrafficPolicy>;
+    get(arg: datatypes.EdgeRouteItem): Promise<datatypes.EndpointTrafficPolicy>;
     delete(arg: datatypes.EdgeRouteItem): Promise<void>;
 }
 export declare class EdgesTCP {
@@ -593,12 +593,12 @@ export declare class TCPEdgeIPRestrictionModule {
     get(id: any): Promise<datatypes.EndpointIPPolicy>;
     delete(id: any): Promise<void>;
 }
-export declare class TCPEdgePolicyModule {
+export declare class TCPEdgeTrafficPolicyModule {
     private httpClient;
-    /** Do not construct this object directly, use the <code>tcpEdgePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+    /** Do not construct this object directly, use the <code>tcpEdgeTrafficPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EdgePolicyReplace): Promise<datatypes.EndpointPolicy>;
-    get(id: any): Promise<datatypes.EndpointPolicy>;
+    replace(arg: datatypes.EdgeTrafficPolicyReplace): Promise<datatypes.EndpointTrafficPolicy>;
+    get(id: any): Promise<datatypes.EndpointTrafficPolicy>;
     delete(id: any): Promise<void>;
 }
 export declare class EdgesTLS {
@@ -660,12 +660,12 @@ export declare class TLSEdgeTLSTerminationModule {
     get(id: any): Promise<datatypes.EndpointTLSTermination>;
     delete(id: any): Promise<void>;
 }
-export declare class TLSEdgePolicyModule {
+export declare class TLSEdgeTrafficPolicyModule {
     private httpClient;
-    /** Do not construct this object directly, use the <code>tlsEdgePolicyModule</code> property of an <code>Ngrok</code> client object instead. */
+    /** Do not construct this object directly, use the <code>tlsEdgeTrafficPolicyModule</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
-    replace(arg: datatypes.EdgePolicyReplace): Promise<datatypes.EndpointPolicy>;
-    get(id: any): Promise<datatypes.EndpointPolicy>;
+    replace(arg: datatypes.EdgeTrafficPolicyReplace): Promise<datatypes.EndpointTrafficPolicy>;
+    get(id: any): Promise<datatypes.EndpointTrafficPolicy>;
     delete(id: any): Promise<void>;
 }
 /**
