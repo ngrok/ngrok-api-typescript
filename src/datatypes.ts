@@ -1012,29 +1012,11 @@ export interface EndpointUserAgentFilter {
   deny: Array<string>;
 }
 
-export interface EndpointPolicy {
+export interface EndpointTrafficPolicy {
   /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
   enabled?: boolean;
-  /** the inbound rules of the traffic policy. */
-  inbound: Array<EndpointRule>;
-  /** the outbound rules on the traffic policy. */
-  outbound: Array<EndpointRule>;
-}
-
-export interface EndpointRule {
-  /** cel expressions that filter traffic the policy rule applies to. */
-  expressions: Array<string>;
-  /** the set of actions on a policy rule. */
-  actions: Array<EndpointAction>;
-  /** the name of the rule that is part of the traffic policy. */
-  name: string;
-}
-
-export interface EndpointAction {
-  /** the type of action on the policy rule. */
-  type: string;
-  /** the configuration for the action on the policy rule. */
-  config: Record<string, unknown> | undefined;
+  /** the traffic policy that should be applied to the traffic on your endpoint. */
+  value: string;
 }
 
 export interface EdgeRouteItem {
@@ -1079,7 +1061,7 @@ export interface HTTPSEdgeRouteCreate {
   websocketTcpConverter?: EndpointWebsocketTCPConverter;
   userAgentFilter?: EndpointUserAgentFilter;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface HTTPSEdgeRouteUpdate {
@@ -1119,7 +1101,7 @@ export interface HTTPSEdgeRouteUpdate {
   websocketTcpConverter?: EndpointWebsocketTCPConverter;
   userAgentFilter?: EndpointUserAgentFilter;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface HTTPSEdgeRoute {
@@ -1163,7 +1145,7 @@ export interface HTTPSEdgeRoute {
   websocketTcpConverter?: EndpointWebsocketTCPConverter;
   userAgentFilter?: EndpointUserAgentFilter;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface HTTPSEdgeList {
@@ -1246,9 +1228,9 @@ export interface EdgeTLSTerminationAtEdgeReplace {
   module: EndpointTLSTerminationAtEdge;
 }
 
-export interface EdgePolicyReplace {
+export interface EdgeTrafficPolicyReplace {
   id: string;
-  module: EndpointPolicy;
+  module: EndpointTrafficPolicy;
 }
 
 export interface EdgeRouteBackendReplace {
@@ -1323,10 +1305,10 @@ export interface EdgeRouteUserAgentFilterReplace {
   module: EndpointUserAgentFilter;
 }
 
-export interface EdgeRoutePolicyReplace {
+export interface EdgeRouteTrafficPolicyReplace {
   edgeId: string;
   id: string;
-  module: EndpointPolicy;
+  module: EndpointTrafficPolicy;
 }
 
 export interface TCPEdgeList {
@@ -1349,7 +1331,7 @@ export interface TCPEdgeCreate {
   backend?: EndpointBackendMutate;
   ipRestriction?: EndpointIPPolicyMutate;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface TCPEdgeUpdate {
@@ -1365,7 +1347,7 @@ export interface TCPEdgeUpdate {
   backend?: EndpointBackendMutate;
   ipRestriction?: EndpointIPPolicyMutate;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface TCPEdge {
@@ -1385,7 +1367,7 @@ export interface TCPEdge {
   backend?: EndpointBackend;
   ipRestriction?: EndpointIPPolicy;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface TLSEdgeList {
@@ -1410,7 +1392,7 @@ export interface TLSEdgeCreate {
   mutualTls?: EndpointMutualTLSMutate;
   tlsTermination?: EndpointTLSTermination;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface TLSEdgeUpdate {
@@ -1428,7 +1410,7 @@ export interface TLSEdgeUpdate {
   mutualTls?: EndpointMutualTLSMutate;
   tlsTermination?: EndpointTLSTermination;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface TLSEdge {
@@ -1450,7 +1432,7 @@ export interface TLSEdge {
   mutualTls?: EndpointMutualTLS;
   tlsTermination?: EndpointTLSTermination;
   /** the traffic policy associated with this edge or null */
-  policy?: EndpointPolicy;
+  trafficPolicy?: EndpointTrafficPolicy;
 }
 
 export interface Endpoint {
@@ -1550,6 +1532,7 @@ export interface EventTarget {
   cloudwatchLogs?: EventTargetCloudwatchLogs;
   /** Configuration used to send events to Datadog. */
   datadog?: EventTargetDatadog;
+  azureLogsIngestion?: EventTargetAzureLogsIngestion;
 }
 
 export interface EventTargetFirehose {
@@ -1582,6 +1565,21 @@ export interface EventTargetDatadog {
   service?: string;
   /** Datadog site to send event to. */
   ddsite?: string;
+}
+
+export interface EventTargetAzureLogsIngestion {
+  /** Tenant ID for the Azure account */
+  tenantId: string;
+  /** Client ID for the application client */
+  clientId: string;
+  /** Client Secret for the application client */
+  clientSecret: string;
+  /** Data collection endpoint logs ingestion URI */
+  logsIngestionUri: string;
+  /** Data collection rule immutable ID */
+  dataCollectionRuleId: string;
+  /** Data collection stream name to use as destination, located instide the DCR */
+  dataCollectionStreamName: string;
 }
 
 export interface AWSAuth {

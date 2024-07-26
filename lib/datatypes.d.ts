@@ -920,27 +920,11 @@ export interface EndpointUserAgentFilter {
     allow: Array<string>;
     deny: Array<string>;
 }
-export interface EndpointPolicy {
+export interface EndpointTrafficPolicy {
     /** `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified */
     enabled?: boolean;
-    /** the inbound rules of the traffic policy. */
-    inbound: Array<EndpointRule>;
-    /** the outbound rules on the traffic policy. */
-    outbound: Array<EndpointRule>;
-}
-export interface EndpointRule {
-    /** cel expressions that filter traffic the policy rule applies to. */
-    expressions: Array<string>;
-    /** the set of actions on a policy rule. */
-    actions: Array<EndpointAction>;
-    /** the name of the rule that is part of the traffic policy. */
-    name: string;
-}
-export interface EndpointAction {
-    /** the type of action on the policy rule. */
-    type: string;
-    /** the configuration for the action on the policy rule. */
-    config: Record<string, unknown> | undefined;
+    /** the traffic policy that should be applied to the traffic on your endpoint. */
+    value: string;
 }
 export interface EdgeRouteItem {
     /** unique identifier of this edge */
@@ -983,7 +967,7 @@ export interface HTTPSEdgeRouteCreate {
     websocketTcpConverter?: EndpointWebsocketTCPConverter;
     userAgentFilter?: EndpointUserAgentFilter;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface HTTPSEdgeRouteUpdate {
     /** unique identifier of this edge */
@@ -1022,7 +1006,7 @@ export interface HTTPSEdgeRouteUpdate {
     websocketTcpConverter?: EndpointWebsocketTCPConverter;
     userAgentFilter?: EndpointUserAgentFilter;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface HTTPSEdgeRoute {
     /** unique identifier of this edge */
@@ -1065,7 +1049,7 @@ export interface HTTPSEdgeRoute {
     websocketTcpConverter?: EndpointWebsocketTCPConverter;
     userAgentFilter?: EndpointUserAgentFilter;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface HTTPSEdgeList {
     /** the list of all HTTPS Edges on this account */
@@ -1138,9 +1122,9 @@ export interface EdgeTLSTerminationAtEdgeReplace {
     id: string;
     module: EndpointTLSTerminationAtEdge;
 }
-export interface EdgePolicyReplace {
+export interface EdgeTrafficPolicyReplace {
     id: string;
-    module: EndpointPolicy;
+    module: EndpointTrafficPolicy;
 }
 export interface EdgeRouteBackendReplace {
     edgeId: string;
@@ -1202,10 +1186,10 @@ export interface EdgeRouteUserAgentFilterReplace {
     id: string;
     module: EndpointUserAgentFilter;
 }
-export interface EdgeRoutePolicyReplace {
+export interface EdgeRouteTrafficPolicyReplace {
     edgeId: string;
     id: string;
-    module: EndpointPolicy;
+    module: EndpointTrafficPolicy;
 }
 export interface TCPEdgeList {
     /** the list of all TCP Edges on this account */
@@ -1226,7 +1210,7 @@ export interface TCPEdgeCreate {
     backend?: EndpointBackendMutate;
     ipRestriction?: EndpointIPPolicyMutate;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface TCPEdgeUpdate {
     /** unique identifier of this edge */
@@ -1241,7 +1225,7 @@ export interface TCPEdgeUpdate {
     backend?: EndpointBackendMutate;
     ipRestriction?: EndpointIPPolicyMutate;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface TCPEdge {
     /** unique identifier of this edge */
@@ -1260,7 +1244,7 @@ export interface TCPEdge {
     backend?: EndpointBackend;
     ipRestriction?: EndpointIPPolicy;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface TLSEdgeList {
     /** the list of all TLS Edges on this account */
@@ -1283,7 +1267,7 @@ export interface TLSEdgeCreate {
     mutualTls?: EndpointMutualTLSMutate;
     tlsTermination?: EndpointTLSTermination;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface TLSEdgeUpdate {
     /** unique identifier of this edge */
@@ -1300,7 +1284,7 @@ export interface TLSEdgeUpdate {
     mutualTls?: EndpointMutualTLSMutate;
     tlsTermination?: EndpointTLSTermination;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface TLSEdge {
     /** unique identifier of this edge */
@@ -1321,7 +1305,7 @@ export interface TLSEdge {
     mutualTls?: EndpointMutualTLS;
     tlsTermination?: EndpointTLSTermination;
     /** the traffic policy associated with this edge or null */
-    policy?: EndpointPolicy;
+    trafficPolicy?: EndpointTrafficPolicy;
 }
 export interface Endpoint {
     /** unique endpoint resource identifier */
@@ -1414,6 +1398,7 @@ export interface EventTarget {
     cloudwatchLogs?: EventTargetCloudwatchLogs;
     /** Configuration used to send events to Datadog. */
     datadog?: EventTargetDatadog;
+    azureLogsIngestion?: EventTargetAzureLogsIngestion;
 }
 export interface EventTargetFirehose {
     /** Configuration for how to authenticate into your AWS account. Exactly one of `role` or `creds` should be configured. */
@@ -1442,6 +1427,20 @@ export interface EventTargetDatadog {
     service?: string;
     /** Datadog site to send event to. */
     ddsite?: string;
+}
+export interface EventTargetAzureLogsIngestion {
+    /** Tenant ID for the Azure account */
+    tenantId: string;
+    /** Client ID for the application client */
+    clientId: string;
+    /** Client Secret for the application client */
+    clientSecret: string;
+    /** Data collection endpoint logs ingestion URI */
+    logsIngestionUri: string;
+    /** Data collection rule immutable ID */
+    dataCollectionRuleId: string;
+    /** Data collection stream name to use as destination, located instide the DCR */
+    dataCollectionStreamName: string;
 }
 export interface AWSAuth {
     /** A role for ngrok to assume on your behalf to deposit events into your AWS account. */
