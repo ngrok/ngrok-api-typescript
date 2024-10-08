@@ -1448,12 +1448,17 @@ export interface Endpoint {
   publicUrl: string;
   /** protocol served by this endpoint. one of `http`, `https`, `tcp`, or `tls` */
   proto: string;
-  /** hostport served by this endpoint (hostname:port) */
+  scheme?: string;
+  /** hostport served by this endpoint (hostname:port) -> soon to be deprecated */
   hostport: string;
-  /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) */
+  host?: string;
+  port?: number;
+  /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)` */
   type: string;
   /** user-supplied metadata of the associated tunnel or edge object */
   metadata?: string;
+  /** user-supplied description of the associated tunnel */
+  description?: string;
   /** the domain reserved for this endpoint */
   domain?: Ref;
   /** the address reserved for this endpoint */
@@ -1462,6 +1467,22 @@ export interface Endpoint {
   tunnel?: Ref;
   /** the edge serving requests to this endpoint, if this is an edge endpoint */
   edge?: Ref;
+  /** the local address the tunnel forwards to */
+  upstreamUrl?: string;
+  /** the protocol the agent uses to forward with */
+  upstreamProto?: string;
+  /** the url of the endpoint */
+  url?: string;
+  /** The ID of the owner (bot or user) that owns this endpoint */
+  principalId?: Ref;
+  /** The traffic policy attached to this endpoint */
+  trafficPolicy?: string;
+  /** the bindings associated with this endpoint */
+  bindings?: Array<string>;
+  /** The tunnel session of the agent for this endpoint */
+  tunnelSession?: Ref;
+  /** URI of the clep API resource */
+  uri?: string;
 }
 
 export interface EndpointList {
@@ -1578,7 +1599,7 @@ export interface EventTargetAzureLogsIngestion {
   logsIngestionUri: string;
   /** Data collection rule immutable ID */
   dataCollectionRuleId: string;
-  /** Data collection stream name to use as destination, located instide the DCR */
+  /** Data collection stream name to use as destination, located inside the DCR */
   dataCollectionStreamName: string;
 }
 
