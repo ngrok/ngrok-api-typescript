@@ -678,6 +678,10 @@ export declare class Endpoints {
     /** Do not construct this object directly, use the <code>endpoints</code> property of an <code>Ngrok</code> client object instead. */
     constructor(httpClient: Wretcher);
     /**
+     * Create an endpoint, currently available only for cloud endpoints
+     */
+    create(arg: datatypes.EndpointCreate): Promise<datatypes.Endpoint>;
+    /**
      * List all active endpoints on the account
      */
     list(beforeId?: string, limit?: string): Promise<Array<datatypes.Endpoint>>;
@@ -687,6 +691,14 @@ export declare class Endpoints {
      * Get the status of an endpoint by ID
      */
     get(id: any): Promise<datatypes.Endpoint>;
+    /**
+     * Update an Endpoint by ID, currently available only for cloud endpoints
+     */
+    update(arg: datatypes.EndpointUpdate): Promise<datatypes.Endpoint>;
+    /**
+     * Delete an Endpoint by ID, currently available only for cloud endpoints
+     */
+    delete(id: any): Promise<void>;
 }
 export declare class EventDestinations {
     private httpClient;

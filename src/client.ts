@@ -185,12 +185,15 @@ export class Ngrok {
     edgeRouteOidcModule: services.EdgeRouteOIDCModule;
     edgeRouteWebsocketTcpConverterModule: services.EdgeRouteWebsocketTCPConverterModule;
     edgeRouteUserAgentFilterModule: services.EdgeRouteUserAgentFilterModule;
+    edgeRouteTrafficPolicyModule: services.EdgeRouteTrafficPolicyModule;
     tcpEdgeBackendModule: services.TCPEdgeBackendModule;
     tcpEdgeIpRestrictionModule: services.TCPEdgeIPRestrictionModule;
+    tcpEdgeTrafficPolicyModule: services.TCPEdgeTrafficPolicyModule;
     tlsEdgeBackendModule: services.TLSEdgeBackendModule;
     tlsEdgeIpRestrictionModule: services.TLSEdgeIPRestrictionModule;
     tlsEdgeMutualTlsModule: services.TLSEdgeMutualTLSModule;
     tlsEdgeTlsTerminationModule: services.TLSEdgeTLSTerminationModule;
+    tlsEdgeTrafficPolicyModule: services.TLSEdgeTrafficPolicyModule;
   };
 
   /**
@@ -213,7 +216,7 @@ export class Ngrok {
     this.httpClient = wretch()
       .url(baseUrl)
       .headers({
-        'User-Agent': 'ngrok-api-typescript/0.11.0/' + process.version,
+        'User-Agent': 'ngrok-api-typescript/0.12.0/' + process.version,
         'Ngrok-Version': '2',
       })
       .content('application/json')
@@ -298,8 +301,14 @@ export class Ngrok {
         new services.EdgeRouteWebsocketTCPConverterModule(this.httpClient),
       edgeRouteUserAgentFilterModule:
         new services.EdgeRouteUserAgentFilterModule(this.httpClient),
+      edgeRouteTrafficPolicyModule: new services.EdgeRouteTrafficPolicyModule(
+        this.httpClient
+      ),
       tcpEdgeBackendModule: new services.TCPEdgeBackendModule(this.httpClient),
       tcpEdgeIpRestrictionModule: new services.TCPEdgeIPRestrictionModule(
+        this.httpClient
+      ),
+      tcpEdgeTrafficPolicyModule: new services.TCPEdgeTrafficPolicyModule(
         this.httpClient
       ),
       tlsEdgeBackendModule: new services.TLSEdgeBackendModule(this.httpClient),
@@ -310,6 +319,9 @@ export class Ngrok {
         this.httpClient
       ),
       tlsEdgeTlsTerminationModule: new services.TLSEdgeTLSTerminationModule(
+        this.httpClient
+      ),
+      tlsEdgeTrafficPolicyModule: new services.TLSEdgeTrafficPolicyModule(
         this.httpClient
       ),
     };
