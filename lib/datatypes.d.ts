@@ -1320,12 +1320,17 @@ export interface Endpoint {
     publicUrl: string;
     /** protocol served by this endpoint. one of `http`, `https`, `tcp`, or `tls` */
     proto: string;
-    /** hostport served by this endpoint (hostname:port) */
+    scheme?: string;
+    /** hostport served by this endpoint (hostname:port) -> soon to be deprecated */
     hostport: string;
-    /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) */
+    host?: string;
+    port?: number;
+    /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)` */
     type: string;
     /** user-supplied metadata of the associated tunnel or edge object */
     metadata?: string;
+    /** user-supplied description of the associated tunnel */
+    description?: string;
     /** the domain reserved for this endpoint */
     domain?: Ref;
     /** the address reserved for this endpoint */
@@ -1334,6 +1339,24 @@ export interface Endpoint {
     tunnel?: Ref;
     /** the edge serving requests to this endpoint, if this is an edge endpoint */
     edge?: Ref;
+    /** the local address the tunnel forwards to */
+    upstreamUrl?: string;
+    /** the protocol the agent uses to forward with */
+    upstreamProto?: string;
+    /** the url of the endpoint */
+    url?: string;
+    /** The ID of the owner (bot or user) that owns this endpoint */
+    principal?: Ref;
+    /** The traffic policy attached to this endpoint */
+    trafficPolicy?: string;
+    /** the bindings associated with this endpoint */
+    bindings?: Array<string>;
+    /** The tunnel session of the agent for this endpoint */
+    tunnelSession?: Ref;
+    /** URI of the clep API resource */
+    uri?: string;
+    /** user supplied name for the endpoint */
+    name?: string;
 }
 export interface EndpointList {
     /** the list of all active endpoints on this account */
@@ -1342,6 +1365,34 @@ export interface EndpointList {
     uri: string;
     /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
+}
+export interface EndpointCreate {
+    /** the url of the endpoint */
+    url: string;
+    /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)` */
+    type: string;
+    /** The traffic policy attached to this endpoint */
+    trafficPolicy: string;
+    /** user-supplied description of the associated tunnel */
+    description?: string;
+    /** user-supplied metadata of the associated tunnel or edge object */
+    metadata?: string;
+    /** the bindings associated with this endpoint */
+    bindings?: Array<string>;
+}
+export interface EndpointUpdate {
+    /** unique endpoint resource identifier */
+    id: string;
+    /** the url of the endpoint */
+    url?: string;
+    /** The traffic policy attached to this endpoint */
+    trafficPolicy?: string;
+    /** user-supplied description of the associated tunnel */
+    description?: string;
+    /** user-supplied metadata of the associated tunnel or edge object */
+    metadata?: string;
+    /** the bindings associated with this endpoint */
+    bindings?: Array<string>;
 }
 export interface EventDestinationCreate {
     /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
@@ -1439,7 +1490,7 @@ export interface EventTargetAzureLogsIngestion {
     logsIngestionUri: string;
     /** Data collection rule immutable ID */
     dataCollectionRuleId: string;
-    /** Data collection stream name to use as destination, located instide the DCR */
+    /** Data collection stream name to use as destination, located inside the DCR */
     dataCollectionStreamName: string;
 }
 export interface AWSAuth {
@@ -1774,7 +1825,7 @@ export interface ReservedDomainList {
 export interface ReservedDomainCertPolicy {
     /** certificate authority to request certificates from. The only supported value is letsencrypt. */
     authority: string;
-    /** type of private key to use when requesting certificates. Defaults to rsa, can be either rsa or ecdsa. */
+    /** type of private key to use when requesting certificates. Defaults to ecdsa, can be either rsa or ecdsa. */
     privateKeyType: string;
 }
 export interface ReservedDomainCertStatus {

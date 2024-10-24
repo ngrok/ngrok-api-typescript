@@ -171,12 +171,15 @@ export declare class Ngrok {
         edgeRouteOidcModule: services.EdgeRouteOIDCModule;
         edgeRouteWebsocketTcpConverterModule: services.EdgeRouteWebsocketTCPConverterModule;
         edgeRouteUserAgentFilterModule: services.EdgeRouteUserAgentFilterModule;
+        edgeRouteTrafficPolicyModule: services.EdgeRouteTrafficPolicyModule;
         tcpEdgeBackendModule: services.TCPEdgeBackendModule;
         tcpEdgeIpRestrictionModule: services.TCPEdgeIPRestrictionModule;
+        tcpEdgeTrafficPolicyModule: services.TCPEdgeTrafficPolicyModule;
         tlsEdgeBackendModule: services.TLSEdgeBackendModule;
         tlsEdgeIpRestrictionModule: services.TLSEdgeIPRestrictionModule;
         tlsEdgeMutualTlsModule: services.TLSEdgeMutualTLSModule;
         tlsEdgeTlsTerminationModule: services.TLSEdgeTLSTerminationModule;
+        tlsEdgeTrafficPolicyModule: services.TLSEdgeTrafficPolicyModule;
     };
     /**
      * Creates an instance of the Ngrok HTTP API client

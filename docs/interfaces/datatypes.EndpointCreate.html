@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ReservedDomainCreate | @ngrok/ngrok-api</title>
+	<title>EndpointCreate | @ngrok/ngrok-api</title>
 	<meta name="description" content="Documentation for @ngrok/ngrok-api">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/datatypes.html">datatypes</a>
 				</li>
 				<li>
-					<a href="datatypes.ReservedDomainCreate.html">ReservedDomainCreate</a>
+					<a href="datatypes.EndpointCreate.html">EndpointCreate</a>
 				</li>
 			</ul>
-			<h1>Interface ReservedDomainCreate</h1>
+			<h1>Interface EndpointCreate</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ReservedDomainCreate</span>
+						<span class="target">EndpointCreate</span>
 					</li>
 				</ul>
 			</section>
@@ -83,12 +83,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCreate.html#certificateId" class="tsd-kind-icon">certificate<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCreate.html#certificateManagementPolicy" class="tsd-kind-icon">certificate<wbr>Management<wbr>Policy</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCreate.html#description" class="tsd-kind-icon">description</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCreate.html#domain" class="tsd-kind-icon">domain</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCreate.html#metadata" class="tsd-kind-icon">metadata</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ReservedDomainCreate.html#region" class="tsd-kind-icon">region</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#bindings" class="tsd-kind-icon">bindings</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#trafficPolicy" class="tsd-kind-icon">traffic<wbr>Policy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,32 +97,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="certificateId" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> certificate<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">certificate<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="bindings" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> bindings</h3>
+					<div class="tsd-signature tsd-kind-icon">bindings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1948">datatypes.ts:1948</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1511">datatypes.ts:1511</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>ID of a user-uploaded TLS certificate to use for connections to targeting this domain. Optional, mutually exclusive with <code>certificate_management_policy</code>.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="certificateManagementPolicy" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> certificate<wbr>Management<wbr>Policy</h3>
-					<div class="tsd-signature tsd-kind-icon">certificate<wbr>Management<wbr>Policy<span class="tsd-signature-symbol">:</span> <a href="datatypes.ReservedDomainCertPolicy.html" class="tsd-signature-type" data-tsd-kind="Interface">ReservedDomainCertPolicy</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1950">datatypes.ts:1950</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with <code>certificate_id</code>.</p>
+							<p>the bindings associated with this endpoint</p>
 						</div>
 					</div>
 				</section>
@@ -132,27 +117,12 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1944">datatypes.ts:1944</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1507">datatypes.ts:1507</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>human-readable description of what this reserved domain will be used for</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="domain" class="tsd-anchor"></a>
-					<h3>domain</h3>
-					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1940">datatypes.ts:1940</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>hostname of the reserved domain</p>
+							<p>user-supplied description of the associated tunnel</p>
 						</div>
 					</div>
 				</section>
@@ -162,27 +132,57 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1946">datatypes.ts:1946</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1509">datatypes.ts:1509</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes.</p>
+							<p>user-supplied metadata of the associated tunnel or edge object</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="region" class="tsd-anchor"></a>
-					<h3>region</h3>
-					<div class="tsd-signature tsd-kind-icon">region<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="trafficPolicy" class="tsd-anchor"></a>
+					<h3>traffic<wbr>Policy</h3>
+					<div class="tsd-signature tsd-kind-icon">traffic<wbr>Policy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1942">datatypes.ts:1942</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1505">datatypes.ts:1505</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (au, eu, ap, us, jp, in, sa)</p>
+							<p>The traffic policy attached to this endpoint</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1503">datatypes.ts:1503</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>whether the endpoint is <code>ephemeral</code> (served directly by an agent-initiated tunnel) or <code>edge</code> (served by an edge) or <code>cloud (represents a cloud endpoint)</code></p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="url" class="tsd-anchor"></a>
+					<h3>url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1501">datatypes.ts:1501</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the url of the endpoint</p>
 						</div>
 					</div>
 				</section>
@@ -210,25 +210,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="datatypes.ReservedDomainCreate.html" class="tsd-kind-icon">Reserved<wbr>Domain<wbr>Create</a>
+						<a href="datatypes.EndpointCreate.html" class="tsd-kind-icon">Endpoint<wbr>Create</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCreate.html#certificateId" class="tsd-kind-icon">certificate<wbr>Id</a>
+								<a href="datatypes.EndpointCreate.html#bindings" class="tsd-kind-icon">bindings</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCreate.html#certificateManagementPolicy" class="tsd-kind-icon">certificate<wbr>Management<wbr>Policy</a>
+								<a href="datatypes.EndpointCreate.html#description" class="tsd-kind-icon">description</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCreate.html#description" class="tsd-kind-icon">description</a>
+								<a href="datatypes.EndpointCreate.html#metadata" class="tsd-kind-icon">metadata</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCreate.html#domain" class="tsd-kind-icon">domain</a>
+								<a href="datatypes.EndpointCreate.html#trafficPolicy" class="tsd-kind-icon">traffic<wbr>Policy</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCreate.html#metadata" class="tsd-kind-icon">metadata</a>
+								<a href="datatypes.EndpointCreate.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.ReservedDomainCreate.html#region" class="tsd-kind-icon">region</a>
+								<a href="datatypes.EndpointCreate.html#url" class="tsd-kind-icon">url</a>
 							</li>
 						</ul>
 					</li>

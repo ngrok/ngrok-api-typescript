@@ -2462,6 +2462,16 @@ export class Endpoints {
     this.httpClient = httpClient;
   }
   /**
+   * Create an endpoint, currently available only for cloud endpoints
+   */
+  public create(arg: datatypes.EndpointCreate): Promise<datatypes.Endpoint> {
+    return this.httpClient
+      .url(`/endpoints`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
    * List all active endpoints on the account
    */
   public async list(
@@ -2517,6 +2527,26 @@ export class Endpoints {
       .url(`/endpoints/${id}`)
       .get()
       .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Update an Endpoint by ID, currently available only for cloud endpoints
+   */
+  public update(arg: datatypes.EndpointUpdate): Promise<datatypes.Endpoint> {
+    return this.httpClient
+      .url(`/endpoints/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete an Endpoint by ID, currently available only for cloud endpoints
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/endpoints/${id}`)
+      .delete()
+      .res()
       .then(f => f, util.onRejected);
   }
 }
