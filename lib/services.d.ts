@@ -879,6 +879,44 @@ export declare class IPRestrictions {
     update(arg: datatypes.IPRestrictionUpdate): Promise<datatypes.IPRestriction>;
 }
 /**
+ * KubernetesOperators is used by the Kubernetes Operator to register and
+ manage its own resource, as well as for users to see active kubernetes
+ clusters.
+ */
+export declare class KubernetesOperators {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>kubernetesOperators</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new Kubernetes Operator
+     */
+    create(arg: datatypes.KubernetesOperatorCreate): Promise<datatypes.KubernetesOperator>;
+    /**
+     * Update an existing Kubernetes operator by ID.
+     */
+    update(arg: datatypes.KubernetesOperatorUpdate): Promise<datatypes.KubernetesOperator>;
+    /**
+     * Delete a Kubernetes Operator
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * Get of a Kubernetes Operator
+     */
+    get(id: any): Promise<datatypes.KubernetesOperator>;
+    /**
+     * List all Kubernetes Operators owned by this account
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.KubernetesOperator>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * List Endpoints bound to a Kubernetes Operator
+     */
+    getBoundEndpoints(id: any, beforeId?: string, limit?: string): Promise<Array<datatypes.Endpoint>>;
+    private _getBoundEndpoints_pagedList;
+    private _getBoundEndpoints_asyncList;
+}
+/**
  * Reserved Addresses are TCP addresses that can be used to listen for traffic.
  TCP address hostnames and ports are assigned by ngrok, they cannot be
  chosen.
