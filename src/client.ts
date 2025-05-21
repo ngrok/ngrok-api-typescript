@@ -90,6 +90,12 @@ export class Ngrok {
    */
   public ipRestrictions: services.IPRestrictions;
   /**
+   * KubernetesOperators is used by the Kubernetes Operator to register and
+ manage its own resource, as well as for users to see active kubernetes
+ clusters.
+   */
+  public kubernetesOperators: services.KubernetesOperators;
+  /**
    * Reserved Addresses are TCP addresses that can be used to listen for traffic.
  TCP address hostnames and ports are assigned by ngrok, they cannot be
  chosen.
@@ -216,7 +222,7 @@ export class Ngrok {
     this.httpClient = wretch()
       .url(baseUrl)
       .headers({
-        'User-Agent': 'ngrok-api-typescript/0.12.0/' + process.version,
+        'User-Agent': 'ngrok-api-typescript/0.13.0/' + process.version,
         'Ngrok-Version': '2',
       })
       .content('application/json')
@@ -241,6 +247,9 @@ export class Ngrok {
     this.ipPolicies = new services.IPPolicies(this.httpClient);
     this.ipPolicyRules = new services.IPPolicyRules(this.httpClient);
     this.ipRestrictions = new services.IPRestrictions(this.httpClient);
+    this.kubernetesOperators = new services.KubernetesOperators(
+      this.httpClient
+    );
     this.reservedAddrs = new services.ReservedAddrs(this.httpClient);
     this.reservedDomains = new services.ReservedDomains(this.httpClient);
     this.sshCertificateAuthorities = new services.SSHCertificateAuthorities(

@@ -12,6 +12,13 @@ export interface Paging {
   limit?: string;
 }
 
+export interface ItemPaging {
+  /** a resource identifier */
+  id: string;
+  beforeId?: string;
+  limit?: string;
+}
+
 export interface Error {
   errorCode: string;
   statusCode: number;
@@ -1470,13 +1477,11 @@ export interface Endpoint {
   /** the local address the tunnel forwards to */
   upstreamUrl?: string;
   /** the protocol the agent uses to forward with */
-  upstreamProto?: string;
+  upstreamProtocol?: string;
   /** the url of the endpoint */
   url?: string;
   /** The ID of the owner (bot or user) that owns this endpoint */
   principal?: Ref;
-  /** TODO: deprecate me! */
-  principalId?: Ref;
   /** The traffic policy attached to this endpoint */
   trafficPolicy?: string;
   /** the bindings associated with this endpoint */
@@ -1487,6 +1492,8 @@ export interface Endpoint {
   uri?: string;
   /** user supplied name for the endpoint */
   name?: string;
+  /** whether the endpoint allows pooling */
+  poolingEnabled: boolean;
 }
 
 export interface EndpointList {
@@ -1501,7 +1508,7 @@ export interface EndpointList {
 export interface EndpointCreate {
   /** the url of the endpoint */
   url: string;
-  /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)` */
+  /** Type of endpoint. Only 'cloud' is currently supported (represents a cloud endpoint). Defaults to 'cloud' if not specified. */
   type: string;
   /** The traffic policy attached to this endpoint */
   trafficPolicy: string;
@@ -1511,6 +1518,7 @@ export interface EndpointCreate {
   metadata?: string;
   /** the bindings associated with this endpoint */
   bindings?: Array<string>;
+  poolingEnabled: boolean;
 }
 
 export interface EndpointUpdate {
@@ -1526,6 +1534,7 @@ export interface EndpointUpdate {
   metadata?: string;
   /** the bindings associated with this endpoint */
   bindings?: Array<string>;
+  poolingEnabled: boolean;
 }
 
 export interface EventDestinationCreate {
@@ -1889,6 +1898,125 @@ export interface IPRestrictionList {
   /** the list of all IP restrictions on this account */
   ipRestrictions: Array<IPRestriction>;
   /** URI of the IP restrictions list API resource */
+  uri: string;
+  /** URI of the next page, or null if there is no next page */
+  nextPageUri?: string;
+}
+
+export interface KubernetesOperatorCreate {
+  /** human-readable description of this Kubernetes Operator. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this Kubernetes Operator. optional, max 4096 bytes. */
+  metadata?: string;
+  /** features enabled for this Kubernetes Operator. a subset of "bindings", "ingress", and "gateway" */
+  enabledFeatures: Array<string>;
+  /** the ngrok region in which the ingress for this operator is served. defaults to "global" */
+  region: string;
+  /** information about the deployment of this Kubernetes Operator */
+  deployment: KubernetesOperatorDeployment;
+  /** configuration for the Bindings feature of this Kubernetes Operator. set only if enabling the "bindings" feature */
+  binding?: KubernetesOperatorBindingCreate;
+}
+
+export interface KubernetesOperatorBindingCreate {
+  /** the list of cel expressions that filter the k8s bound endpoints for this operator */
+  endpointSelectors: Array<string>;
+  /** CSR is supplied during initial creation to enable creating a mutual TLS secured connection between ngrok and the operator. This is an internal implementation detail and subject to change. */
+  csr: string;
+  /** the public ingress endpoint for this Kubernetes Operator */
+  ingressEndpoint?: string;
+}
+
+export interface KubernetesOperatorUpdate {
+  /** unique identifier for this Kubernetes Operator */
+  id: string;
+  /** human-readable description of this Kubernetes Operator. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this Kubernetes Operator. optional, max 4096 bytes. */
+  metadata?: string;
+  /** features enabled for this Kubernetes Operator. a subset of "bindings", "ingress", and "gateway" */
+  enabledFeatures?: Array<string>;
+  /** the ngrok region in which the ingress for this operator is served. defaults to "global" */
+  region?: string;
+  /** configuration for the Bindings feature of this Kubernetes Operator. set only if enabling the "bindings" feature */
+  binding?: KubernetesOperatorBindingUpdate;
+  /** configuration for the Deployment info */
+  deployment?: KubernetesOperatorDeploymentUpdate;
+}
+
+export interface KubernetesOperatorBindingUpdate {
+  /** the list of cel expressions that filter the k8s bound endpoints for this operator */
+  endpointSelectors?: Array<string>;
+  /** CSR is supplied during initial creation to enable creating a mutual TLS secured connection between ngrok and the operator. This is an internal implementation detail and subject to change. */
+  csr?: string;
+  /** the public ingress endpoint for this Kubernetes Operator */
+  ingressEndpoint?: string;
+}
+
+export interface KubernetesOperatorDeploymentUpdate {
+  /** the deployment name */
+  name?: string;
+  /** the version of this Kubernetes Operator */
+  version?: string;
+}
+
+export interface KubernetesOperator {
+  /** unique identifier for this Kubernetes Operator */
+  id: string;
+  /** URI of this Kubernetes Operator API resource */
+  uri: string;
+  /** timestamp when the Kubernetes Operator was created. RFC 3339 format */
+  createdAt: Date;
+  /** timestamp when the Kubernetes Operator was last updated. RFC 3339 format */
+  updatedAt: Date;
+  /** human-readable description of this Kubernetes Operator. optional, max 255 bytes. */
+  description?: string;
+  /** arbitrary user-defined machine-readable data of this Kubernetes Operator. optional, max 4096 bytes. */
+  metadata?: string;
+  /** the principal who created this Kubernetes Operator */
+  principal: Ref;
+  /** features enabled for this Kubernetes Operator. a subset of "bindings", "ingress", and "gateway" */
+  enabledFeatures: Array<string>;
+  /** the ngrok region in which the ingress for this operator is served. defaults to "global" */
+  region?: string;
+  /** information about the deployment of this Kubernetes Operator */
+  deployment: KubernetesOperatorDeployment;
+  /** information about the Bindings feature of this Kubernetes Operator, if enabled */
+  binding?: KubernetesOperatorBinding;
+}
+
+export interface KubernetesOperatorDeployment {
+  /** the deployment name */
+  name: string;
+  /** the namespace this Kubernetes Operator is deployed to */
+  namespace: string;
+  /** the version of this Kubernetes Operator */
+  version: string;
+  /** user-given name for the cluster the Kubernetes Operator is deployed to */
+  clusterName: string;
+}
+
+export interface KubernetesOperatorCert {
+  /** the public client certificate generated for this Kubernetes Operator from the CSR supplied when enabling the Bindings feature */
+  cert: string;
+  /** timestamp when the certificate becomes valid. RFC 3339 format */
+  notBefore: Date;
+  /** timestamp when the certificate becomes invalid. RFC 3339 format */
+  notAfter: Date;
+}
+
+export interface KubernetesOperatorBinding {
+  /** the list of cel expressions that filter the k8s bound endpoints for this operator */
+  endpointSelectors: Array<string>;
+  /** the binding certificate information */
+  cert: KubernetesOperatorCert;
+  /** the public ingress endpoint for this Kubernetes Operator */
+  ingressEndpoint?: string;
+}
+
+export interface KubernetesOperatorList {
+  /** the list of Kubernetes Operators for this account */
+  operators: Array<KubernetesOperator>;
   uri: string;
   /** URI of the next page, or null if there is no next page */
   nextPageUri?: string;

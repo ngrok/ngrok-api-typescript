@@ -76,6 +76,12 @@ export declare class Ngrok {
      */
     ipRestrictions: services.IPRestrictions;
     /**
+     * KubernetesOperators is used by the Kubernetes Operator to register and
+   manage its own resource, as well as for users to see active kubernetes
+   clusters.
+     */
+    kubernetesOperators: services.KubernetesOperators;
+    /**
      * Reserved Addresses are TCP addresses that can be used to listen for traffic.
    TCP address hostnames and ports are assigned by ngrok, they cannot be
    chosen.

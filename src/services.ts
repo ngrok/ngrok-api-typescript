@@ -3144,6 +3144,175 @@ export class IPRestrictions {
 }
 
 /**
+ * KubernetesOperators is used by the Kubernetes Operator to register and
+ manage its own resource, as well as for users to see active kubernetes
+ clusters.
+ */
+export class KubernetesOperators {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>kubernetesOperators</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new Kubernetes Operator
+   */
+  public create(
+    arg: datatypes.KubernetesOperatorCreate
+  ): Promise<datatypes.KubernetesOperator> {
+    return this.httpClient
+      .url(`/kubernetes_operators`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Update an existing Kubernetes operator by ID.
+   */
+  public update(
+    arg: datatypes.KubernetesOperatorUpdate
+  ): Promise<datatypes.KubernetesOperator> {
+    return this.httpClient
+      .url(`/kubernetes_operators/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete a Kubernetes Operator
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/kubernetes_operators/${id}`)
+      .delete()
+      .res()
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Get of a Kubernetes Operator
+   */
+  public get(id): Promise<datatypes.KubernetesOperator> {
+    return this.httpClient
+      .url(`/kubernetes_operators/${id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * List all Kubernetes Operators owned by this account
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.KubernetesOperator>> {
+    const array: Array<datatypes.KubernetesOperator> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(
+    arg: datatypes.Paging
+  ): Promise<datatypes.KubernetesOperatorList> {
+    return this.httpClient
+      .url(`/kubernetes_operators`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.KubernetesOperator[] = pagedList.operators;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * List Endpoints bound to a Kubernetes Operator
+   */
+  public async getBoundEndpoints(
+    id,
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Endpoint>> {
+    const array: Array<datatypes.Endpoint> = [];
+    for await (const item of this._getBoundEndpoints_asyncList(
+      id,
+      beforeId,
+      limit
+    )) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _getBoundEndpoints_pagedList(
+    arg: datatypes.ItemPaging
+  ): Promise<datatypes.EndpointList> {
+    return this.httpClient
+      .url(`/kubernetes_operators/${arg.id}/bound_endpoints`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_getBoundEndpoints_asyncList(
+    id,
+    beforeId: string,
+    limit = '100'
+  ) {
+    let nextPage = 'initial loop';
+    let page: datatypes.ItemPaging = { id: id, limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+    page.id = id;
+
+    while (nextPage) {
+      const pagedList = await this._getBoundEndpoints_pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.Endpoint[] = pagedList.endpoints;
+
+      if (nextPage) {
+        page = {
+          id: id,
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+}
+
+/**
  * Reserved Addresses are TCP addresses that can be used to listen for traffic.
  TCP address hostnames and ports are assigned by ngrok, they cannot be
  chosen.
