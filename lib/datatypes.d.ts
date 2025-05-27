@@ -1342,13 +1342,11 @@ export interface Endpoint {
     /** the local address the tunnel forwards to */
     upstreamUrl?: string;
     /** the protocol the agent uses to forward with */
-    upstreamProto?: string;
+    upstreamProtocol?: string;
     /** the url of the endpoint */
     url?: string;
     /** The ID of the owner (bot or user) that owns this endpoint */
     principal?: Ref;
-    /** TODO: deprecate me! */
-    principalId?: Ref;
     /** The traffic policy attached to this endpoint */
     trafficPolicy?: string;
     /** the bindings associated with this endpoint */
@@ -1359,6 +1357,8 @@ export interface Endpoint {
     uri?: string;
     /** user supplied name for the endpoint */
     name?: string;
+    /** whether the endpoint allows pooling */
+    poolingEnabled: boolean;
 }
 export interface EndpointList {
     /** the list of all active endpoints on this account */
@@ -1371,7 +1371,7 @@ export interface EndpointList {
 export interface EndpointCreate {
     /** the url of the endpoint */
     url: string;
-    /** whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)` */
+    /** Type of endpoint. Only 'cloud' is currently supported (represents a cloud endpoint). Defaults to 'cloud' if not specified. */
     type: string;
     /** The traffic policy attached to this endpoint */
     trafficPolicy: string;
@@ -1381,6 +1381,7 @@ export interface EndpointCreate {
     metadata?: string;
     /** the bindings associated with this endpoint */
     bindings?: Array<string>;
+    poolingEnabled: boolean;
 }
 export interface EndpointUpdate {
     /** unique endpoint resource identifier */
@@ -1395,6 +1396,7 @@ export interface EndpointUpdate {
     metadata?: string;
     /** the bindings associated with this endpoint */
     bindings?: Array<string>;
+    poolingEnabled: boolean;
 }
 export interface EventDestinationCreate {
     /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */

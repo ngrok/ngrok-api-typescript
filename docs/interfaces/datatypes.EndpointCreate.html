@@ -86,6 +86,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#bindings" class="tsd-kind-icon">bindings</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#poolingEnabled" class="tsd-kind-icon">pooling<wbr>Enabled</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#trafficPolicy" class="tsd-kind-icon">traffic<wbr>Policy</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#type" class="tsd-kind-icon">type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.EndpointCreate.html#url" class="tsd-kind-icon">url</a></li>
@@ -102,7 +103,7 @@
 					<div class="tsd-signature tsd-kind-icon">bindings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1513">datatypes.ts:1513</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1513">datatypes.ts:1513</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -117,7 +118,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1509">datatypes.ts:1509</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1509">datatypes.ts:1509</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -132,7 +133,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1511">datatypes.ts:1511</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1511">datatypes.ts:1511</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,12 +143,22 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="poolingEnabled" class="tsd-anchor"></a>
+					<h3>pooling<wbr>Enabled</h3>
+					<div class="tsd-signature tsd-kind-icon">pooling<wbr>Enabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1514">datatypes.ts:1514</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="trafficPolicy" class="tsd-anchor"></a>
 					<h3>traffic<wbr>Policy</h3>
 					<div class="tsd-signature tsd-kind-icon">traffic<wbr>Policy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1507">datatypes.ts:1507</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1507">datatypes.ts:1507</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,12 +173,12 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1505">datatypes.ts:1505</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1505">datatypes.ts:1505</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>whether the endpoint is <code>ephemeral</code> (served directly by an agent-initiated tunnel) or <code>edge</code> (served by an edge) or <code>cloud (represents a cloud endpoint)</code></p>
+							<p>Type of endpoint. Only &#39;cloud&#39; is currently supported (represents a cloud endpoint). Defaults to &#39;cloud&#39; if not specified.</p>
 						</div>
 					</div>
 				</section>
@@ -177,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/d5a6bc0/src/datatypes.ts#L1503">datatypes.ts:1503</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/19686b4/src/datatypes.ts#L1503">datatypes.ts:1503</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -220,6 +231,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="datatypes.EndpointCreate.html#metadata" class="tsd-kind-icon">metadata</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="datatypes.EndpointCreate.html#poolingEnabled" class="tsd-kind-icon">pooling<wbr>Enabled</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="datatypes.EndpointCreate.html#trafficPolicy" class="tsd-kind-icon">traffic<wbr>Policy</a>
