@@ -952,6 +952,36 @@ export declare class ReservedDomains {
     deleteCertificate(id: any): Promise<void>;
 }
 /**
+ * Secrets is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+ */
+export declare class Secrets {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>secrets</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new Secret
+     */
+    create(arg: datatypes.SecretCreate): Promise<datatypes.Secret>;
+    /**
+     * Update an existing Secret by ID
+     */
+    update(arg: datatypes.SecretUpdate): Promise<datatypes.Secret>;
+    /**
+     * Delete a Secret
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * Get a Secret by ID
+     */
+    get(id: any): Promise<datatypes.Secret>;
+    /**
+     * List all Secrets owned by account
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.Secret>>;
+    private _pagedList;
+    private _asyncList;
+}
+/**
  * An SSH Certificate Authority is a pair of an SSH Certificate and its private
  key that can be used to sign other SSH host and user certificates.
  */
@@ -1129,5 +1159,35 @@ export declare class Tunnels {
      * Get the status of a tunnel by ID
      */
     get(id: any): Promise<datatypes.Tunnel>;
+}
+/**
+ * Vaults is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+ */
+export declare class Vaults {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>vaults</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new Vault
+     */
+    create(arg: datatypes.VaultCreate): Promise<datatypes.Vault>;
+    /**
+     * Update an existing Vault by ID
+     */
+    update(arg: datatypes.VaultUpdate): Promise<datatypes.Vault>;
+    /**
+     * Delete a Vault
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * Get a Vault by ID
+     */
+    get(id: any): Promise<datatypes.Vault>;
+    /**
+     * List all Vaults owned by account
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.Vault>>;
+    private _pagedList;
+    private _asyncList;
 }
 //# sourceMappingURL=services.d.ts.map

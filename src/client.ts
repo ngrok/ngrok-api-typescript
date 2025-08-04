@@ -103,6 +103,10 @@ export class Ngrok {
    */
   public reservedDomains: services.ReservedDomains;
   /**
+   * Secrets is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+   */
+  public secrets: services.Secrets;
+  /**
    * An SSH Certificate Authority is a pair of an SSH Certificate and its private
  key that can be used to sign other SSH host and user certificates.
    */
@@ -137,6 +141,10 @@ export class Ngrok {
  agent tunnel session or an SSH reverse tunnel session.
    */
   public tunnels: services.Tunnels;
+  /**
+   * Vaults is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+   */
+  public vaults: services.Vaults;
   public backends: {
     /**
      * A Failover backend defines failover behavior within a list of referenced
@@ -216,7 +224,7 @@ export class Ngrok {
     this.httpClient = wretch()
       .url(baseUrl)
       .headers({
-        'User-Agent': 'ngrok-api-typescript/0.13.0/' + process.version,
+        'User-Agent': 'ngrok-api-typescript/0.14.0/' + process.version,
         'Ngrok-Version': '2',
       })
       .content('application/json')
@@ -243,6 +251,7 @@ export class Ngrok {
     this.ipRestrictions = new services.IPRestrictions(this.httpClient);
     this.reservedAddrs = new services.ReservedAddrs(this.httpClient);
     this.reservedDomains = new services.ReservedDomains(this.httpClient);
+    this.secrets = new services.Secrets(this.httpClient);
     this.sshCertificateAuthorities = new services.SSHCertificateAuthorities(
       this.httpClient
     );
@@ -255,6 +264,7 @@ export class Ngrok {
     );
     this.tlsCertificates = new services.TLSCertificates(this.httpClient);
     this.tunnels = new services.Tunnels(this.httpClient);
+    this.vaults = new services.Vaults(this.httpClient);
     this.backends = {
       failoverBackends: new services.FailoverBackends(this.httpClient),
       httpResponseBackends: new services.HTTPResponseBackends(this.httpClient),

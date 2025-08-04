@@ -89,6 +89,10 @@ export declare class Ngrok {
      */
     reservedDomains: services.ReservedDomains;
     /**
+     * Secrets is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+     */
+    secrets: services.Secrets;
+    /**
      * An SSH Certificate Authority is a pair of an SSH Certificate and its private
    key that can be used to sign other SSH host and user certificates.
      */
@@ -123,6 +127,10 @@ export declare class Ngrok {
    agent tunnel session or an SSH reverse tunnel session.
      */
     tunnels: services.Tunnels;
+    /**
+     * Vaults is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+     */
+    vaults: services.Vaults;
     backends: {
         /**
          * A Failover backend defines failover behavior within a list of referenced
