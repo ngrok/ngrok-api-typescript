@@ -3381,6 +3381,106 @@ export class ReservedDomains {
 }
 
 /**
+ * Secrets is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+ */
+export class Secrets {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>secrets</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new Secret
+   */
+  public create(arg: datatypes.SecretCreate): Promise<datatypes.Secret> {
+    return this.httpClient
+      .url(`/vault_secrets`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Update an existing Secret by ID
+   */
+  public update(arg: datatypes.SecretUpdate): Promise<datatypes.Secret> {
+    return this.httpClient
+      .url(`/vault_secrets/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete a Secret
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/vault_secrets/${id}`)
+      .delete()
+      .res()
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Get a Secret by ID
+   */
+  public get(id): Promise<datatypes.Secret> {
+    return this.httpClient
+      .url(`/vault_secrets/${id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * List all Secrets owned by account
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Secret>> {
+    const array: Array<datatypes.Secret> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(arg: datatypes.Paging): Promise<datatypes.SecretList> {
+    return this.httpClient
+      .url(`/vault_secrets`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.Secret[] = pagedList.secrets;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+}
+
+/**
  * An SSH Certificate Authority is a pair of an SSH Certificate and its private
  key that can be used to sign other SSH host and user certificates.
  */
@@ -3991,5 +4091,105 @@ export class Tunnels {
       .get()
       .json(payload => util.deserializeResult(payload))
       .then(f => f, util.onRejected);
+  }
+}
+
+/**
+ * Vaults is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
+ */
+export class Vaults {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>vaults</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new Vault
+   */
+  public create(arg: datatypes.VaultCreate): Promise<datatypes.Vault> {
+    return this.httpClient
+      .url(`/vaults`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Update an existing Vault by ID
+   */
+  public update(arg: datatypes.VaultUpdate): Promise<datatypes.Vault> {
+    return this.httpClient
+      .url(`/vaults/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete a Vault
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/vaults/${id}`)
+      .delete()
+      .res()
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Get a Vault by ID
+   */
+  public get(id): Promise<datatypes.Vault> {
+    return this.httpClient
+      .url(`/vaults/${id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * List all Vaults owned by account
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Vault>> {
+    const array: Array<datatypes.Vault> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(arg: datatypes.Paging): Promise<datatypes.VaultList> {
+    return this.httpClient
+      .url(`/vaults`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.Paging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.Vault[] = pagedList.vaults;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
   }
 }

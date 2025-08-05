@@ -2027,6 +2027,63 @@ export interface ReservedDomainCertJob {
   retriesAt?: Date;
 }
 
+export interface SecretCreate {
+  /** Name of secret */
+  name: string;
+  /** Value of secret */
+  value: string;
+  /** Arbitrary user-defined metadata for this Secret */
+  metadata?: string;
+  /** description of Secret */
+  description?: string;
+  /** unique identifier of the referenced vault */
+  vaultId: string;
+}
+
+export interface SecretUpdate {
+  /** identifier for Secret */
+  id: string;
+  /** Name of secret */
+  name?: string;
+  /** Value of secret */
+  value?: string;
+  /** Arbitrary user-defined metadata for this Secret */
+  metadata?: string;
+  /** description of Secret */
+  description?: string;
+}
+
+export interface Secret {
+  /** identifier for Secret */
+  id: string;
+  /** URI of this Secret API resource */
+  uri: string;
+  /** Timestamp when the Secret was created (RFC 3339 format) */
+  createdAt: Date;
+  /** Timestamp when the Secret was last updated (RFC 3339 format) */
+  updatedAt: Date;
+  /** Name of secret */
+  name: string;
+  /** description of Secret */
+  description?: string;
+  /** Arbitrary user-defined metadata for this Secret */
+  metadata?: string;
+  /** Reference to who created this Secret */
+  createdBy: Ref;
+  /** Reference to who created this Secret */
+  lastUpdatedBy: Ref;
+  /** Reference to the vault the secret is stored in */
+  vault: Ref;
+}
+
+export interface SecretList {
+  /** The list of Secrets for this account */
+  secrets: Array<Secret>;
+  uri: string;
+  /** URI of the next page of results, or null if there is no next page */
+  nextPageUri?: string;
+}
+
 export interface SSHCertificateAuthorityCreate {
   /** human-readable description of this SSH Certificate Authority. optional, max 255 bytes. */
   description?: string;
@@ -2366,5 +2423,54 @@ export interface TunnelList {
   /** URI of the tunnels list API resource */
   uri: string;
   /** URI of the next page, or null if there is no next page */
+  nextPageUri?: string;
+}
+
+export interface VaultCreate {
+  /** Name of vault */
+  name: string;
+  /** Arbitrary user-defined metadata for this Vault */
+  metadata: string;
+  /** description of Vault */
+  description: string;
+}
+
+export interface VaultUpdate {
+  /** identifier for Vault */
+  id: string;
+  /** Name of vault */
+  name?: string;
+  /** Arbitrary user-defined metadata for this Vault */
+  metadata?: string;
+  /** description of Vault */
+  description?: string;
+}
+
+export interface Vault {
+  /** identifier for Vault */
+  id: string;
+  /** URI of this Vault API resource */
+  uri: string;
+  /** Timestamp when the Vault was created (RFC 3339 format) */
+  createdAt: Date;
+  /** Timestamp when the Vault was last updated (RFC 3339 format) */
+  updatedAt: Date;
+  /** Name of vault */
+  name: string;
+  /** description of Vault */
+  description?: string;
+  /** Arbitrary user-defined metadata for this Vault */
+  metadata?: string;
+  /** Reference to who created this Vault */
+  createdBy: string;
+  /** Reference to who created this Vault */
+  lastUpdatedBy: string;
+}
+
+export interface VaultList {
+  /** The list of Vaults for this account */
+  vaults: Array<Vault>;
+  uri: string;
+  /** URI of the next page of results, or null if there is no next page */
   nextPageUri?: string;
 }
