@@ -1481,7 +1481,7 @@ export interface Endpoint {
   bindings?: Array<string>;
   /** The tunnel session of the agent for this endpoint */
   tunnelSession?: Ref;
-  /** URI of the clep API resource */
+  /** URI of the Cloud Endpoint API resource */
   uri?: string;
   /** user supplied name for the endpoint */
   name?: string;
@@ -1512,6 +1512,13 @@ export interface EndpointCreate {
   /** the bindings associated with this endpoint */
   bindings?: Array<string>;
   poolingEnabled: boolean;
+}
+
+export interface EndpointListArgs {
+  beforeId?: string;
+  limit?: string;
+  ids?: Array<string>;
+  urls?: Array<string>;
 }
 
 export interface EndpointUpdate {
