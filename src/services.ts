@@ -2485,7 +2485,9 @@ export class Endpoints {
     return array;
   }
 
-  private _pagedList(arg: datatypes.Paging): Promise<datatypes.EndpointList> {
+  private _pagedList(
+    arg: datatypes.EndpointListArgs
+  ): Promise<datatypes.EndpointList> {
     return this.httpClient
       .url(`/endpoints`)
       .query(arg)
@@ -2496,7 +2498,7 @@ export class Endpoints {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.EndpointListArgs = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
