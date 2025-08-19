@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SSHCredentialList | @ngrok/ngrok-api</title>
+	<title>ItemPaging | @ngrok/ngrok-api</title>
 	<meta name="description" content="Documentation for @ngrok/ngrok-api">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/datatypes.html">datatypes</a>
 				</li>
 				<li>
-					<a href="datatypes.SSHCredentialList.html">SSHCredentialList</a>
+					<a href="datatypes.ItemPaging.html">ItemPaging</a>
 				</li>
 			</ul>
-			<h1>Interface SSHCredentialList</h1>
+			<h1>Interface ItemPaging</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SSHCredentialList</span>
+						<span class="target">ItemPaging</span>
 					</li>
 				</ul>
 			</section>
@@ -83,9 +83,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.SSHCredentialList.html#nextPageUri" class="tsd-kind-icon">next<wbr>Page<wbr>Uri</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.SSHCredentialList.html#sshCredentials" class="tsd-kind-icon">ssh<wbr>Credentials</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.SSHCredentialList.html#uri" class="tsd-kind-icon">uri</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ItemPaging.html#beforeId" class="tsd-kind-icon">before<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ItemPaging.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="datatypes.ItemPaging.html#limit" class="tsd-kind-icon">limit</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,49 +94,39 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="nextPageUri" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> next<wbr>Page<wbr>Uri</h3>
-					<div class="tsd-signature tsd-kind-icon">next<wbr>Page<wbr>Uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="beforeId" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> before<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">before<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/5d4f398/src/datatypes.ts#L2196">datatypes.ts:2196</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/5d4f398/src/datatypes.ts#L18">datatypes.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/5d4f398/src/datatypes.ts#L17">datatypes.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URI of the next page, or null if there is no next page</p>
+							<p>a resource identifier</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="sshCredentials" class="tsd-anchor"></a>
-					<h3>ssh<wbr>Credentials</h3>
-					<div class="tsd-signature tsd-kind-icon">ssh<wbr>Credentials<span class="tsd-signature-symbol">:</span> <a href="datatypes.SSHCredential.html" class="tsd-signature-type" data-tsd-kind="Interface">SSHCredential</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="limit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> limit</h3>
+					<div class="tsd-signature tsd-kind-icon">limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/5d4f398/src/datatypes.ts#L2192">datatypes.ts:2192</a></li>
+							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/5d4f398/src/datatypes.ts#L19">datatypes.ts:19</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>the list of all ssh credentials on this account</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="uri" class="tsd-anchor"></a>
-					<h3>uri</h3>
-					<div class="tsd-signature tsd-kind-icon">uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ngrok/ngrok-api-typescript/blob/5d4f398/src/datatypes.ts#L2194">datatypes.ts:2194</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>URI of the ssh credential list API resource</p>
-						</div>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -162,16 +152,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="datatypes.SSHCredentialList.html" class="tsd-kind-icon">SSHCredential<wbr>List</a>
+						<a href="datatypes.ItemPaging.html" class="tsd-kind-icon">Item<wbr>Paging</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.SSHCredentialList.html#nextPageUri" class="tsd-kind-icon">next<wbr>Page<wbr>Uri</a>
+								<a href="datatypes.ItemPaging.html#beforeId" class="tsd-kind-icon">before<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.SSHCredentialList.html#sshCredentials" class="tsd-kind-icon">ssh<wbr>Credentials</a>
+								<a href="datatypes.ItemPaging.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="datatypes.SSHCredentialList.html#uri" class="tsd-kind-icon">uri</a>
+								<a href="datatypes.ItemPaging.html#limit" class="tsd-kind-icon">limit</a>
 							</li>
 						</ul>
 					</li>

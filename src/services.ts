@@ -4147,6 +4147,67 @@ export class Vaults {
       .then(f => f, util.onRejected);
   }
   /**
+   * Get Secrets by Vault ID
+   */
+  public async getSecretsByVault(
+    id,
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.Secret>> {
+    const array: Array<datatypes.Secret> = [];
+    for await (const item of this._getSecretsByVault_asyncList(
+      id,
+      beforeId,
+      limit
+    )) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _getSecretsByVault_pagedList(
+    arg: datatypes.ItemPaging
+  ): Promise<datatypes.SecretList> {
+    return this.httpClient
+      .url(`/vaults/${arg.id}/secrets`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_getSecretsByVault_asyncList(
+    id,
+    beforeId: string,
+    limit = '100'
+  ) {
+    let nextPage = 'initial loop';
+    let page: datatypes.ItemPaging = { id: id, limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+    page.id = id;
+
+    while (nextPage) {
+      const pagedList = await this._getSecretsByVault_pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.Secret[] = pagedList.secrets;
+
+      if (nextPage) {
+        page = {
+          id: id,
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
    * List all Vaults owned by account
    */
   public async list(
