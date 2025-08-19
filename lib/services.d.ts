@@ -1184,6 +1184,12 @@ export declare class Vaults {
      */
     get(id: any): Promise<datatypes.Vault>;
     /**
+     * Get Secrets by Vault ID
+     */
+    getSecretsByVault(id: any, beforeId?: string, limit?: string): Promise<Array<datatypes.Secret>>;
+    private _getSecretsByVault_pagedList;
+    private _getSecretsByVault_asyncList;
+    /**
      * List all Vaults owned by account
      */
     list(beforeId?: string, limit?: string): Promise<Array<datatypes.Vault>>;

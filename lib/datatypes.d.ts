@@ -8,6 +8,12 @@ export interface Paging {
     beforeId?: string;
     limit?: string;
 }
+export interface ItemPaging {
+    /** a resource identifier */
+    id: string;
+    beforeId?: string;
+    limit?: string;
+}
 export interface Error {
     errorCode: string;
     statusCode: number;
@@ -1386,8 +1392,8 @@ export interface EndpointCreate {
 export interface EndpointListArgs {
     beforeId?: string;
     limit?: string;
-    ids?: Array<string>;
-    urls?: Array<string>;
+    id?: Array<string>;
+    url?: Array<string>;
 }
 export interface EndpointUpdate {
     /** unique endpoint resource identifier */
