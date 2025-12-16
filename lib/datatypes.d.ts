@@ -8,6 +8,11 @@ export interface Paging {
     beforeId?: string;
     limit?: string;
 }
+export interface FilteredPaging {
+    beforeId?: string;
+    limit?: string;
+    filter?: string;
+}
 export interface ItemPaging {
     /** a resource identifier */
     id: string;
@@ -1322,7 +1327,7 @@ export interface Endpoint {
     createdAt?: Date;
     /** timestamp when the endpoint was updated in RFC 3339 format */
     updatedAt?: Date;
-    /** URL of the hostport served by this endpoint */
+    /** deprecated [replaced by URL]: URL of the hostport served by this endpoint */
     publicUrl: string;
     /** protocol served by this endpoint. one of `http`, `https`, `tcp`, or `tls` */
     proto: string;
@@ -1387,13 +1392,14 @@ export interface EndpointCreate {
     metadata?: string;
     /** the bindings associated with this endpoint */
     bindings?: Array<string>;
-    poolingEnabled: boolean;
+    poolingEnabled?: boolean;
 }
 export interface EndpointListArgs {
     beforeId?: string;
     limit?: string;
     id?: Array<string>;
     url?: Array<string>;
+    filter?: string;
 }
 export interface EndpointUpdate {
     /** unique endpoint resource identifier */
@@ -1408,7 +1414,7 @@ export interface EndpointUpdate {
     metadata?: string;
     /** the bindings associated with this endpoint */
     bindings?: Array<string>;
-    poolingEnabled: boolean;
+    poolingEnabled?: boolean;
 }
 export interface EventDestinationCreate {
     /** Arbitrary user-defined machine-readable data of this Event Destination. Optional, max 4096 bytes. */
@@ -1871,6 +1877,8 @@ export interface SecretCreate {
     description?: string;
     /** unique identifier of the referenced vault */
     vaultId: string;
+    /** name of the referenced vault */
+    vaultName?: string;
 }
 export interface SecretUpdate {
     /** identifier for Secret */
@@ -1905,12 +1913,47 @@ export interface Secret {
     lastUpdatedBy: Ref;
     /** Reference to the vault the secret is stored in */
     vault: Ref;
+    /** Name of the vault the secret is stored in */
+    vaultName?: string;
 }
 export interface SecretList {
     /** The list of Secrets for this account */
     secrets: Array<Secret>;
     uri: string;
     /** URI of the next page of results, or null if there is no next page */
+    nextPageUri?: string;
+}
+export interface ServiceUser {
+    /** unique API key resource identifier */
+    id: string;
+    /** URI to the API resource of this service user */
+    uri: string;
+    /** human-readable name used to identify the service */
+    name: string;
+    /** whether or not the service is active */
+    active: boolean;
+    /** timestamp when the api key was created, RFC 3339 format */
+    createdAt: Date;
+}
+export interface ServiceUserCreate {
+    /** human-readable name used to identify the service */
+    name: string;
+    /** whether or not the service is active */
+    active?: boolean;
+}
+export interface ServiceUserUpdate {
+    id: string;
+    /** human-readable name used to identify the service */
+    name?: string;
+    /** whether or not the service is active */
+    active?: boolean;
+}
+export interface ServiceUserList {
+    /** the list of all service users on this account */
+    serviceUsers: Array<ServiceUser>;
+    /** URI of the service users list API resource */
+    uri: string;
+    /** URI of the next page, or null if there is no next page */
     nextPageUri?: string;
 }
 export interface SSHCertificateAuthorityCreate {

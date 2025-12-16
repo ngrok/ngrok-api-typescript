@@ -335,7 +335,7 @@ export declare class CertificateAuthorities {
      */
     delete(id: any): Promise<void>;
     /**
-     * Get detailed information about a certficate authority
+     * Get detailed information about a certificate authority
      */
     get(id: any): Promise<datatypes.CertificateAuthority>;
     /**
@@ -981,6 +981,33 @@ export declare class Secrets {
     private _pagedList;
     private _asyncList;
 }
+export declare class ServiceUsers {
+    private httpClient;
+    /** Do not construct this object directly, use the <code>serviceUsers</code> property of an <code>Ngrok</code> client object instead. */
+    constructor(httpClient: Wretcher);
+    /**
+     * Create a new service user
+     */
+    create(arg: datatypes.ServiceUserCreate): Promise<datatypes.ServiceUser>;
+    /**
+     * Delete a service user by ID
+     */
+    delete(id: any): Promise<void>;
+    /**
+     * Get the details of a Bot User by ID.
+     */
+    get(id: any): Promise<datatypes.ServiceUser>;
+    /**
+     * List all service users in this account.
+     */
+    list(beforeId?: string, limit?: string): Promise<Array<datatypes.ServiceUser>>;
+    private _pagedList;
+    private _asyncList;
+    /**
+     * Update attributes of a service user by ID.
+     */
+    update(arg: datatypes.ServiceUserUpdate): Promise<datatypes.ServiceUser>;
+}
 /**
  * An SSH Certificate Authority is a pair of an SSH Certificate and its private
  key that can be used to sign other SSH host and user certificates.
@@ -998,7 +1025,7 @@ export declare class SSHCertificateAuthorities {
      */
     delete(id: any): Promise<void>;
     /**
-     * Get detailed information about an SSH Certficate Authority
+     * Get detailed information about an SSH Certificate Authority
      */
     get(id: any): Promise<datatypes.SSHCertificateAuthority>;
     /**
@@ -1061,7 +1088,7 @@ export declare class SSHHostCertificates {
      */
     delete(id: any): Promise<void>;
     /**
-     * Get detailed information about an SSH Host Certficate
+     * Get detailed information about an SSH Host Certificate
      */
     get(id: any): Promise<datatypes.SSHHostCertificate>;
     /**
@@ -1093,7 +1120,7 @@ export declare class SSHUserCertificates {
      */
     delete(id: any): Promise<void>;
     /**
-     * Get detailed information about an SSH User Certficate
+     * Get detailed information about an SSH User Certificate
      */
     get(id: any): Promise<datatypes.SSHUserCertificate>;
     /**
