@@ -92,6 +92,7 @@ export declare class Ngrok {
      * Secrets is an api service for securely storing and managing sensitive data such as secrets, credentials, and tokens.
      */
     secrets: services.Secrets;
+    serviceUsers: services.ServiceUsers;
     /**
      * An SSH Certificate Authority is a pair of an SSH Certificate and its private
    key that can be used to sign other SSH host and user certificates.

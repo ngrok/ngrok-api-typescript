@@ -94,7 +94,7 @@ export class AgentIngresses {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.AgentIngressList> {
     return this.httpClient
       .url(`/agent_ingresses`)
@@ -106,7 +106,7 @@ export class AgentIngresses {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -201,7 +201,9 @@ export class APIKeys {
     return array;
   }
 
-  private _pagedList(arg: datatypes.Paging): Promise<datatypes.APIKeyList> {
+  private _pagedList(
+    arg: datatypes.FilteredPaging
+  ): Promise<datatypes.APIKeyList> {
     return this.httpClient
       .url(`/api_keys`)
       .query(arg)
@@ -212,7 +214,7 @@ export class APIKeys {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -433,7 +435,7 @@ export class TunnelSessions {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.TunnelSessionList> {
     return this.httpClient
       .url(`/tunnel_sessions`)
@@ -445,7 +447,7 @@ export class TunnelSessions {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -1164,7 +1166,7 @@ export class CertificateAuthorities {
       .then(f => f, util.onRejected);
   }
   /**
-   * Get detailed information about a certficate authority
+   * Get detailed information about a certificate authority
    */
   public get(id): Promise<datatypes.CertificateAuthority> {
     return this.httpClient
@@ -1188,7 +1190,7 @@ export class CertificateAuthorities {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.CertificateAuthorityList> {
     return this.httpClient
       .url(`/certificate_authorities`)
@@ -1200,7 +1202,7 @@ export class CertificateAuthorities {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -1297,7 +1299,9 @@ export class Credentials {
     return array;
   }
 
-  private _pagedList(arg: datatypes.Paging): Promise<datatypes.CredentialList> {
+  private _pagedList(
+    arg: datatypes.FilteredPaging
+  ): Promise<datatypes.CredentialList> {
     return this.httpClient
       .url(`/credentials`)
       .query(arg)
@@ -1308,7 +1312,7 @@ export class Credentials {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -2607,7 +2611,7 @@ export class EventDestinations {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.EventDestinationList> {
     return this.httpClient
       .url(`/event_destinations`)
@@ -2619,7 +2623,7 @@ export class EventDestinations {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -2710,7 +2714,7 @@ export class EventSubscriptions {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.EventSubscriptionList> {
     return this.httpClient
       .url(`/event_subscriptions`)
@@ -2722,7 +2726,7 @@ export class EventSubscriptions {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -2881,7 +2885,9 @@ export class IPPolicies {
     return array;
   }
 
-  private _pagedList(arg: datatypes.Paging): Promise<datatypes.IPPolicyList> {
+  private _pagedList(
+    arg: datatypes.FilteredPaging
+  ): Promise<datatypes.IPPolicyList> {
     return this.httpClient
       .url(`/ip_policies`)
       .query(arg)
@@ -2892,7 +2898,7 @@ export class IPPolicies {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -2985,7 +2991,7 @@ export class IPPolicyRules {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.IPPolicyRuleList> {
     return this.httpClient
       .url(`/ip_policy_rules`)
@@ -2997,7 +3003,7 @@ export class IPPolicyRules {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3096,7 +3102,7 @@ export class IPRestrictions {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.IPRestrictionList> {
     return this.httpClient
       .url(`/ip_restrictions`)
@@ -3108,7 +3114,7 @@ export class IPRestrictions {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3204,7 +3210,7 @@ export class ReservedAddrs {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.ReservedAddrList> {
     return this.httpClient
       .url(`/reserved_addrs`)
@@ -3216,7 +3222,7 @@ export class ReservedAddrs {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3313,7 +3319,7 @@ export class ReservedDomains {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.ReservedDomainList> {
     return this.httpClient
       .url(`/reserved_domains`)
@@ -3325,7 +3331,7 @@ export class ReservedDomains {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3446,7 +3452,9 @@ export class Secrets {
     return array;
   }
 
-  private _pagedList(arg: datatypes.Paging): Promise<datatypes.SecretList> {
+  private _pagedList(
+    arg: datatypes.FilteredPaging
+  ): Promise<datatypes.SecretList> {
     return this.httpClient
       .url(`/vault_secrets`)
       .query(arg)
@@ -3457,7 +3465,7 @@ export class Secrets {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3479,6 +3487,109 @@ export class Secrets {
         yield item;
       }
     }
+  }
+}
+
+export class ServiceUsers {
+  private httpClient: Wretcher;
+
+  /** Do not construct this object directly, use the <code>serviceUsers</code> property of an <code>Ngrok</code> client object instead. */
+  public constructor(httpClient: Wretcher) {
+    this.httpClient = httpClient;
+  }
+  /**
+   * Create a new service user
+   */
+  public create(
+    arg: datatypes.ServiceUserCreate
+  ): Promise<datatypes.ServiceUser> {
+    return this.httpClient
+      .url(`/service_users`)
+      .post(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Delete a service user by ID
+   */
+  public delete(id): Promise<void> {
+    return this.httpClient
+      .url(`/service_users/${id}`)
+      .delete()
+      .res()
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * Get the details of a Bot User by ID.
+   */
+  public get(id): Promise<datatypes.ServiceUser> {
+    return this.httpClient
+      .url(`/service_users/${id}`)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
+  }
+  /**
+   * List all service users in this account.
+   */
+  public async list(
+    beforeId?: string,
+    limit?: string
+  ): Promise<Array<datatypes.ServiceUser>> {
+    const array: Array<datatypes.ServiceUser> = [];
+    for await (const item of this._asyncList(beforeId, limit)) {
+      array.push(item);
+    }
+    return array;
+  }
+
+  private _pagedList(
+    arg: datatypes.FilteredPaging
+  ): Promise<datatypes.ServiceUserList> {
+    return this.httpClient
+      .url(`/service_users`)
+      .query(arg)
+      .get()
+      .json(payload => util.deserializeResult(payload))
+      .then(util.onFulfilled, util.onRejected);
+  }
+
+  private async *_asyncList(beforeId: string, limit = '100') {
+    let nextPage = 'initial loop';
+    let page: datatypes.FilteredPaging = { limit: limit };
+
+    if (beforeId) {
+      page.beforeId = beforeId;
+    }
+
+    while (nextPage) {
+      const pagedList = await this._pagedList(page);
+      nextPage = pagedList.nextPageUri;
+      const items: datatypes.ServiceUser[] = pagedList.serviceUsers;
+
+      if (nextPage) {
+        page = {
+          beforeId: items[items.length - 1].id,
+          limit: limit,
+        };
+      }
+
+      for (const item of items) {
+        yield item;
+      }
+    }
+  }
+  /**
+   * Update attributes of a service user by ID.
+   */
+  public update(
+    arg: datatypes.ServiceUserUpdate
+  ): Promise<datatypes.ServiceUser> {
+    return this.httpClient
+      .url(`/service_users/${arg.id}`)
+      .patch(util.serializeArgument(arg))
+      .json(payload => util.deserializeResult(payload))
+      .then(f => f, util.onRejected);
   }
 }
 
@@ -3516,7 +3627,7 @@ export class SSHCertificateAuthorities {
       .then(f => f, util.onRejected);
   }
   /**
-   * Get detailed information about an SSH Certficate Authority
+   * Get detailed information about an SSH Certificate Authority
    */
   public get(id): Promise<datatypes.SSHCertificateAuthority> {
     return this.httpClient
@@ -3540,7 +3651,7 @@ export class SSHCertificateAuthorities {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.SSHCertificateAuthorityList> {
     return this.httpClient
       .url(`/ssh_certificate_authorities`)
@@ -3552,7 +3663,7 @@ export class SSHCertificateAuthorities {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3648,7 +3759,7 @@ export class SSHCredentials {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.SSHCredentialList> {
     return this.httpClient
       .url(`/ssh_credentials`)
@@ -3660,7 +3771,7 @@ export class SSHCredentials {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -3732,7 +3843,7 @@ export class SSHHostCertificates {
       .then(f => f, util.onRejected);
   }
   /**
-   * Get detailed information about an SSH Host Certficate
+   * Get detailed information about an SSH Host Certificate
    */
   public get(id): Promise<datatypes.SSHHostCertificate> {
     return this.httpClient
@@ -3841,7 +3952,7 @@ export class SSHUserCertificates {
       .then(f => f, util.onRejected);
   }
   /**
-   * Get detailed information about an SSH User Certficate
+   * Get detailed information about an SSH User Certificate
    */
   public get(id): Promise<datatypes.SSHUserCertificate> {
     return this.httpClient
@@ -3976,7 +4087,7 @@ export class TLSCertificates {
   }
 
   private _pagedList(
-    arg: datatypes.Paging
+    arg: datatypes.FilteredPaging
   ): Promise<datatypes.TLSCertificateList> {
     return this.httpClient
       .url(`/tls_certificates`)
@@ -3988,7 +4099,7 @@ export class TLSCertificates {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
@@ -4221,7 +4332,9 @@ export class Vaults {
     return array;
   }
 
-  private _pagedList(arg: datatypes.Paging): Promise<datatypes.VaultList> {
+  private _pagedList(
+    arg: datatypes.FilteredPaging
+  ): Promise<datatypes.VaultList> {
     return this.httpClient
       .url(`/vaults`)
       .query(arg)
@@ -4232,7 +4345,7 @@ export class Vaults {
 
   private async *_asyncList(beforeId: string, limit = '100') {
     let nextPage = 'initial loop';
-    let page: datatypes.Paging = { limit: limit };
+    let page: datatypes.FilteredPaging = { limit: limit };
 
     if (beforeId) {
       page.beforeId = beforeId;
