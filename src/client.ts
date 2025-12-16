@@ -225,7 +225,7 @@ export class Ngrok {
     this.httpClient = wretch()
       .url(baseUrl)
       .headers({
-        'User-Agent': 'ngrok-api-typescript/0.17.0/' + process.version,
+        'User-Agent': 'ngrok-api-typescript/0.18.0/' + process.version,
         'Ngrok-Version': '2',
       })
       .content('application/json')
