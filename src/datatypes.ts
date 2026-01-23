@@ -13,8 +13,11 @@ export interface Paging {
 }
 
 export interface FilteredPaging {
+  /** Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID. */
   beforeId?: string;
+  /** Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details. */
   limit?: string;
+  /** A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering. */
   filter?: string;
 }
 
@@ -666,7 +669,7 @@ export interface CredentialCreate {
   metadata?: string;
   /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
-  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Service User. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Service User. Accepts one of: User ID, User email, or SCIM User ID. */
   ownerId?: string;
 }
 
@@ -695,7 +698,7 @@ export interface Credential {
   token?: string;
   /** optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the `bind` rule. The `bind` rule allows the caller to restrict what domains, addresses, and labels the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule `bind:example.ngrok.io`. Bind rules for domains may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of `bind:*.example.com` which will allow `x.example.com`, `y.example.com`, `*.example.com`, etc. Bind rules for labels may specify a wildcard key and/or value to match multiple labels. For example, you may specify a rule of `bind:*=example` which will allow `x=example`, `y=example`, etc. A rule of `'*'` is equivalent to no acl at all and will explicitly permit all actions. */
   acl: Array<string>;
-  /** If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot. */
+  /** If supplied at credential creation, ownership will be assigned to the specified User or Service User. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Service User. Accepts one of: User ID, User email, or SCIM User ID. */
   ownerId?: string;
 }
 
@@ -1528,10 +1531,15 @@ export interface EndpointCreate {
 }
 
 export interface EndpointListArgs {
+  /** Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID. */
   beforeId?: string;
+  /** Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details. */
   limit?: string;
+  /** Filter results by endpoint IDs. Deprecated: use `filter` instead. */
   id?: Array<string>;
+  /** Filter results by endpoint URLs. Deprecated: use `filter` instead. */
   url?: Array<string>;
+  /** A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering. */
   filter?: string;
 }
 
@@ -1973,6 +1981,8 @@ export interface ReservedDomainCreate {
   certificateId?: string;
   /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
   certificateManagementPolicy?: ReservedDomainCertPolicy;
+  /** DNS resolver targets configured for the reserved domain, or empty for "global" resolution. */
+  resolvesTo?: Array<ReservedDomainResolvesToEntry>;
 }
 
 export interface ReservedDomainUpdate {
@@ -1985,6 +1995,8 @@ export interface ReservedDomainUpdate {
   certificateId?: string;
   /** configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`. */
   certificateManagementPolicy?: ReservedDomainCertPolicy;
+  /** DNS resolver targets configured for the reserved domain, or empty for "global" resolution. */
+  resolvesTo?: Array<ReservedDomainResolvesToEntry>;
 }
 
 export interface ReservedDomain {
@@ -2012,6 +2024,8 @@ export interface ReservedDomain {
   certificateManagementStatus?: ReservedDomainCertStatus;
   /** DNS CNAME target for the host _acme-challenge.example.com, where example.com is your reserved domain name. This is required to issue certificates for wildcard, non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok subdomains. */
   acmeChallengeCnameTarget?: string;
+  /** DNS resolver targets configured for the reserved domain, or empty for "global" resolution. */
+  resolvesTo?: Array<ReservedDomainResolvesToEntry>;
 }
 
 export interface ReservedDomainList {
@@ -2046,6 +2060,11 @@ export interface ReservedDomainCertJob {
   startedAt: Date;
   /** timestamp when the provisioning job will be retried */
   retriesAt?: Date;
+}
+
+export interface ReservedDomainResolvesToEntry {
+  /** accepts an ngrok point-of-presence shortcode, or "global" */
+  value: string;
 }
 
 export interface SecretCreate {
